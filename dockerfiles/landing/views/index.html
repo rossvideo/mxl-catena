@@ -11,7 +11,10 @@
     <div class="brand">MXL Demo</div>
     <nav class="nav">
       <a class="btn" href="/">README</a>
-      <a class="btn" href="http://localhost:3000" target="_blank" rel="noopener noreferrer">MP4 → TS</a>
+      <a class="btn" id="btn-mp42ts" href="http://localhost:3000" target="_blank" rel="noopener noreferrer">
+        <span class="led" id="led-mp42ts" title="MP4→TS stream status"></span>
+        MP4 → TS
+      </a>
       <a class="btn" href="#ts2mxl">TS → MXL</a>
       <a class="btn" href="#mxl2ndi">MXL → NDI</a>
     </nav>
@@ -19,5 +22,6 @@
   <main class="content">
     {{content}}
   </main>
+  <script src="/public/app.js"></script>
 </body>
 </html>

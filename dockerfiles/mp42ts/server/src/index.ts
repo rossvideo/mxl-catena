@@ -185,7 +185,44 @@ app.use('/videos', express.static(VIDEOS_DIR));
 const PORT = Number(process.env.PORT || 3000);
 app.listen(PORT, () => {
   console.log(`Server listening on :${PORT}`);
+  tryAutoStartFirstVideo();
 });
+
+function findFirstVideoPath(dir: string): string | null {
+  try {
+    const entries = fs.readdirSync(dir, { withFileTypes: true });
+    for (const e of entries) {
+      const full = path.join(dir, e.name);
+      if (e.isDirectory()) {
+        const found = findFirstVideoPath(full);
+        if (found) return found;
+      } else if (isVideo(full)) {
+        return full;
+      }
+    }
+  } catch {
+    // ignore
+  }
+  return null;
+}
+
+function tryAutoStartFirstVideo() {
+  try {
+    const hasMain = Object.values(processes).some(p => p.mode === 'main');
+    if (hasMain) return;
+    if (!fs.existsSync(VIDEOS_DIR)) return;
+    const first = findFirstVideoPath(VIDEOS_DIR);
+    if (!first) {
+      console.log('[autostart] No video files found under', VIDEOS_DIR);
+      return;
+    }
+    if (!fs.existsSync(SHM_DIR)) fs.mkdirSync(SHM_DIR, { recursive: true });
+    console.log('[autostart] Starting main stream from', first);
+    startFfmpeg(first, MAIN_TS, 'main');
+  } catch (e) {
+    console.error('[autostart] Failed to start first video:', e);
+  }
+}
 
 function cleanupTsFiles() {
   try {
