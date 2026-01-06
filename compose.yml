@@ -1,8 +1,8 @@
 services:
-  streamer:
-    image: mp42mxl:local
+  mp42ts:
+    image: mp42ts:local
     build: 
-      context: dockerfiles/mp42mxl
+      context: dockerfiles/mp42ts
     pull_policy: always
     environment:
       - PORT=3000
@@ -10,8 +10,8 @@ services:
       - WEB_DIR=/app/web
       - NODE_ENV=development
     volumes:
-      - ./web:/app/web:ro
-      - ./server/src:/app/server/src:ro
+      - ./dockerfiles/mp42ts/web:/app/web:ro
+      - ./dockerfiles/mp42ts/server/src:/app/server/src:ro
       - ./videos:/videos:ro
       - /dev/shm:/dev/shm
     ports:
