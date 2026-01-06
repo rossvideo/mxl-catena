@@ -7,6 +7,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libavformat60 \
     libavcodec60 \
     libavutil58 \
+    libavahi-client3 \
+    libavahi-common3 \
     && rm -rf /var/lib/apt/lists/*
 
 
