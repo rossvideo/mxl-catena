@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY .${WORKDIR} ${WORKDIR}
 COPY ./mxl /mxl
 
-ENV LD_LIBRARY_PATH=/mxl/app
+ENV LD_LIBRARY_PATH=/mxl/app:/mxl/ndi/lib
 
 WORKDIR ${WORKDIR}
 
