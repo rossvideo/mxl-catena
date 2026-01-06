@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 COPY .${WORKDIR} ${WORKDIR}
 COPY ./mxl /mxl
+COPY ./static /static
 
 ENV LD_LIBRARY_PATH=/mxl/app:/mxl/ndi/lib
 
@@ -21,6 +22,4 @@ WORKDIR ${WORKDIR}
 
 RUN mkdir -p ${WORKDIR}/logs
 
-ENTRYPOINT ["/app/mxl2ndi_sink"]
-
-ENV CATENA_PORT=6254
+ENTRYPOINT ["/app/mxl2ndi_sink", "--static_root", "/static"]

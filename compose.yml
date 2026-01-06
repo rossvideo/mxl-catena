@@ -19,7 +19,13 @@ services:
     stop_grace_period: 10s
     init: true
     command: ["npm", "run", "dev"]
-  
+  # pattern:
+  #   image: pattern:local
+  #   build:
+  #     context: dockerfiles/pattern
+  #   pull_policy: always
+  #   volumes:
+  #     - /dev/shm:/dev/shm
   ts2mxl:
     image: ts2mxl:local
     build:
@@ -29,6 +35,8 @@ services:
       FLOW: 81386976-94f3-47c7-ade7-6fcd733e9eb3
     volumes:
       - /dev/shm:/dev/shm
+    ports:
+      - "6253:6254"
   mxl2ndi:
     image: mxl2ndi:local
     build:
@@ -38,3 +46,6 @@ services:
       FLOW: 81386976-94f3-47c7-ade7-6fcd733e9eb3
     volumes:
       - /dev/shm:/dev/shm
+    ports:
+      - "6254:6254"
+      - "5960-5969:5960-5969"
