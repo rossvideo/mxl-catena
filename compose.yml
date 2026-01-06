@@ -1,9 +1,16 @@
 services:
+  domain:
+    image: ubuntu:24.04
+    entrypoint: ["mkdir", "-p", "/dev/shm/mxl"]
+    volumes:
+      - /dev/shm:/dev/shm
   mp42ts:
     image: mp42ts:local
     build: 
       context: dockerfiles/mp42ts
     pull_policy: always
+    depends_on:
+      - domain
     environment:
       - PORT=3000
       - VIDEOS_DIR=/videos
@@ -19,13 +26,15 @@ services:
     stop_grace_period: 10s
     init: true
     command: ["npm", "run", "dev"]
-  # pattern:
-  #   image: pattern:local
-  #   build:
-  #     context: dockerfiles/pattern
-  #   pull_policy: always
-  #   volumes:
-  #     - /dev/shm:/dev/shm
+  pat2mxl:
+    image: pat2mxl:local
+    build:
+      context: dockerfiles/pat2mxl
+    pull_policy: always
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - domain
   ts2mxl:
     image: ts2mxl:local
     build:
@@ -37,6 +46,8 @@ services:
       - /dev/shm:/dev/shm
     ports:
       - "6253:6254"
+    depends_on:
+      - domain
   mxl2ndi:
     image: mxl2ndi:local
     build:
@@ -49,3 +60,5 @@ services:
     ports:
       - "6254:6254"
       - "5960-5969:5960-5969"
+    depends_on:
+      - domain
