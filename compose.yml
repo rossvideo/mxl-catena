@@ -35,6 +35,6 @@ services:
       context: dockerfiles/mxl2ndi
     pull_policy: always
     labels:
-      FLOW: c4d0731e-3c75-4567-b98d-a3611ccf27e2
+      FLOW: 81386976-94f3-47c7-ade7-6fcd733e9eb3
     volumes:
       - /dev/shm:/dev/shm
