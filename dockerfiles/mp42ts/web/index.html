@@ -1,0 +1,172 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Streamer Web</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+        }
+
+        button {
+            margin-right: 8px;
+        }
+
+        .controls {
+            margin-bottom: 16px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 16px;
+        }
+
+        .card {
+            position: relative;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 12px;
+            background: #fafafa;
+        }
+
+        .led {
+            position: absolute;
+            top: 10px;
+            left: 12px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #bbb;
+        }
+
+        .led.on {
+            background: #0a6;
+            box-shadow: 0 0 8px #0f0;
+        }
+
+        .card h3 {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            margin: 0;
+            font-size: 14px;
+            color: #333;
+            background: #fafafaff;
+            border-radius: 0 8px 0 8px;
+            border-bottom: 1px solid #ddd;
+            border-left: 1px solid #ddd;
+            padding: 4px 8px;
+        }
+
+        .card img {
+            width: 100%;
+            max-height: 180px;
+            object-fit: contain;
+            display: block;
+            border-radius: 4px;
+        }
+
+        .card .actions {
+            margin-top: 10px;
+            display: flex;
+            width: 100%;
+            justify-content: flex-start;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="controls">
+        <button id="stopAll">Stop Streams</button>
+    </div>
+    <div id="grid" class="grid"></div>
+    <script>
+        async function fetchTree() {
+            const res = await fetch('/api/files');
+            const data = await res.json();
+            renderGrid(data.tree || []);
+        }
+
+        function renderGrid(nodes) {
+            const grid = document.getElementById('grid');
+            grid.innerHTML = '';
+            const topLevelDirs = nodes.filter(n => n.type === 'dir');
+            topLevelDirs.forEach(dir => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                const led = document.createElement('div');
+                led.className = 'led';
+                card.appendChild(led);
+                const title = document.createElement('h3');
+                title.textContent = dir.name.toUpperCase();
+                card.appendChild(title);
+
+                // Find thumbnail and mp4 within this folder
+                const children = dir.children || [];
+                const thumb = children.find(c => c.type === 'file' && /_thumbnail\.png$/i.test(c.name));
+                const video = children.find(c => c.type === 'file' && /\.mp4$/i.test(c.name) && c.isVideo);
+
+                const img = document.createElement('img');
+                if (thumb) {
+                    img.src = thumb.path.replace(/^\/videos\//, '/videos/');
+                    img.alt = dir.name + ' thumbnail';
+                } else {
+                    img.style.display = 'none';
+                }
+                card.appendChild(img);
+
+                const actions = document.createElement('div');
+                actions.className = 'actions';
+                const btn = document.createElement('button');
+                btn.textContent = 'Start Stream';
+                btn.disabled = !video;
+                btn.onclick = () => startMain(video.path);
+                actions.appendChild(btn);
+                card.appendChild(actions);
+
+                // Store video path for LED updates
+                if (video) {
+                    card.dataset.videoPath = video.path;
+                }
+
+                grid.appendChild(card);
+            });
+        }
+        async function startMain(file) {
+            await fetch('/api/stream/main', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ file }) });
+        }
+        async function stopStreams() {
+            await fetch('/api/stream/stop', { method: 'POST' });
+        }
+        document.getElementById('stopAll').onclick = stopStreams;
+        fetchTree();
+        setInterval(updateLeds, 2000);
+
+        async function updateLeds() {
+            try {
+                const res = await fetch('/api/active');
+                const data = await res.json();
+                const activePath = data && data.main && data.main.input ? String(data.main.input) : '';
+                const cards = document.querySelectorAll('.card');
+                cards.forEach(card => {
+                    const vp = card.dataset.videoPath || '';
+                    const led = card.querySelector('.led');
+                    if (!led) return;
+                    if (activePath && vp === activePath) {
+                        led.classList.add('on');
+                    } else {
+                        led.classList.remove('on');
+                    }
+                });
+            } catch (e) {
+                // ignore polling errors
+            }
+        }
+    </script>
+</body>
+
+</html>

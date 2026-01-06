@@ -1,0 +1,51 @@
+services:
+  streamer:
+    image: mp42mxl:local
+    build: 
+      context: dockerfiles/mp42mxl
+    pull_policy: always
+    environment:
+      - PORT=3000
+      - VIDEOS_DIR=/videos
+      - WEB_DIR=/app/web
+      - NODE_ENV=development
+    volumes:
+      - ./web:/app/web:ro
+      - ./server/src:/app/server/src:ro
+      - ./videos:/videos:ro
+      - /dev/shm:/dev/shm
+    ports:
+      - "3000:3000"
+    stop_grace_period: 10s
+    init: true
+    command: ["npm", "run", "dev"]
+  
+  test_bars_mxl:
+    image: test_bars_mxl:local
+    build:
+      context: dockerfiles/testpat2mxl
+    pull_policy: always
+    command: >-
+       -d /dev/shm -p smpte -t "Catena Test Bars"
+    environment:
+      FLOW: c4d0731e-3c75-4567-b98d-a3611ccf27e2
+    volumes:
+      - /dev/shm:/dev/shm
+  ts2mxl:
+    image: ts2mxl:local
+    build:
+      context: dockerfiles/ts2mxl
+    pull_policy: always
+    environment:
+      FLOW: 81386976-94f3-47c7-ade7-6fcd733e9eb3
+    volumes:
+      - /dev/shm:/dev/shm
+  mxl2ndi:
+    image: mxl2ndi:local
+    build:
+      context: dockerfiles/mxl2ndi
+    pull_policy: always
+    labels:
+      FLOW: c4d0731e-3c75-4567-b98d-a3611ccf27e2
+    volumes:
+      - /dev/shm:/dev/shm
