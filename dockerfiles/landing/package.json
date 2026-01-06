@@ -1,0 +1,14 @@
+{
+  "name": "landing",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Landing page that renders README and provides navigation buttons.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "marked": "^12.0.2"
+  }
+}

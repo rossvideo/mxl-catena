@@ -4,6 +4,20 @@ services:
     entrypoint: ["mkdir", "-p", "/dev/shm/mxl"]
     volumes:
       - /dev/shm:/dev/shm
+  landing:
+    image: landing:local
+    build:
+      context: dockerfiles/landing
+    pull_policy: always
+    environment:
+      - PORT=8080
+      - README_PATH=/app/README.md
+    volumes:
+      - ./README.md:/app/README.md:ro
+    ports:
+      - "80:8080"
+    stop_grace_period: 10s
+    init: true
   mp42ts:
     image: mp42ts:local
     build: 
