@@ -30,6 +30,26 @@
   <main class="content">
     {{content}}
   </main>
+  <script>
+    // Transform fenced ```mermaid code blocks into <div class="mermaid"> so mermaid can render
+    document.addEventListener('DOMContentLoaded', () => {
+      const blocks = document.querySelectorAll('pre > code.language-mermaid');
+      blocks.forEach(code => {
+        const pre = code.parentElement;
+        const div = document.createElement('div');
+        div.className = 'mermaid';
+        div.textContent = code.textContent || '';
+        if (pre && pre.parentElement) {
+          pre.parentElement.replaceChild(div, pre);
+        }
+      });
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@latest/dist/mermaid.min.js"></script>
+  <script>
+    // Initialize Mermaid after transforming blocks
+    mermaid.initialize({ startOnLoad: true });
+  </script>
   <script src="/public/app.js"></script>
 </body>
 

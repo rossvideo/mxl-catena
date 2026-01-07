@@ -3,6 +3,9 @@
   const ACTIVE_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
     ? `http://localhost:3000/api/active`
     : `http://${window.location.hostname}:3000/api/active`;
+  const MP42TS_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? `http://localhost:3000`
+    : `http://${window.location.hostname}:3000`;
   const ts2mxlLED = document.getElementById('led-ts2mxl');
   const mxl2ndiLED = document.getElementById('led-mxl2ndi');
   const ts2mxlStartBtn = document.getElementById('btn-ts2mxl');
@@ -69,12 +72,81 @@
 
   }
 
+  async function toggleMp42ts() {
+    try {
+      const res = await fetch(`${MP42TS_BASE}/api/active`, { headers: { 'Accept': 'application/json' } });
+      const data = await res.json();
+      const isRunning = !!(data && data.main);
+      if (isRunning) {
+        await fetch(`${MP42TS_BASE}/api/stream/stop`, { method: 'POST' });
+      } else {
+        // Find first video under /videos via mp42ts API
+        const filesRes = await fetch(`${MP42TS_BASE}/api/files`, { headers: { 'Accept': 'application/json' } });
+        const files = await filesRes.json();
+        const first = findFirstVideoPathInTree(files && files.tree);
+        if (!first) throw new Error('No video found to start');
+        await fetch(`${MP42TS_BASE}/api/stream/main`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ file: first })
+        });
+      }
+    } catch (e) {
+      // On error, try to start anyway using first video
+      try {
+        const filesRes = await fetch(`${MP42TS_BASE}/api/files`, { headers: { 'Accept': 'application/json' } });
+        const files = await filesRes.json();
+        const first = findFirstVideoPathInTree(files && files.tree);
+        if (first) {
+          await fetch(`${MP42TS_BASE}/api/stream/main`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ file: first })
+          });
+        }
+      } catch {}
+    } finally {
+      poll();
+    }
+  }
+
+  function findFirstVideoPathInTree(tree) {
+    if (!Array.isArray(tree)) return null;
+    for (const node of tree) {
+      const p = findFirstVideoRec(node);
+      if (p) return p;
+    }
+    return null;
+  }
+
+  function findFirstVideoRec(node) {
+    if (!node) return null;
+    if (node.type === 'file' && node.isVideo) return node.path;
+    if (node.type === 'dir' && Array.isArray(node.children)) {
+      for (const child of node.children) {
+        const p = findFirstVideoRec(child);
+        if (p) return p;
+      }
+    }
+    return null;
+  }
+
   ts2mxlStartBtn.addEventListener('click', () => {
     runningToggle('ts2mxl');
   });
 
   mxl2ndiStartBtn.addEventListener('click', () => {
     runningToggle('mxl2ndi');
+  });
+
+  // Toggle MP4→TS stream on click unless opening in new tab
+  document.getElementById('btn-mp42ts').addEventListener('click', (ev) => {
+    if (ev.ctrlKey || ev.metaKey || ev.shiftKey || ev.button !== 0) {
+      // allow default navigation (open UI)
+      return;
+    }
+    ev.preventDefault();
+    toggleMp42ts();
   });
 
   // Initialize as unknown/off, then poll

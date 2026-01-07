@@ -8,6 +8,7 @@ const protoLoader = require('@grpc/proto-loader');
 const app = express();
 const PORT = process.env.PORT || 8080;
 const README_PATH = process.env.README_PATH || '/app/README.md';
+const UML_PATH = process.env.UML_PATH || '/app/UML.md';
 const PROTOS_PATH = path.join(__dirname, 'proto', 'service.proto');
 
 const packageDefinition = protoLoader.loadSync(PROTOS_PATH,
@@ -38,14 +39,19 @@ function renderTemplate(htmlContent) {
 }
 
 app.get('/', (req, res) => {
-  fs.readFile(README_PATH, 'utf8', (err, md) => {
-    if (err) {
-      res.status(500).send(`Failed to read README: ${err.message}`);
-      return;
-    }
-    const html = marked.parse(md);
-    const fullPage = renderTemplate(html);
-    res.send(fullPage);
+  // Read UML (optional) then README and render with UML first
+  fs.readFile(UML_PATH, 'utf8', (umlErr, umlMd) => {
+    const umlHtml = (!umlErr && umlMd) ? marked.parse(umlMd) : '';
+    fs.readFile(README_PATH, 'utf8', (err, md) => {
+      if (err) {
+        res.status(500).send(`Failed to read README: ${err.message}`);
+        return;
+      }
+      const readmeHtml = marked.parse(md);
+      const html = `${umlHtml}\n${readmeHtml}`;
+      const fullPage = renderTemplate(html);
+      res.send(fullPage);
+    });
   });
 });
 
@@ -79,8 +85,8 @@ const handleGetValue = (client, oid) => {
 app.get('/api/ts2mxl/status', handleGetValue(ts2mxlClient, "/status"));
 app.post('/api/ts2mxl/start', handleCommand(ts2mxlClient, "/start"));
 app.post('/api/ts2mxl/stop', handleCommand(ts2mxlClient, "/stop"));
-app.get('/api/mxl2ndi/status', handleGetValue(mxl2ndiClient, "/status")); ~
-  app.post('/api/mxl2ndi/start', handleCommand(mxl2ndiClient, "/start"));
+app.get('/api/mxl2ndi/status', handleGetValue(mxl2ndiClient, "/status"));
+app.post('/api/mxl2ndi/start', handleCommand(mxl2ndiClient, "/start"));
 app.post('/api/mxl2ndi/stop', handleCommand(mxl2ndiClient, "/stop"));
 
 app.listen(PORT, () => {
