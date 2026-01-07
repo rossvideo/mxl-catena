@@ -11,7 +11,7 @@
 <body>
   <header class="topbar">
     <div class="brand">MXL Demo</div>
-    <nav class="nav">
+    <!-- <nav class="nav">
       <a class="btn" href="/">README</a>
       <a class="btn" id="btn-mp42ts" href="http://localhost:3000" target="_blank" rel="noopener noreferrer">
         <span class="led" id="led-mp42ts" title="MP4→TS stream status"></span>
@@ -25,7 +25,7 @@
         <span class="led" id="led-mxl2ndi" title="MXL→NDI conversion status"></span>
         MXL → NDI
       </a>
-    </nav>
+    </nav> -->
   </header>
   <main class="content">
     {{content}}
@@ -46,10 +46,6 @@
     });
   </script>
   <script src="https://cdn.jsdelivr.net/npm/mermaid@latest/dist/mermaid.min.js"></script>
-  <script>
-    // Initialize Mermaid after transforming blocks
-    mermaid.initialize({ startOnLoad: true });
-  </script>
   <script src="/public/app.js"></script>
 </body>
 
