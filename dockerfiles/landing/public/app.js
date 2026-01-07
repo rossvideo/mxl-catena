@@ -63,7 +63,6 @@
     animateEdge(e4, mxl2ndiStatus);
     setLed(pat2mxlLED, pat2mxlStatus);
     animateEdge(e3, pat2mxlStatus);
-    // mxl2ndiStartBtn.disabled = (ts2mxlStatus !== 'on');
   }
 
   const runningToggle = (svc) => {
@@ -92,8 +91,17 @@
 
   }
 
-  window.asdf = function() {
-    alert('Callback invoked');
+  window.toggleTs2Mxl = function() {
+    runningToggle('ts2mxl');
+  }
+
+  window.toggleMxl2Ndi = async function() {
+    const ts2mxlStatus = await catenaStatus('ts2mxl');
+    if (ts2mxlStatus !== 'on') {
+      alert('Please start the TS to MXL stream first.');
+      return;
+    }
+    runningToggle('mxl2ndi');
   }
 
   // ts2mxlStartBtn.addEventListener('click', () => {

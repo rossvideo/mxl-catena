@@ -13,7 +13,9 @@ graph LR
   pat2mxl e3@==> mxl2ndi
   mxl2ndi e4@==> dashboard[DashBoard]
 
-  click ts2mxl asdf "Toggle TS to MXL Stream"
+  click mp42ts "http://localhost:3000" "Open MP4 to TS Stream Page" _blank
+  click ts2mxl toggleTs2Mxl "Toggle TS to MXL Stream"
+  click mxl2ndi toggleMxl2Ndi "Toggle MXL to NDI Stream"
 
   subgraph MXL Providers
     ts2mxl
