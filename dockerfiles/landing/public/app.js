@@ -18,6 +18,16 @@
     else led.classList.add('led-red');
   }
 
+  async function catenaStatus(svc) {
+    const res = await fetch(`api/${svc}/status`, { headers: { 'Accept': 'application/json' } });
+    if (!res.ok) return "err";
+    const data = await res.json();
+    const status = data && data.string_value;
+    if (status === 'Running') return "on";
+    else if (status === 'Stopped') return "off";
+    else return "err";
+  }
+
   async function poll() {
     try {
       const res = await fetch(ACTIVE_URL, { headers: { 'Accept': 'application/json' } });
@@ -28,22 +38,11 @@
     } catch (e) {
       setLed(mp42tsLED, 'err');
     }
-    [[ts2mxlLED, 'ts2mxl'], [mxl2ndiLED, 'mxl2ndi']].forEach(([led, svc]) => {
-      fetch(`api/${svc}/status`, { headers: { 'Accept': 'application/json' } })
-        .then(res => {
-          if (!res.ok) throw new Error('Bad status ' + res.status);
-          return res.json();
-        })
-        .then(data => {
-          const status = data && data.string_value;
-          if (status === 'Running') setLed(led, 'on');
-          else if (status === 'Stopped') setLed(led, 'off');
-          else setLed(led, 'err');
-        })
-        .catch(err => {
-          setLed(led, 'err');
-        });
-    });
+    const ts2mxlStatus = await catenaStatus('ts2mxl');
+    const mxl2ndiStatus = await catenaStatus('mxl2ndi');
+    setLed(ts2mxlLED, ts2mxlStatus);
+    setLed(mxl2ndiLED, mxl2ndiStatus);
+    mxl2ndiStartBtn.disabled = (ts2mxlStatus !== 'on');
   }
 
   const runningToggle = (svc) => {
