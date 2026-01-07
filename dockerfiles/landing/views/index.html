@@ -1,11 +1,13 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MXL Demo — Landing</title>
   <link rel="stylesheet" href="/public/style.css" />
 </head>
+
 <body>
   <header class="topbar">
     <div class="brand">MXL Demo</div>
@@ -15,8 +17,14 @@
         <span class="led" id="led-mp42ts" title="MP4→TS stream status"></span>
         MP4 → TS
       </a>
-      <a class="btn" href="#ts2mxl">TS → MXL</a>
-      <a class="btn" href="#mxl2ndi">MXL → NDI</a>
+      <a class="btn" id="btn-ts2mxl" href="#ts2mxl">
+        <span class="led" id="led-ts2mxl" title="TS→MXL conversion status"></span>
+        TS → MXL
+      </a>
+      <a class="btn" id="btn-mxl2ndi" href="#mxl2ndi">
+        <span class="led" id="led-mxl2ndi" title="MXL→NDI conversion status"></span>
+        MXL → NDI
+      </a>
     </nav>
   </header>
   <main class="content">
@@ -24,4 +32,5 @@
   </main>
   <script src="/public/app.js"></script>
 </body>
+
 </html>

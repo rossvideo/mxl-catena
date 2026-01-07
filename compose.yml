@@ -62,7 +62,7 @@ services:
     volumes:
       - /dev/shm:/dev/shm
     ports:
-      - "6253:6254"
+      - "7253:6254"
     depends_on:
       domain:
         condition: service_completed_successfully
@@ -76,7 +76,7 @@ services:
     volumes:
       - /dev/shm:/dev/shm
     ports:
-      - "6254:6254"
+      - "7254:6254"
       - "5960-5969:5960-5969"
     depends_on:
       domain:

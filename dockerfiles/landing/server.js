@@ -2,10 +2,27 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const { marked } = require('marked');
+const grpc = require('@grpc/grpc-js');
+const protoLoader = require('@grpc/proto-loader');
 
 const app = express();
 const PORT = process.env.PORT || 8080;
 const README_PATH = process.env.README_PATH || '/app/README.md';
+const PROTOS_PATH = path.join(__dirname, 'proto', 'service.proto');
+
+const packageDefinition = protoLoader.loadSync(PROTOS_PATH,
+  {
+    keepCase: true,
+    longs: String,
+    enums: String,
+    defaults: true,
+    oneofs: true
+  }
+);
+const protoDescriptor = grpc.loadPackageDefinition(packageDefinition);
+const st2138 = protoDescriptor.st2138;
+const ts2mxlClient = new st2138.CatenaService('ts2mxl:6254', grpc.credentials.createInsecure());
+const mxl2ndiClient = new st2138.CatenaService('mxl2ndi:6254', grpc.credentials.createInsecure());
 
 marked.setOptions({
   mangle: false,
@@ -31,6 +48,40 @@ app.get('/', (req, res) => {
     res.send(fullPage);
   });
 });
+
+const handleCommand = (client, oid) => {
+  return (req, res) => {
+    client.ExecuteCommand({
+      slot: 0,
+      oid: oid,
+      value: {},
+      respond: false,
+    });
+    res.json({ status: 'executed', command: oid });
+  };
+};
+
+const handleGetValue = (client, oid) => {
+  return (req, res) => {
+    client.GetValue({
+      slot: 0,
+      oid: oid,
+    }, (err, response) => {
+      if (err) {
+        res.status(500).json({ error: err.message });
+        return;
+      }
+      res.json(response);
+    });
+  };
+}
+
+app.get('/api/ts2mxl/status', handleGetValue(ts2mxlClient, "/status"));
+app.post('/api/ts2mxl/start', handleCommand(ts2mxlClient, "/start"));
+app.post('/api/ts2mxl/stop', handleCommand(ts2mxlClient, "/stop"));
+app.get('/api/mxl2ndi/status', handleGetValue(mxl2ndiClient, "/status")); ~
+  app.post('/api/mxl2ndi/start', handleCommand(mxl2ndiClient, "/start"));
+app.post('/api/mxl2ndi/stop', handleCommand(mxl2ndiClient, "/stop"));
 
 app.listen(PORT, () => {
   console.log(`Landing page listening on http://0.0.0.0:${PORT}`);

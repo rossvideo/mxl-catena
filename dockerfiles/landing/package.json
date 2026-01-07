@@ -8,6 +8,8 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "@grpc/grpc-js": "^1.14.3",
+    "@grpc/proto-loader": "^0.8.0",
     "express": "^4.18.2",
     "marked": "^12.0.2"
   }

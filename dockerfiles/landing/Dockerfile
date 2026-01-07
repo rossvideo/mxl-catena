@@ -10,6 +10,7 @@ RUN npm install --only=production
 COPY server.js ./
 COPY views ./views
 COPY public ./public
+COPY proto ./proto
 
 EXPOSE 8080
 CMD ["node", "server.js"]
