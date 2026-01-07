@@ -103,29 +103,6 @@
     }
     runningToggle('mxl2ndi');
   }
-
-  // ts2mxlStartBtn.addEventListener('click', () => {
-  //   runningToggle('ts2mxl');
-  // });
-
-  // mxl2ndiStartBtn.addEventListener('click', () => {
-  //   runningToggle('mxl2ndi');
-  // });
-
-  // Toggle MP4→TS stream on click unless opening in new tab
-  // document.getElementById('btn-mp42ts').addEventListener('click', (ev) => {
-  //   if (ev.ctrlKey || ev.metaKey || ev.shiftKey || ev.button !== 0) {
-  //     // allow default navigation (open UI)
-  //     return;
-  //   }
-  //   ev.preventDefault();
-  //   toggleMp42ts();
-  // });
-
-  // Initialize as unknown/off, then poll
-  // setLed(mp42tsLED, 'off');
-  // setLed(ts2mxlLED, 'off');
-  // setLed(mxl2ndiLED, 'off');
   poll();
   setTimeout(poll, 500);
   setInterval(poll, 2000);
