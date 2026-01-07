@@ -2,6 +2,7 @@ services:
   domain:
     image: ubuntu:24.04
     entrypoint: ["mkdir", "-p", "/dev/shm/mxl"]
+    restart: "no"
     volumes:
       - /dev/shm:/dev/shm
   landing:
@@ -24,7 +25,8 @@ services:
       context: dockerfiles/mp42ts
     pull_policy: always
     depends_on:
-      - domain
+      domain:
+        condition: service_completed_successfully
     environment:
       - PORT=3000
       - VIDEOS_DIR=/videos
@@ -48,7 +50,8 @@ services:
     volumes:
       - /dev/shm:/dev/shm
     depends_on:
-      - domain
+      domain:
+        condition: service_completed_successfully
   ts2mxl:
     image: ts2mxl:local
     build:
@@ -61,7 +64,8 @@ services:
     ports:
       - "6253:6254"
     depends_on:
-      - domain
+      domain:
+        condition: service_completed_successfully
   mxl2ndi:
     image: mxl2ndi:local
     build:
@@ -75,4 +79,5 @@ services:
       - "6254:6254"
       - "5960-5969:5960-5969"
     depends_on:
-      - domain
+      domain:
+        condition: service_completed_successfully
