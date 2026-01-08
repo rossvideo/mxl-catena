@@ -22,6 +22,7 @@
     cd mxl-demo
     docker compose up -d
     ```
+    >> on older versions of docker you will need to use `docker-compose up -d`
 3. Open "http://localhost" in your web browser to access the demo interface.
 4. Follow the instructions in the "Viewing the Demo" section below.
 
