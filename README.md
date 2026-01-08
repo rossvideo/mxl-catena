@@ -45,7 +45,7 @@ Follow these steps in the browser:
 	- Note: Start "TS → MXL" before "MXL → NDI" to ensure a valid MXL stream to read from.
 
 3. Optional: Stream an MP4 as TS
-	- Click "MP4 → TS".
+	- Click "Change the Video".
 	- Select one of the available MP4 files.
 	- Click "Start Stream". It goes live automatically, so the indicator should already be green.
 
