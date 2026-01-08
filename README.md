@@ -19,7 +19,7 @@
 1. Make sure dashboard is closed before starting 
 2. Open a WSL terminal and run:
     ```
-    cd /path/to/mxl-demo
+    cd mxl-demo
     docker compose up -d
     ```
 3. Open "http://localhost" in your web browser to access the demo interface.
@@ -28,7 +28,7 @@
 ### Stopping the Demo
 Open a WSL terminal and run:
 ```
-cd /path/to/mxl-demo
+cd mxl-demo
 docker compose down
 ```
 
