@@ -8,14 +8,14 @@
 
   // Initialize Mermaid after transforming blocks
   mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
-
+  // nice LED indicators  :D
   function setLed(led, state) {
     led.classList.remove('led-gray', 'led-green', 'led-red');
     if (state === 'on') led.classList.add('led-green');
     else if (state === 'off') led.classList.add('led-gray');
     else led.classList.add('led-red');
   }
-
+  // it looks good 
   function animateEdge(edge, state) {
     if (state === "on") edge.classList.add('edge-animation-slow');
     else edge.classList.remove('edge-animation-slow');
@@ -64,7 +64,7 @@
     setLed(pat2mxlLED, pat2mxlStatus);
     animateEdge(e3, pat2mxlStatus);
   }
-
+  // cool grpc commands to start/stop catena services
   const runningToggle = (svc) => {
     fetch(`api/${svc}/status`, { headers: { 'Accept': 'application/json' } })
       .then(res => {
@@ -91,9 +91,10 @@
 
   }
 
+  // TS to MXL depends on MP4 to TS so dont let it start first
   window.toggleTs2Mxl = async function() {
-    let mp42tsStatus = "off";
-    try {
+    let mp42tsStatus = 'off';
+    try { 
       const res = await fetch(ACTIVE_URL, { headers: { 'Accept': 'application/json' } });
       if (!res.ok) throw new Error('Bad status ' + res.status);
       const data = await res.json();
@@ -108,6 +109,7 @@
     runningToggle('ts2mxl');
   }
 
+  // MXL to NDI depends on TS to MXL so dont let it start first
   window.toggleMxl2Ndi = async function() {
     const ts2mxlStatus = await catenaStatus('ts2mxl');
     if (ts2mxlStatus !== 'on') {
@@ -116,7 +118,7 @@
     }
     runningToggle('mxl2ndi');
   }
-  poll();
-  setTimeout(poll, 500);
-  setInterval(poll, 2000);
+  poll(); //first poll
+  setTimeout(poll, 500); // quick update after mermaid renders
+  setInterval(poll, 2000); // poll every 2 seconds
 })();
