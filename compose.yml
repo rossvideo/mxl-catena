@@ -17,6 +17,9 @@ services:
     volumes:
       - ./README.md:/app/README.md:ro
       - ./UML.md:/app/UML.md:ro
+      - ./dockerfiles/ts2mxl/static/mxl_ingest_stream.png:/app/mxl_ingest_stream.png:ro
+      - ./dockerfiles/pat2mxl/static/mxl_ingest_synthetic.png:/app/mxl_ingest_synthetic.png:ro
+      - ./dockerfiles/mxl2ndi/static/mxl_egress_network.png:/app/mxl_egress_network.png:ro
     ports:
       - "80:8080"
     stop_grace_period: 10s

@@ -17,8 +17,8 @@
   }
 
   function animateEdge(edge, state) {
-    if (state === "on") edge.classList.add('edge-animation-fast');
-    else edge.classList.remove('edge-animation-fast');
+    if (state === "on") edge.classList.add('edge-animation-slow');
+    else edge.classList.remove('edge-animation-slow');
   }
 
   async function catenaStatus(svc) {
