@@ -91,7 +91,20 @@
 
   }
 
-  window.toggleTs2Mxl = function() {
+  window.toggleTs2Mxl = async function() {
+    let mp42tsStatus = "off";
+    try {
+      const res = await fetch(ACTIVE_URL, { headers: { 'Accept': 'application/json' } });
+      if (!res.ok) throw new Error('Bad status ' + res.status);
+      const data = await res.json();
+      const active = data && data.main;
+      mp42tsStatus = active ? 'on' : 'off';
+    } catch (e) {
+    }
+    if (mp42tsStatus !== 'on') {
+      alert('Please start the MP4 to TS stream first.');
+      return;
+    }
     runningToggle('ts2mxl');
   }
 

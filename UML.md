@@ -38,9 +38,9 @@ graph LR
     mp4Files
     mp4Change
   end
-  e1@{ animation: slow }
+  e1@{ animation: false }
   e2@{ animate: false }
-  e3@{ animation: slow }
+  e3@{ animation: false }
   e4@{ animate: false }
 
 ```
