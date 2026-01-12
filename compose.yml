@@ -9,7 +9,7 @@ services:
     image: landing:local
     build:
       context: dockerfiles/landing
-    pull_policy: always
+    pull_policy: build
     environment:
       - PORT=8080
       - README_PATH=/app/README.md
@@ -28,7 +28,7 @@ services:
     image: mp42ts:local
     build: 
       context: dockerfiles/mp42ts
-    pull_policy: always
+    pull_policy: build
     depends_on:
       domain:
         condition: service_completed_successfully
@@ -51,7 +51,7 @@ services:
     image: pat2mxl:local
     build:
       context: dockerfiles/pat2mxl
-    pull_policy: always
+    pull_policy: build
     volumes:
       - /dev/shm:/dev/shm
     depends_on:
@@ -61,7 +61,7 @@ services:
     image: ts2mxl:local
     build:
       context: dockerfiles/ts2mxl
-    pull_policy: always
+    pull_policy: build
     environment:
       FLOW: 81386976-94f3-47c7-ade7-6fcd733e9eb3
     volumes:
@@ -75,7 +75,7 @@ services:
     image: mxl2ndi:local
     build:
       context: dockerfiles/mxl2ndi
-    pull_policy: always
+    pull_policy: build
     labels:
       FLOW: 81386976-94f3-47c7-ade7-6fcd733e9eb3
     volumes:
