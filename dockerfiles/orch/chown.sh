@@ -1,0 +1,2 @@
+USER_GROUP=${1:-1000:1000}
+chown -R $USER_GROUP .

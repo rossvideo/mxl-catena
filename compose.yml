@@ -86,3 +86,12 @@ services:
     depends_on:
       domain:
         condition: service_completed_successfully
+
+  orch:
+    image: orchestrator:local
+    build:
+      context: dockerfiles/orch
+    pull_policy: build
+    command: ["python", "/app/orchestrator.py"]
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
