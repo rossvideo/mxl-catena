@@ -23,7 +23,7 @@ resource "docker_container" "tomsk_ts2mxl_container" {
 resource "catena_device" "tomsk_ts2mxl" {
   depends_on = [ docker_container.tomsk_ts2mxl_container ]
   device_type  = "remote-grpc"
-  name         = "Tomsk TS Loop"
+  name         = "Tomsk University"
   slot         = 0
   address      = "http://host.docker.internal"
   port         = 7255

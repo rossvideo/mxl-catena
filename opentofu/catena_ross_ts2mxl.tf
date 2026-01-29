@@ -23,7 +23,7 @@ resource "docker_container" "ross_ts2mxl_container" {
 resource "catena_device" "ross_ts2mxl" {
   depends_on = [ docker_container.ross_ts2mxl_container ]
   device_type  = "remote-grpc"
-  name         = "Ross Logo Loop"
+  name         = "Ross Logo"
   slot         = 0
   address      = "http://host.docker.internal"
   port         = 7250

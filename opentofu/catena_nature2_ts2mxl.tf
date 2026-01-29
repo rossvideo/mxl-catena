@@ -23,7 +23,7 @@ resource "docker_container" "nature2_ts2mxl_container" {
 resource "catena_device" "nature2_ts2mxl" {
   depends_on = [ docker_container.nature2_ts2mxl_container ]
   device_type  = "remote-grpc"
-  name         = "Nature river TS Loop"
+  name         = "Nature river"
   slot         = 0
   address      = "http://host.docker.internal"
   port         = 7252

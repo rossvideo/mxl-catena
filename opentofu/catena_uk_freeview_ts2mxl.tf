@@ -23,7 +23,7 @@ resource "docker_container" "uk_freeview_ts2mxl_container" {
 resource "catena_device" "uk_freeview_ts2mxl" {
   depends_on = [ docker_container.uk_freeview_ts2mxl_container ]
   device_type  = "remote-grpc"
-  name         = "UK Freeview"
+  name         = "Cartoon from UK Freeview"
   slot         = 0
   address      = "http://host.docker.internal"
   port         = 7249
