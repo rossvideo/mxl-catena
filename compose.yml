@@ -1,97 +1,24 @@
 services:
-  domain:
-    image: ubuntu:24.04
-    entrypoint: ["mkdir", "-p", "/dev/shm/mxl"]
-    restart: "no"
+  tofu:
+    build: .
+    image: catena-tofu-test
+    container_name: catena-tofu-test
+    working_dir: /workspace/opentofu
     volumes:
-      - /dev/shm:/dev/shm
-  landing:
-    image: landing:local
-    build:
-      context: dockerfiles/landing
-    pull_policy: build
-    environment:
-      - PORT=8080
-      - README_PATH=/app/README.md
-      - UML_PATH=/app/UML.md
-    volumes:
-      - ./README.md:/app/README.md:ro
-      - ./UML.md:/app/UML.md:ro
-      - ./dockerfiles/ts2mxl/static/mxl_ingest_stream.png:/app/mxl_ingest_stream.png:ro
-      - ./dockerfiles/pat2mxl/static/mxl_ingest_synthetic.png:/app/mxl_ingest_synthetic.png:ro
-      - ./dockerfiles/mxl2ndi/static/mxl_egress_network.png:/app/mxl_egress_network.png:ro
-    ports:
-      - "80:8080"
-    stop_grace_period: 10s
-    init: true
-  mp42ts:
-    image: mp42ts:local
-    build: 
-      context: dockerfiles/mp42ts
-    pull_policy: build
-    depends_on:
-      domain:
-        condition: service_completed_successfully
-    environment:
-      - PORT=3000
-      - VIDEOS_DIR=/videos
-      - WEB_DIR=/app/web
-      - NODE_ENV=development
-    volumes:
-      - ./dockerfiles/mp42ts/web:/app/web:ro
-      - ./dockerfiles/mp42ts/server/src:/app/server/src:ro
-      - ./videos:/videos:ro
-      - /dev/shm:/dev/shm
-    ports:
-      - "3000:3000"
-    stop_grace_period: 10s
-    init: true
-    command: ["npm", "run", "dev"]
-  pat2mxl:
-    image: pat2mxl:local
-    build:
-      context: dockerfiles/pat2mxl
-    pull_policy: build
-    volumes:
-      - /dev/shm:/dev/shm
-    depends_on:
-      domain:
-        condition: service_completed_successfully
-  ts2mxl:
-    image: ts2mxl:local
-    build:
-      context: dockerfiles/ts2mxl
-    pull_policy: build
-    environment:
-      FLOW: 81386976-94f3-47c7-ade7-6fcd733e9eb3
-    volumes:
-      - /dev/shm:/dev/shm
-    ports:
-      - "7253:6254"
-    depends_on:
-      domain:
-        condition: service_completed_successfully
-  mxl2ndi:
-    image: mxl2ndi:local
-    build:
-      context: dockerfiles/mxl2ndi
-    pull_policy: build
-    labels:
-      FLOW: 81386976-94f3-47c7-ade7-6fcd733e9eb3
-    volumes:
-      - /dev/shm:/dev/shm
-    ports:
-      - "7254:6254"
-      - "5960-5969:5960-5969"
-    depends_on:
-      domain:
-        condition: service_completed_successfully
-
-  orch:
-    image: orchestrator:local
-    build:
-      context: dockerfiles/orch
-    pull_policy: build
-    command: ["python", "/app/orchestrator.py"]
-    volumes:
+      - ./:/workspace
       - /var/run/docker.sock:/var/run/docker.sock
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    entrypoint: ["tofu"]
+    tty: true
+
+  builder:
+    build:
+      context: .
+      dockerfile: builder.Dockerfile
+    image: catena-builder
+    working_dir: /workspace
+    volumes:
+      - ./:/workspace
+      - /dev/shm:/dev/shm
+    tty: true
