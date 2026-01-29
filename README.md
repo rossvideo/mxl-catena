@@ -1,77 +1,58 @@
-### Pulling the Demo
-#### Requierments 
-- have wsl or linux
-- install docker with docker compose
-- install git
+# MXL DEMO with OpenTofu
 
-#### Steps
-1. In wsl navigate to your home 
-    ```
-    cd ~
-    ```
-2. run 
-    ```
-    git clone https://srvottgitlab02.rossvideo.com/rrl/mxl-demo.git
-    ```
-
----
-### Running the Demo
-1. Make sure dashboard is closed before starting 
-2. Open a WSL terminal and run:
-    ```
-    cd mxl-demo
-    docker compose up -d
-    ```
-    >> on older versions of docker you will need to use `docker-compose up -d`
-3. Open "http://localhost" in your web browser to access the demo interface.
-4. Follow the instructions in the "Viewing the Demo" section below.
-
-### Stopping the Demo
-Open a WSL terminal and run:
-```
-cd mxl-demo
-docker compose down
+This is a mxl demo that is created by using OpenTofu to spin up and manage catena devices.
+```mermaid
+flowchart LR
+    o0@{ shape: start, label: "Start"} --> A
+    A@{ shape: manual, label: "./tofu start"} --> B["Tofu pulls and creates containers"]   
+    N1@{ shape: documents, label: "in opentofu dir there is a bunch of containers to create"}.- B
+    B --> C["Tofu configures each container"]
+    C --> IF1{"the container have a start command?"}
+    IF1 -- Yes --> D["Tofu sends the container the start command"]
+    IF1 -- No -->  E
+    D --> E@{ shape: stop, label: "End"}
 ```
 
-### Viewing the Demo
-Follow these steps in the browser:
 
-1. Start the MXL stream writer
-	- In the control Diagram at the top, Click "TS → MXL".
-	- Wait until the indicator turns green.
+## First Time Start
+1. Make sure Dashboard is closed or the mxl2ndi device is disconnected
+2. Run these commands 1 at a time:
+```
+./ndi-builder.sh
+./ts-builder.sh
+./tofu build
+./tofu init
+./tofu start
+```
+3. open dashboard and connect to `localhost:7254` as a catena device
 
-2. Start the MXL reader and NDI output
-	- Click "MXL → NDI".
-	- Confirm the indicator is green.
-	- Note: Start "TS → MXL" before "MXL → NDI" to ensure a valid MXL stream to read from.
-
-3. Optional: Stream an MP4 as TS
-	- Click "Change the Video".
-	- Select one of the available MP4 files.
-	- Click "Start Stream". It goes live automatically, so the indicator should already be green.
-
+### Notes:
+- `./tofu build` runs inside a container with Go and Make installed; Docker is required.
+- `sudo chown -R 1000:1000 *` to fix some permison stuff
+- No local Go/Make installation needed for builds.
+- The provider binary `terraform-provider-catena_v0.1.0` is written to the repo root.
 ---
 
-### Status Stoplight:
-- 🔴 Error: the device has an error
-- ⚪ Stopped: the device is stopped (Grey)
-- 🟢 Running: the device is running (Green)
+## Start normal
+1. Make sure Dashboard is closed or the mxl2ndi device is disconnected
+2. Run command:
+```
+./tofu start
+```
+3. open dashboard and connect to `localhost:7254` as a catena device
 
-### Showing the NDI stream in Dashboard
-Open dashboard and add a new Connection. Select "Catena Device" under "Catena" and enter the following details:
+## Stop
+1. Run command:
+```
+./tofu stop
+```
+2. close dashboard or disconect the mxl2ndi device
 
-|          |          |
-|--------------|--------------|
-| Hostname     | localhost    |
-| Display Name | MXL to NDI   |
-| Port         | 7254         |
-| Use SSL      | ☐ Unchecked |
+## Links for demo video sources
+- https://www.vqeg.org/video-datasets-and-organizations/
+- https://tsduck.io/streams/
 
-Click "Finish" to add the connection.
-
-> You can also add the TS to MXL Catena Device to dashboard using the same steps but with port `7253`, and display name `TS to MXL`.
----
-
-## FAQ
-### My dashbord has loaded but i dont see the video:
-In Dashboard on the "MXL to NDI" page, "Demo Controls" tab you can see the NDI video output, if it does not appear right away, click the "Refresh" button at the bottom dashboard page. You can also select which input stream to view by click on the desired "Select Source" button. It will switch between the video file loop and the test pattern.
+## Known bugs
+- Sometimes the selected Device Name and ID don't update
+## TODOs
+ - move project to github

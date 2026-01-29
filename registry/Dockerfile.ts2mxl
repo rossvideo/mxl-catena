@@ -1,0 +1,26 @@
+FROM ghcr.io/rossvideo/catena:one-of-everything-gRPC-dev
+
+LABEL org.opencontainers.image.url="https://github.com/rossvideo/Catena-deployments"
+LABEL org.opencontainers.image.licenses="BSD-3-Clause"
+LABEL org.opencontainers.image.title="Transport Stream to MXL Catena gRPC Example"
+LABEL org.opencontainers.image.version="ts2mxl-1.0.0"
+LABEL org.opencontainers.image.description="Self contained example for Catena ts2mxl gRPC module"
+LABEL org.opencontainers.image.vendor="Ross Video"
+LABEL org.opencontainers.image.ref.name="ubuntu"
+LABEL org.opencontainers.image.source="https://github.com/rossvideo/mxl-catena"
+USER root
+
+RUN apt-get update && apt-get install -y \
+    gstreamer1.0-libav \
+    gstreamer1.0-plugins-base \
+    gstreamer1.0-plugins-good \
+    gstreamer1.0-plugins-bad \
+    gstreamer1.0-x \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY . /app/gRPC/ts2mxl/
+
+ENV CATENA_EXAMPLE=ts2mxl
+ENV LD_LIBRARY_PATH=/app/gRPC/ts2mxl/mxl
+ENV GST_PLUGIN_PATH=/app/gRPC/ts2mxl/mxl
+ENV MXL_PATH=/app/gRPC/ts2mxl/tools/mxl-gst-looping-filesrc

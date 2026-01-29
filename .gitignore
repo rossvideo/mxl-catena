@@ -1,2 +1,15 @@
+log.txt
+terraform-provider-catena_v*
 .venv/
 __pycache__/
+internal/genproto/*.pb.go
+terraform.tfstate*
+
+**/ndi/*
+**/mxl/*
+**/ts/*
+!external/ts/ross_logo_loop2.ts
+opentofu/.terraform/*
+opentofu/.terraform.lock.hcl
+build/
+*.mp4
