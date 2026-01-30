@@ -1,0 +1,24 @@
+services:
+  tofu:
+    build: .
+    image: catena-tofu-test
+    container_name: catena-tofu-test
+    working_dir: /workspace/opentofu
+    volumes:
+      - ./:/workspace
+      - /var/run/docker.sock:/var/run/docker.sock
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    entrypoint: ["tofu"]
+    tty: true
+
+  builder:
+    build:
+      context: .
+      dockerfile: builder.Dockerfile
+    image: catena-builder
+    working_dir: /workspace
+    volumes:
+      - ./:/workspace
+      - /dev/shm:/dev/shm
+    tty: true
