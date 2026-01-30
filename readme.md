@@ -142,7 +142,14 @@ Additional pass-through commands are available, e.g., `./tofu plan`, `./tofu des
 - Protocol Buffers: https://protobuf.dev/
 - gRPC for Go: https://grpc.io/docs/languages/go/
 - NDI (SDK & info): https://ndi.tv/sdk
+### Links for demo video sources
 - TSDuck sample streams: https://tsduck.io/streams/
 - VQEG video datasets: https://www.vqeg.org/video-datasets-and-organizations/
+### Links to Catana data models
+- [MXL Flow Definintion](https://github.com/rossvideo/Catena/blob/mxl-poc/sdks/cpp/connections/gRPC/examples/poc/templates/param.flow_def.yaml)
+- [ts2mxl Device Model](https://github.com/rossvideo/Catena/blob/mxl-poc/sdks/cpp/connections/gRPC/examples/poc/ts2mxl/device.ts2mxl.yaml)
+- [mxl2ndi Device Model](https://github.com/rossvideo/Catena/blob/mxl-poc/sdks/cpp/connections/gRPC/examples/poc/mxl2ndi_sink/device.mxl2ndi_sink.yaml)
+
+
 
 ---
