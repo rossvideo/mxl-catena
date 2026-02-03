@@ -104,4 +104,4 @@ for file in "${listof_files[@]}"; do
     echo "[ndi] Copied $(basename "$file") to external"
 done
 
-# rm -rf $TEMP_DIR
+rm -rf $TEMP_DIR
