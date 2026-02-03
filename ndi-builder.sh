@@ -79,9 +79,10 @@ if [ "$1" == "-t" ] && [ -n "$2" ]; then
     echo "[ndi] Using target architecture from argument: $targetarch"
 else
     echo "[ndi] No target architecture argument provided. Using default: x86_64-linux-gnu"
+    targetarch="x86_64-linux-gnu"
 fi
 
-targetarch="x86_64-linux-gnu"
+
 
 listof_files=(
     "$TEMP_DIR/NDI Advanced SDK for Linux/lib/$targetarch/libndi.so"
