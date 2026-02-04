@@ -1,14 +1,17 @@
 # Multi-stage Dockerfile to build and test the Catena OpenTofu provider
 
 # 1) Build the provider inside a Go builder image
-FROM golang:1.22 AS builder
+FROM --platform=$BUILDPLATFORM golang:1.22 AS builder
 WORKDIR /src
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
 # Build a linux_amd64 binary with versioned filename
 ARG GO_BUILD_TAGS=""
-RUN GOOS=linux GOARCH=amd64 go build -tags "$GO_BUILD_TAGS" -o terraform-provider-catena_v0.1.0
+# Build for target platform (supports amd64 and arm64)
+ARG TARGETOS=linux
+ARG TARGETARCH=amd64
+RUN GOOS=$TARGETOS GOARCH=$TARGETARCH go build -tags "$GO_BUILD_TAGS" -o terraform-provider-catena_v0.1.0
 
 # 2) Minimal runtime image with OpenTofu and the built provider
 FROM debian:stable-slim
@@ -30,7 +33,12 @@ RUN curl -L "https://github.com/opentofu/opentofu/releases/download/v${TOFU_VERS
 # Install Docker CLI (static binary) to interact with host daemon via mounted socket
 # Note: Debian's docker.io package may not include the 'docker' client; use official static release instead.
 RUN arch=$(dpkg --print-architecture) && \
-    curl -fsSL "https://download.docker.com/linux/static/stable/$( [ "$arch" = "amd64" ] && echo x86_64 || echo $arch )/docker-25.0.5.tgz" -o /tmp/docker.tgz && \
+        case "$arch" in \
+            amd64) tararch="x86_64" ;; \
+            arm64) tararch="aarch64" ;; \
+            *) tararch="$arch" ;; \
+        esac && \
+        curl -fsSL "https://download.docker.com/linux/static/stable/${tararch}/docker-25.0.5.tgz" -o /tmp/docker.tgz && \
     tar -xzf /tmp/docker.tgz -C /tmp docker/docker && \
     mv /tmp/docker/docker /usr/local/bin/docker && \
     rm -rf /tmp/docker /tmp/docker.tgz && \
@@ -38,9 +46,9 @@ RUN arch=$(dpkg --print-architecture) && \
 
 # Copy built provider into the filesystem mirror path
 ENV HOME=/root
-RUN mkdir -p $HOME/.terraform.d/plugins/registry.opentofu.org/local/catena/0.1.0/linux_amd64
-COPY --from=builder /src/terraform-provider-catena_v0.1.0 $HOME/.terraform.d/plugins/registry.opentofu.org/local/catena/0.1.0/linux_amd64/terraform-provider-catena_v0.1.0
-RUN chmod +x $HOME/.terraform.d/plugins/registry.opentofu.org/local/catena/0.1.0/linux_amd64/terraform-provider-catena_v0.1.0
+RUN mkdir -p $HOME/.terraform.d/plugins/registry.opentofu.org/local/catena/0.1.0/${TARGETOS}_${TARGETARCH}
+COPY --from=builder /src/terraform-provider-catena_v0.1.0 $HOME/.terraform.d/plugins/registry.opentofu.org/local/catena/0.1.0/${TARGETOS}_${TARGETARCH}/terraform-provider-catena_v0.1.0
+RUN chmod +x $HOME/.terraform.d/plugins/registry.opentofu.org/local/catena/0.1.0/${TARGETOS}_${TARGETARCH}/terraform-provider-catena_v0.1.0
 
 # Configure Terraform/OpenTofu to use local plugin mirror
 COPY terraformrc /root/.terraformrc
