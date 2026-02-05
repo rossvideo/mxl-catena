@@ -19,7 +19,18 @@ docker run --rm -v $TEMP_DIR:/cache -v catena-build:/source alpine:latest cp -r 
 cp -r ~/Catena/sdks/cpp/connections/gRPC/examples/poc/$DOCKERFILE_NAME/static $TEMP_DIR/static
 cp -r ~/Catena/mxl/lib $TEMP_DIR/mxl
 cp -r ~/Catena/mxl/tools $TEMP_DIR/tools
+cp -r ./entrypoint.sh $TEMP_DIR/entrypoint.sh
 
+if [ "$(arch)" == "x86_64" ]; then
+    TARGET_ARCH="linux/amd64"
+else
+    TARGET_ARCH="linux/arm64"
+fi
 # build the image, using the temp dir as context
-docker build -f $1 -t ghcr.io/rossvideo/mxl-catena:$DOCKERFILE_NAME --pull $TEMP_DIR
+docker buildx build \
+  -f $1 \
+  --platform $TARGET_ARCH \
+  -t ghcr.io/rossvideo/mxl-catena:$DOCKERFILE_NAME \
+  --push $TEMP_DIR 
+
 docker push ghcr.io/rossvideo/mxl-catena:$DOCKERFILE_NAME
