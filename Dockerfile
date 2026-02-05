@@ -9,16 +9,16 @@ COPY . .
 # Build a linux_amd64 binary with versioned filename
 ARG GO_BUILD_TAGS=""
 # Build for target platform (supports amd64 and arm64)
-ARG TARGETOS=linux
-ARG TARGETARCH=amd64
+ARG TARGETOS
+ARG TARGETARCH
 RUN GOOS=$TARGETOS GOARCH=$TARGETARCH go build -tags "$GO_BUILD_TAGS" -o terraform-provider-catena_v0.1.0
 
 # 2) Minimal runtime image with OpenTofu and the built provider
 FROM debian:stable-slim
 
 ARG TOFU_VERSION=1.7.1
-ARG TARGETOS=linux
-ARG TARGETARCH=amd64
+ARG TARGETOS
+ARG TARGETARCH
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates curl unzip tar && \
