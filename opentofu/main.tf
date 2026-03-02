@@ -5,8 +5,10 @@ locals {
 // Docker images for MXL Catena components
 resource "docker_image" "mxl2ndi" {
   name = "ghcr.io/rossvideo/mxl-catena:mxl2ndi_sink"
+  keep_locally = true
 }
 
 resource "docker_image" "ts2mxl" {
   name = "ghcr.io/rossvideo/mxl-catena:ts2mxl"
+  keep_locally = true
 }

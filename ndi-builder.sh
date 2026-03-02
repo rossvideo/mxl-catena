@@ -1,10 +1,7 @@
 #!/usr/bin/env bash
 set -e
-# Prompt user to put there ndi installer sh in the external/ndi folder
-# cd to the folder
-# run the installer and send a y to the prompt
-# copy out the needed files to external/ndi
-# clean up temp files
+# NDI SDK Installer Script
+
 TEMP_DIR="/tmp/ndi-installer-temp"
 rm -rf $TEMP_DIR
 mkdir -p $TEMP_DIR
@@ -49,10 +46,48 @@ wait "$INSTALLER_PID" || true
 cd "$home"
 
 
+#### Possible architectures:
+# aarch64-himix100-linux
+# aarch64-himix200-linux
+# aarch64-mix210-linux
+# aarch64-mix410-linux
+# aarch64-newtek-linux-gnu
+# aarch64-rockchip-linux-gnu
+# aarch64-rpi4-linux-gnueabi
+# arm-himix100-linux
+# arm-himix200-linux
+# arm-himix410-linux
+# arm-hisiv300-linux
+# arm-hisiv400-linux
+# arm-hisiv500-linux
+# arm-hisiv510-linux
+# arm-hisiv600-linux
+# arm-histbv310-linux
+# arm-newtek-linux-gnueabihf
+# arm-rockchip-linux-gnueabihf
+# arm-rpi1-linux-gnueabihf
+# arm-rpi2-linux-gnueabihf
+# arm-rpi3-linux-gnueabihf
+# arm-rpi4-linux-gnueabihf
+# arm-sigmastar-linux-gnueabihf
+# i686-linux-gnu
+# x86_64-linux-gnu
+###
+# check if -t argument is given to specify target architecture
+if [ "$1" == "-t" ] && [ -n "$2" ]; then
+    targetarch="$2"
+    echo "[ndi] Using target architecture from argument: $targetarch"
+else
+    echo "[ndi] No target architecture argument provided. Using default: x86_64-linux-gnu"
+    targetarch="x86_64-linux-gnu"
+fi
+
+
+
 listof_files=(
-    "$TEMP_DIR/NDI Advanced SDK for Linux/lib/x86_64-linux-gnu/libndi.so"
-    "$TEMP_DIR/NDI Advanced SDK for Linux/lib/x86_64-linux-gnu/libndi.so.6"
-    "$TEMP_DIR/NDI Advanced SDK for Linux/lib/x86_64-linux-gnu/libndi.so.6.0.0"
+    "$TEMP_DIR/NDI Advanced SDK for Linux/lib/$targetarch/libndi.so"
+    "$TEMP_DIR/NDI Advanced SDK for Linux/lib/$targetarch/libndi.so.6"
+    "$TEMP_DIR/NDI Advanced SDK for Linux/lib/$targetarch/libndi.so.6.0.0"
 )
 
 MAX_WAIT=200

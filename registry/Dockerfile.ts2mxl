@@ -1,4 +1,30 @@
-FROM ghcr.io/rossvideo/catena:one-of-everything-gRPC-dev
+FROM ubuntu:24.04 AS base
+
+ARG WORKDIR=/app
+ARG USER_GROUP=1000:1000
+
+ENV CATENA_CONNECTION=gRPC
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
+    libcurl4 \
+    libavahi-common3 \
+    libavahi-client3 \
+    && rm -rf /var/lib/apt/lists/*
+
+USER ${USER_GROUP}
+
+WORKDIR ${WORKDIR}
+
+COPY --chmod=755 ./entrypoint.sh /entrypoint.sh
+
+RUN mkdir -p ${WORKDIR}/logs && mkdir -p ${WORKDIR}/static
+
+ENTRYPOINT ["/bin/sh", "/entrypoint.sh"]
+
+ENV CATENA_PORT=6254
+
+FROM base
 
 LABEL org.opencontainers.image.url="https://github.com/rossvideo/Catena-deployments"
 LABEL org.opencontainers.image.licenses="BSD-3-Clause"
