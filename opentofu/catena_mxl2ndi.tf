@@ -40,13 +40,19 @@ locals {
     {
       "/selected_flow_id" = catena_device.ross_ts2mxl.params_map["/inputs/target_flow"]
     },
-    merge([
+    merge(concat([
+      {
+      "/inputs/${length(local.mxl_inputs)}/name"    = "MV Output"
+      "/inputs/${length(local.mxl_inputs)}/domain"  = "/dev/shm/mxl"
+      "/inputs/${length(local.mxl_inputs)}/flow_id" = "3f9618cb-ff4c-49d9-8360-252fd6111d72"
+    }
+    ],[
       for idx, dev in local.mxl_inputs : {
         "/inputs/${idx}/name"    = dev.name
         "/inputs/${idx}/domain"  = "/dev/shm/mxl"
         "/inputs/${idx}/flow_id" = dev.params_map["/inputs/target_flow"]
       }
-    ]...)
+    ])... )
   )
 }
 // --- device configuration ---------------------------
