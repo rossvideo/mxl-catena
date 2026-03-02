@@ -25,7 +25,7 @@ resource "docker_image" "control" {
   keep_locally = true
 }
 
-resource "docker_image" "cheetah-lite" {
+resource "docker_image" "cheetah_lite" {
   name = "${local.ECR_REGISTRY}/distcessna/cheetah-lite:${local.CHEETAH_LITE_TAG}"
   keep_locally = true
 }
@@ -45,12 +45,12 @@ resource "docker_image" "multiviewer" {
   keep_locally = true
 }
 
-resource "docker_image" "mxl-input" {
+resource "docker_image" "mxl_input" {
   name = "${local.ECR_REGISTRY}/distcessna/mxl-input:${local.MXL_TAG}"
   keep_locally = true
 }
 
-resource "docker_image" "mxl-output" {
+resource "docker_image" "mxl_output" {
   name = "${local.ECR_REGISTRY}/distcessna/mxl-output:${local.MXL_TAG}"
   keep_locally = true
 }
