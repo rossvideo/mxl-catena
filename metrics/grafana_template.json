@@ -1,0 +1,800 @@
+{
+  "panels": [
+    {
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "title": "Overall",
+      "type": "row"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 4,
+          "max": 59.94,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red"
+              },
+              {
+                "color": "yellow",
+                "value": 59
+              },
+              {
+                "color": "green",
+                "value": 59.9
+              }
+            ]
+          },
+          "unit": "fps"
+        }
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 3,
+        "x": 0,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "Control{instance=\"control:14100\", type=\"fps\"}",
+          "instant": true,
+          "legendFormat": "1"
+        }
+      ],
+      "title": "FPS",
+      "type": "gauge"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 1,
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 1.1754943508222875e-38
+              }
+            ]
+          },
+          "unit": "%"
+        }
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 3,
+        "x": 3,
+        "y": 1
+      },
+      "options": {
+        "showThresholdMarkers": false
+      },
+      "targets": [
+        {
+          "expr": "DropsGauge{instance=\"control:14100\"}",
+          "instant": true,
+          "legendFormat": "1"
+        }
+      ],
+      "title": "Drops",
+      "type": "gauge"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 1.1754943508222875e-38
+              }
+            ]
+          }
+        }
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 3,
+        "x": 6,
+        "y": 1
+      },
+      "options": {
+        "showThresholdMarkers": false
+      },
+      "targets": [
+        {
+          "expr": "DropsCounter{instance=\"control:14100\"}",
+          "instant": true,
+          "legendFormat": "1"
+        }
+      ],
+      "title": "Drops Counter",
+      "type": "stat"
+    },
+    {
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 16
+      },
+      "title": "Control",
+      "type": "row"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 1,
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 100
+              }
+            ]
+          },
+          "unit": "%"
+        }
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 0,
+        "y": 17
+      },
+      "options": {
+        "showThresholdMarkers": false
+      },
+      "targets": [
+        {
+          "expr": "Control{instance=\"control:14100\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "Control load"
+        }
+      ],
+      "title": "Control",
+      "type": "gauge"
+    },
+    {
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 22
+      },
+      "title": "Inputs",
+      "type": "row"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 1,
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 100
+              }
+            ]
+          },
+          "unit": "%"
+        }
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 40,
+        "x": 0,
+        "y": 23
+      },
+      "options": {
+        "showThresholdMarkers": false
+      },
+      "targets": [
+        {
+          "expr": "Input{instance=\"input1:15100\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "1"
+        },
+        {
+          "expr": "Input{instance=\"input2:15101\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "2"
+        },
+        {
+          "expr": "Input{instance=\"input3:15102\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "3"
+        },
+        {
+          "expr": "Input{instance=\"input4:15103\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "4"
+        },
+        {
+          "expr": "Input{instance=\"input5:15104\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "5"
+        },
+        {
+          "expr": "Input{instance=\"input6:15105\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "6"
+        },
+        {
+          "expr": "Input{instance=\"input7:15106\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "7"
+        },
+        {
+          "expr": "Input{instance=\"input8:15107\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "8"
+        },
+        {
+          "expr": "Input{instance=\"input9:15108\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "9"
+        },
+        {
+          "expr": "Input{instance=\"input10:15109\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "10"
+        },
+        {
+          "expr": "Input{instance=\"input11:15110\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "11"
+        },
+        {
+          "expr": "Input{instance=\"input12:15111\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "12"
+        },
+        {
+          "expr": "Input{instance=\"input13:15112\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "13"
+        },
+        {
+          "expr": "Input{instance=\"input14:15113\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "14"
+        },
+        {
+          "expr": "Input{instance=\"input15:15114\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "15"
+        },
+        {
+          "expr": "Input{instance=\"input16:15115\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "16"
+        }
+      ],
+      "title": "Load",
+      "type": "gauge"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 1,
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 100
+              }
+            ]
+          },
+          "unit": "%"
+        }
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 40,
+        "x": 0,
+        "y": 28
+      },
+      "options": {
+        "showThresholdMarkers": false
+      },
+      "targets": [
+        {
+          "expr": "PixelConverter{instance=\"input1:15100\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "1"
+        },
+        {
+          "expr": "PixelConverter{instance=\"input2:15101\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "2"
+        },
+        {
+          "expr": "PixelConverter{instance=\"input3:15102\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "3"
+        },
+        {
+          "expr": "PixelConverter{instance=\"input4:15103\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "4"
+        },
+        {
+          "expr": "PixelConverter{instance=\"input5:15104\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "5"
+        },
+        {
+          "expr": "PixelConverter{instance=\"input6:15105\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "6"
+        },
+        {
+          "expr": "PixelConverter{instance=\"input7:15106\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "7"
+        },
+        {
+          "expr": "PixelConverter{instance=\"input8:15107\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "8"
+        },
+        {
+          "expr": "PixelConverter{instance=\"input9:15108\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "9"
+        },
+        {
+          "expr": "PixelConverter{instance=\"input10:15109\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "10"
+        },
+        {
+          "expr": "PixelConverter{instance=\"input11:15110\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "11"
+        },
+        {
+          "expr": "PixelConverter{instance=\"input12:15111\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "12"
+        },
+        {
+          "expr": "PixelConverter{instance=\"input13:15112\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "13"
+        },
+        {
+          "expr": "PixelConverter{instance=\"input14:15113\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "14"
+        },
+        {
+          "expr": "PixelConverter{instance=\"input15:15114\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "15"
+        },
+        {
+          "expr": "PixelConverter{instance=\"input16:15115\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "16"
+        }
+      ],
+      "title": "V210 Decode",
+      "type": "gauge"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 1,
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 100
+              }
+            ]
+          },
+          "unit": "%"
+        }
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 40,
+        "x": 0,
+        "y": 33
+      },
+      "options": {
+        "showThresholdMarkers": false
+      },
+      "targets": [
+        {
+          "expr": "OutputConverter{instance=\"input1:15100\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "1"
+        },
+        {
+          "expr": "OutputConverter{instance=\"input2:15101\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "2"
+        },
+        {
+          "expr": "OutputConverter{instance=\"input3:15102\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "3"
+        },
+        {
+          "expr": "OutputConverter{instance=\"input4:15103\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "4"
+        },
+        {
+          "expr": "OutputConverter{instance=\"input5:15104\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "5"
+        },
+        {
+          "expr": "OutputConverter{instance=\"input6:15105\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "6"
+        },
+        {
+          "expr": "OutputConverter{instance=\"input7:15106\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "7"
+        },
+        {
+          "expr": "OutputConverter{instance=\"input8:15107\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "8"
+        },
+        {
+          "expr": "OutputConverter{instance=\"input9:15108\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "9"
+        },
+        {
+          "expr": "OutputConverter{instance=\"input10:15109\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "10"
+        },
+        {
+          "expr": "OutputConverter{instance=\"input11:15110\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "11"
+        },
+        {
+          "expr": "OutputConverter{instance=\"input12:15111\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "12"
+        },
+        {
+          "expr": "OutputConverter{instance=\"input13:15112\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "13"
+        },
+        {
+          "expr": "OutputConverter{instance=\"input14:15113\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "14"
+        },
+        {
+          "expr": "OutputConverter{instance=\"input15:15114\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "15"
+        },
+        {
+          "expr": "OutputConverter{instance=\"input16:15115\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "16"
+        }
+      ],
+      "title": "Proxy Creation",
+      "type": "gauge"
+    },
+    {
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 121
+      },
+      "title": "MV",
+      "type": "row"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 1,
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 100
+              }
+            ]
+          },
+          "unit": "%"
+        }
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 40,
+        "x": 0,
+        "y": 122
+      },
+      "options": {
+        "showThresholdMarkers": false
+      },
+      "targets": [
+        {
+          "expr": "VideoRead{instance=\"multiviewer:19100\", type=\"transfer\", name=\"Src0\"}",
+          "instant": true,
+          "legendFormat": "1"
+        },
+        {
+          "expr": "VideoRead{instance=\"multiviewer:19100\", type=\"transfer\", name=\"Src1\"}",
+          "instant": true,
+          "legendFormat": "2"
+        },
+        {
+          "expr": "VideoRead{instance=\"multiviewer:19100\", type=\"transfer\", name=\"Src2\"}",
+          "instant": true,
+          "legendFormat": "3"
+        },
+        {
+          "expr": "VideoRead{instance=\"multiviewer:19100\", type=\"transfer\", name=\"Src3\"}",
+          "instant": true,
+          "legendFormat": "4"
+        },
+        {
+          "expr": "VideoRead{instance=\"multiviewer:19100\", type=\"transfer\", name=\"Src4\"}",
+          "instant": true,
+          "legendFormat": "5"
+        },
+        {
+          "expr": "VideoRead{instance=\"multiviewer:19100\", type=\"transfer\", name=\"Src5\"}",
+          "instant": true,
+          "legendFormat": "6"
+        },
+        {
+          "expr": "VideoRead{instance=\"multiviewer:19100\", type=\"transfer\", name=\"Src6\"}",
+          "instant": true,
+          "legendFormat": "7"
+        },
+        {
+          "expr": "VideoRead{instance=\"multiviewer:19100\", type=\"transfer\", name=\"Src7\"}",
+          "instant": true,
+          "legendFormat": "8"
+        },
+        {
+          "expr": "VideoRead{instance=\"multiviewer:19100\", type=\"transfer\", name=\"Src8\"}",
+          "instant": true,
+          "legendFormat": "9"
+        },
+        {
+          "expr": "VideoRead{instance=\"multiviewer:19100\", type=\"transfer\", name=\"Src9\"}",
+          "instant": true,
+          "legendFormat": "10"
+        },
+        {
+          "expr": "VideoRead{instance=\"multiviewer:19100\", type=\"transfer\", name=\"Src10\"}",
+          "instant": true,
+          "legendFormat": "11"
+        },
+        {
+          "expr": "VideoRead{instance=\"multiviewer:19100\", type=\"transfer\", name=\"Src11\"}",
+          "instant": true,
+          "legendFormat": "12"
+        },
+        {
+          "expr": "VideoRead{instance=\"multiviewer:19100\", type=\"transfer\", name=\"Src12\"}",
+          "instant": true,
+          "legendFormat": "13"
+        },
+        {
+          "expr": "VideoRead{instance=\"multiviewer:19100\", type=\"transfer\", name=\"Src13\"}",
+          "instant": true,
+          "legendFormat": "14"
+        },
+        {
+          "expr": "VideoRead{instance=\"multiviewer:19100\", type=\"transfer\", name=\"Src14\"}",
+          "instant": true,
+          "legendFormat": "15"
+        },
+        {
+          "expr": "VideoRead{instance=\"multiviewer:19100\", type=\"transfer\", name=\"Src15\"}",
+          "instant": true,
+          "legendFormat": "16"
+        }
+      ],
+      "title": "Transfer",
+      "type": "gauge"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 1,
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 100
+              }
+            ]
+          },
+          "unit": "%"
+        }
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 0,
+        "y": 137
+      },
+      "options": {
+        "showThresholdMarkers": false
+      },
+      "targets": [
+        {
+          "expr": "MultiViewer{instance=\"multiviewer:19100\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "MultiViewer load"
+        }
+      ],
+      "title": "Load",
+      "type": "gauge"
+    },
+    {
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 142
+      },
+      "title": "Output",
+      "type": "row"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 1,
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 100
+              }
+            ]
+          },
+          "unit": "%"
+        }
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 0,
+        "y": 143
+      },
+      "options": {
+        "showThresholdMarkers": false
+      },
+      "targets": [
+        {
+          "expr": "VideoRead{instance=\"output:16100\", type=\"transfer\", name=\"Src4\"}",
+          "instant": true,
+          "legendFormat": "MV"
+        }
+      ],
+      "title": "Transfer",
+      "type": "gauge"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 1,
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 100
+              }
+            ]
+          },
+          "unit": "%"
+        }
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 0,
+        "y": 153
+      },
+      "options": {
+        "showThresholdMarkers": false
+      },
+      "targets": [
+        {
+          "expr": "Output{instance=\"output:16100\", type=\"load\"}",
+          "instant": true,
+          "legendFormat": "Output load"
+        }
+      ],
+      "title": "Load",
+      "type": "gauge"
+    }
+  ],
+  "timepicker": {
+    "refresh_intervals": [
+      "1s",
+      "2s",
+      "5s",
+      "10s"
+    ]
+  },
+  "title": "MXL MV Monitor"
+}

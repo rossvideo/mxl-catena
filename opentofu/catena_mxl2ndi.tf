@@ -17,8 +17,8 @@ resource "docker_container" "mxl2ndicontainer" {
     }
   }
   volumes {
-    host_path      = "/dev/shm/mxl"
-    container_path = "/dev/shm/mxl"
+    host_path      = "${local.MXL_DOMAIN}"
+    container_path = "${local.MXL_DOMAIN}"
   }
   volumes {
     host_path      = "${var.workspace_dir}/external"
@@ -43,13 +43,13 @@ locals {
     merge(concat([
       {
       "/inputs/${length(local.mxl_inputs)}/name"    = "MV Output"
-      "/inputs/${length(local.mxl_inputs)}/domain"  = "/dev/shm/mxl"
+      "/inputs/${length(local.mxl_inputs)}/domain"  = "${local.MXL_DOMAIN}"
       "/inputs/${length(local.mxl_inputs)}/flow_id" = "3f9618cb-ff4c-49d9-8360-252fd6111d72"
     }
     ],[
       for idx, dev in local.mxl_inputs : {
         "/inputs/${idx}/name"    = dev.name
-        "/inputs/${idx}/domain"  = "/dev/shm/mxl"
+        "/inputs/${idx}/domain"  = "${local.MXL_DOMAIN}"
         "/inputs/${idx}/flow_id" = dev.params_map["/inputs/target_flow"]
       }
     ])... )

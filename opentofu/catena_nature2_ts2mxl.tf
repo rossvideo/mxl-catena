@@ -9,8 +9,8 @@ resource "docker_container" "nature2_ts2mxl_container" {
     external = "7252"
   }
   volumes {
-    host_path      = "/dev/shm/mxl"
-    container_path = "/dev/shm/mxl"
+    host_path      = "${local.MXL_DOMAIN}"
+    container_path = "${local.MXL_DOMAIN}"
   }
   volumes {
     host_path      = "${var.workspace_dir}/external/ts"
@@ -31,7 +31,7 @@ resource "catena_device" "nature2_ts2mxl" {
   apply_all = false
   params_map = {
     "/inputs/ts_file_path" = "/ts/0224_comp.ts"
-    "/inputs/target_domain"      = "/dev/shm/mxl"
+    "/inputs/target_domain"      = "${local.MXL_DOMAIN}"
     "/inputs/target_flow"     = "a42c729c-d330-efc4-9c11-000020260129"
   }
 

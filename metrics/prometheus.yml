@@ -1,0 +1,26 @@
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: 'MXL MV'
+    scrape_interval: 1s  # Or lower
+    static_configs:
+      - targets: ['input1:15100']
+      - targets: ['input2:15101']
+      - targets: ['input3:15102']
+      - targets: ['input4:15103']
+      - targets: ['input5:15104']
+      - targets: ['input6:15105']
+      - targets: ['input7:15106']
+      - targets: ['input8:15107']
+      - targets: ['input9:15108']
+      - targets: ['input10:15109']
+      - targets: ['input11:15110']
+      - targets: ['input12:15111']
+      - targets: ['input13:15112']
+      - targets: ['input14:15113']
+      - targets: ['input15:15114']
+      - targets: ['input16:15115']
+      - targets: ['multiviewer:19100']
+      - targets: ['output:16100']
+      - targets: ['control:14100']

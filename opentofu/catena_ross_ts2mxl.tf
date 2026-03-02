@@ -9,8 +9,8 @@ resource "docker_container" "ross_ts2mxl_container" {
     external = "7250"
   }
   volumes {
-    host_path      = "/dev/shm/mxl"
-    container_path = "/dev/shm/mxl"
+    host_path      = "${local.MXL_DOMAIN}"
+    container_path = "${local.MXL_DOMAIN}"
   }
   volumes {
     host_path      = "${var.workspace_dir}/external/ts"
@@ -31,7 +31,7 @@ resource "catena_device" "ross_ts2mxl" {
   apply_all = false
   params_map = {
     "/inputs/ts_file_path" = "/ts/ross_logo_loop2.ts"
-    "/inputs/target_domain"      = "/dev/shm/mxl"
+    "/inputs/target_domain"      = "${local.MXL_DOMAIN}"
     "/inputs/target_flow"     = "025aebb9-d330-f84d-a2cd-000020260129"                       
   }
 

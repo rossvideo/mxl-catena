@@ -9,8 +9,8 @@ resource "docker_container" "uk_freeview_ts2mxl_container" {
     external = "7249"
   }
   volumes {
-    host_path      = "/dev/shm/mxl"
-    container_path = "/dev/shm/mxl"
+    host_path      = "${local.MXL_DOMAIN}"
+    container_path = "${local.MXL_DOMAIN}"
   }
   volumes {
     host_path      = "${var.workspace_dir}/external/ts/586000000.ts"
@@ -31,7 +31,7 @@ resource "catena_device" "uk_freeview_ts2mxl" {
   apply_all = false
   params_map = {
     "/inputs/ts_file_path"        = "/ts/586000000.ts"
-    "/inputs/target_domain"      = "/dev/shm/mxl"
+    "/inputs/target_domain"      = "${local.MXL_DOMAIN}"
     "/inputs/target_flow"     = "c3c715d3-d330-7fdd-baa5-000020260129"
   }
 
