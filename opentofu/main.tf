@@ -19,7 +19,7 @@ resource "docker_image" "ts2mxl" {
   name = "ghcr.io/rossvideo/mxl-catena:ts2mxl"
   keep_locally = true
 }
-
+// Docker images for Multiviewer
 resource "docker_image" "control" {
   name = "${local.ECR_REGISTRY}/distcessna/control:${local.DISTCESSNA_TAG}"
   keep_locally = true
@@ -53,4 +53,13 @@ resource "docker_image" "mxl_input" {
 resource "docker_image" "mxl_output" {
   name = "${local.ECR_REGISTRY}/distcessna/mxl-output:${local.MXL_TAG}"
   keep_locally = true
+}
+resource "docker_image" "mxl_tools" {
+  name = "${local.ECR_REGISTRY}/distcessna/mxl-tools:${local.MXL_TAG}"
+  keep_locally = true
+  
+}
+//Docker network for Multiviewer
+resource "docker_network" "multiviewer_network" {
+  name = "multiviewer_network"
 }
