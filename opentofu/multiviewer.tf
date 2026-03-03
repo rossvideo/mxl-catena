@@ -1,4 +1,4 @@
-// --- device creation --------------------------------
+// --- Multiviewer creation --------------------------------
 locals {
     INPUTS=[
         {

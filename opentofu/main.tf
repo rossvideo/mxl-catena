@@ -1,12 +1,16 @@
 locals {
+  // MXL DEMO 
   ndi_ports = ["5960", "5961", "5962", "5963", "5964", "5965", "5966", "5967", "5968", "5969"]
+  MXL_DOMAIN = "/dev/shm"
+  
+  // Multiviewer
   ECR_REGISTRY = "905418485545.dkr.ecr.us-east-1.amazonaws.com"
   ECR_REGION = "us-east-1"
   MXL_TAG = "0.1.0-c66cb47f"
   DISTCESSNA_TAG = "0.0.1-18deca61"
   CHEETAH_LITE_TAG = "0.0.1-e094080b"
 
-  MXL_DOMAIN = "/dev/shm"
+  
 }
 
 // Docker images for MXL Catena components
