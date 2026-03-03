@@ -11,6 +11,15 @@ locals {
             port2 = "15100"
         },
         {
+            name = "mxl_input4"
+            label = "Media IO COOL SPOT"
+            uuid = "3f9618cb-ff4c-49d9-8360-252fd6111d72"
+            # auuid = "fba2bbad-43e6-4b04-8f0c-f586e2c312af"
+            auuid = ""
+            port = "15003"
+            port2 = "15103"
+        },
+        {
             name = "nature2_ts2mxl"
             label = "Nature river"
             uuid = "a42c729c-d330-efc4-9c11-000020260129"
@@ -28,15 +37,7 @@ locals {
             port = "15002"
             port2 = "15102"
         },
-        {
-            name = "mxl_input4"
-            label = "MXL Out"
-            uuid = "3f9618cb-ff4c-49d9-8360-252fd6111d72"
-            # auuid = "fba2bbad-43e6-4b04-8f0c-f586e2c312af"
-            auuid = ""
-            port = "15003"
-            port2 = "15103"
-        },
+        
 
         {
             name = "ross_ts2mxl"
@@ -57,6 +58,15 @@ locals {
             port2 = "15105"
         },
         {
+            name = "mxl_input8"
+            label = "This is the one tha MXL TO NDI has selectted"
+            uuid = "3f9618cb-ff4c-49d9-8360-252fd6111d72"
+            # auuid = "fba2bbad-43e6-4b04-8f0c-f586e2c312af"
+            auuid = ""
+            port = "15007"
+            port2 = "15107"
+        },
+        {
             name = "uk_freeview_ts2mxl"
             label = "Cartoon from UK Freeview"
             uuid = "c3c715d3-d330-7fdd-baa5-000020260129"
@@ -65,15 +75,7 @@ locals {
             port = "15006"
             port2 = "15106"
         },
-        {
-            name = "mxl_input8"
-            label = "MXL Out2"
-            uuid = "3f9618cb-ff4c-49d9-8360-252fd6111d72"
-            # auuid = "fba2bbad-43e6-4b04-8f0c-f586e2c312af"
-            auuid = ""
-            port = "15007"
-            port2 = "15107"
-        },
+        
 
         {
             name = "mxl_input9"
@@ -86,7 +88,7 @@ locals {
         },
         {
             name = "mxl_input10"
-            label = "Ball3"
+            label = "this is a supper "
             uuid = "6ab164b9-9de1-44e3-be34-a4b7595d08d9"
             # auuid = "fba2bbad-43e6-4b04-8f0c-f586e2c312af"
             auuid = ""
@@ -288,7 +290,7 @@ resource "docker_container" "cheetah_lite" {
     ],
     [
         "MAX_SOURCE_ID=${length(local.INPUTS)}",
-        "DEFAULT_LAYOUT=e_MVLayout_4x4",
+        "DEFAULT_LAYOUT=e_MVLayout_4_2_4_Ver",
     ]
     ))
     networks_advanced {
