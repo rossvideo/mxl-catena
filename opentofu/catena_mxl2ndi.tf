@@ -50,7 +50,7 @@ locals {
 }
 // --- device configuration ---------------------------
 resource "catena_device" "mxl2ndi" {
-  depends_on = [ catena_device.ts2mxl[0]]
+  depends_on = [ catena_device.ts2mxl, docker_container.multiviewer]
   device_type  = "remote-grpc"
   name         = "Catena MXL to NDI Sink"
   slot         = 0

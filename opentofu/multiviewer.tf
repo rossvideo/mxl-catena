@@ -1,7 +1,6 @@
 // --- Multiviewer creation --------------------------------
 locals {
-    INPUTS=[
-        merge(concat(
+    INPUTS= concat(
             [
                 {
                     name = local.OUTPUTS.name
@@ -9,8 +8,8 @@ locals {
                     uuid = local.OUTPUTS.uuid
                     # auuid = "fba2bbad-43e6-4b04-8f0c-f586e2c312af"
                     auuid = ""
-                    port = "15055"
-                    port2 = "15155"
+                    port = "15000"
+                    port2 = "15100"
                 }
             ],
             [ for idx, dev in local.CATENA_INPUTS :{
@@ -18,11 +17,11 @@ locals {
                 label = dev.label
                 uuid = dev.uuid
                 auuid = ""
-                port = tostring(15000 + idx)
-                port2 = tostring(15100 + idx)
-            }])...
-        )
-    ]
+                port = tostring(15001 + idx)
+                port2 = tostring(15101 + idx)
+            }])
+        
+    
     OUTPUTS={
         name = "mxl_output"
         label = "Output"
@@ -130,7 +129,7 @@ resource "docker_container" "control" {
         flatten([
             for idx, input in local.INPUTS : [
             "Input ${idx + 1}",
-            input.name,
+            "${input.name}_input",
             tostring(input.port),
             ]
         ]),
