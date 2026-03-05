@@ -25,7 +25,7 @@ resource "catena_device" "tomsk_ts2mxl" {
   device_type  = "remote-grpc"
   name         = "Tomsk University"
   slot         = 0
-  address      = "http://host.docker.internal"
+  address      = "${local.catena_endpoint}"
   port         = 7255
   
   apply_all = false

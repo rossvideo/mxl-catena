@@ -25,7 +25,7 @@ resource "catena_device" "uk_freeview_ts2mxl" {
   device_type  = "remote-grpc"
   name         = "Cartoon from UK Freeview"
   slot         = 0
-  address      = "http://host.docker.internal"
+  address      = "${local.catena_endpoint}"
   port         = 7249
   
   apply_all = false

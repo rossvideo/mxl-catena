@@ -25,7 +25,7 @@ resource "catena_device" "nature3_ts2mxl" {
   device_type  = "remote-grpc"
   name         = "Nature bird"
   slot         = 0
-  address      = "http://host.docker.internal"
+  address      = "${local.catena_endpoint}"
   port         = 7253
   
   apply_all = false

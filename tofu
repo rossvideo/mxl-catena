@@ -7,7 +7,8 @@ IMAGE_NAME="catena-tofu-test"
 WORKDIR="/workspace/opentofu"
 BUILDER_SERVICE="builder"
 BUILDER_IMAGE="catena-builder"
-
+# TF_VAR_workspace_dir="${PWD}"
+TF_VAR_workspace_dir="/workspace"
 dc() {
 	docker compose -f "$COMPOSE_FILE" "$@"
 }
@@ -29,7 +30,7 @@ ensure_builder_built() {
 run_in_container() {
 	ensure_built
 	# Service config already sets working_dir; override if needed
-	dc run --rm -e "TF_VAR_workspace_dir=${PWD}" "$SERVICE" "$@"
+	dc run --rm -e "TF_VAR_workspace_dir=$TF_VAR_workspace_dir" "$SERVICE" "$@"
 }
 
 usage() {

@@ -12,12 +12,20 @@ terraform {
   }
 }
 
+# provider "docker" {
+#   host = "unix:///var/run/docker.sock"
+# }
+
 provider "docker" {
-  host = "unix:///var/run/docker.sock"
+  host     = "ssh://ansible@10.62.152.123"
+  ssh_opts = [
+    "-i", "~/.ssh/id_ed25519", "-o", "StrictHostKeyChecking accept-new"
+  ]
 }
 
+
 provider "catena" {
-  endpoint  = "localhost"
+  endpoint  = "10.62.152.123"
   transport = "grpc"
   executables_dir = "exe/"
 }

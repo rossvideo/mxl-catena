@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+
+##scp -i ~/IAC/.ssh/id_ed25519 images/* ansible@10.62.152.123:~/images
+
 set -eoa pipefail
 cd "$(dirname "$0")"
 

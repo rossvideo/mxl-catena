@@ -25,7 +25,7 @@ resource "catena_device" "ross_ts2mxl" {
   device_type  = "remote-grpc"
   name         = "Ross Logo"
   slot         = 0
-  address      = "http://host.docker.internal"
+  address      = "${local.catena_endpoint}"
   port         = 7250
   
   apply_all = false
