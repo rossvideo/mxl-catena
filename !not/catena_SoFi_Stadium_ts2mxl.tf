@@ -1,12 +1,12 @@
 // --- device creation --------------------------------
 
-resource "docker_container" "ross_ts2mxl_container" {
-  name  = "ross_ts2mxl_container"
+resource "docker_container" "sofi_stadium_ts2mxl_container" {
+  name  = "sofi_stadium_ts2mxl_container"
   image = docker_image.ts2mxl.name
   command = ["--log_dir", "/app/logs"]
   ports {
     internal = "6254"
-    external = "7250"
+    external = "7252"
   }
   volumes {
     host_path      = "${local.MXL_DOMAIN}"
@@ -20,19 +20,19 @@ resource "docker_container" "ross_ts2mxl_container" {
 
 // --- device configuration ---------------------------
 
-resource "catena_device" "ross_ts2mxl" {
-  depends_on = [ docker_container.ross_ts2mxl_container ]
+resource "catena_device" "sofi_stadium_ts2mxl" {
+  depends_on = [ docker_container.sofi_stadium_ts2mxl_container ]
   device_type  = "remote-grpc"
-  name         = "Ross Logo"
+  name         = "SoFi Stadium"
   slot         = 0
   address      = "${local.catena_endpoint}"
-  port         = 7250
+  port         = 7252
   
   apply_all = false
   params_map = {
-    "/inputs/ts_file_path" = "/ts/ross_logo_loop2.ts"
-    "/inputs/target_domain"      = "${local.MXL_DOMAIN}"
-    "/inputs/target_flow"     = "025aebb9-d330-f84d-a2cd-000020260129"                       
+    "/inputs/ts_file_path"  = "/ts/SoFi_Stadium.ts"
+    "/inputs/target_domain" = "${local.MXL_DOMAIN}"
+    "/inputs/target_flow"   = "a42c729c-d330-efc4-9c11-000020260129"                       
   }
 
   start_command = "/start"

@@ -27,48 +27,34 @@ resource "docker_container" "mxl2ndicontainer" {
 }
 
 locals {
-  mxl_inputs = [
-    catena_device.ross_ts2mxl,
-    catena_device.uk_freeview_ts2mxl,
-    catena_device.nature_ts2mxl,
-    catena_device.nature3_ts2mxl,
-    catena_device.nature2_ts2mxl,
-    catena_device.tomsk_ts2mxl
-  ]
-
   mxl_params = merge(
     {
-      "/selected_flow_id" = catena_device.ross_ts2mxl.params_map["/inputs/target_flow"]
+      "/selected_flow_id" = local.CATENA_INPUTS[0].uuid
     },
-    merge(concat([
-      {
-      "/inputs/${length(local.mxl_inputs)}/name"    = "MV Output"
-      "/inputs/${length(local.mxl_inputs)}/domain"  = "${local.MXL_DOMAIN}"
-      "/inputs/${length(local.mxl_inputs)}/flow_id" = "3f9618cb-ff4c-49d9-8360-252fd6111d72"
-    }
-    ],[
-      for idx, dev in local.mxl_inputs : {
-        "/inputs/${idx}/name"    = dev.name
+    merge(concat(
+    #   [
+    #   {
+    #   "/inputs/${length(local.mxl_inputs)}/name"    = "MV Output"
+    #   "/inputs/${length(local.mxl_inputs)}/domain"  = "${local.MXL_DOMAIN}"
+    #   "/inputs/${length(local.mxl_inputs)}/flow_id" = "3f9618cb-ff4c-49d9-8360-252fd6111d72"
+    #   }
+    # ],
+    [
+      for idx, dev in local.CATENA_INPUTS : {
+        "/inputs/${idx}/name"    = dev.label
         "/inputs/${idx}/domain"  = "${local.MXL_DOMAIN}"
-        "/inputs/${idx}/flow_id" = dev.params_map["/inputs/target_flow"]
+        "/inputs/${idx}/flow_id" = dev.uuid
       }
     ])... )
   )
 }
 // --- device configuration ---------------------------
 resource "catena_device" "mxl2ndi" {
-  depends_on = [ docker_container.mxl2ndicontainer, 
-                 catena_device.ross_ts2mxl,
-                 catena_device.uk_freeview_ts2mxl,
-                 catena_device.nature_ts2mxl,
-                 catena_device.nature3_ts2mxl,
-                 catena_device.nature2_ts2mxl,
-                 catena_device.tomsk_ts2mxl
- ]
+  depends_on = [ catena_device.ts2mxl[0]]
   device_type  = "remote-grpc"
   name         = "Catena MXL to NDI Sink"
   slot         = 0
-  address      = "http://host.docker.internal"
+  address      = "${local.catena_endpoint}"
   port         = 7254
   
   apply_all = false

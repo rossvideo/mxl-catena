@@ -100,7 +100,7 @@ case "$cmd" in
 		echo "[tofu] Running 'tofu destroy -auto-approve'..."
 		run_in_container destroy -auto-approve "$@"
 		# use docker to remove the /dev/shm/mxl content
-		dc run --rm "$BUILDER_SERVICE" rm -rf /dev/shm/mxl/* || true
+		# dc run --rm "$BUILDER_SERVICE" rm -rf /dev/shm/mxl/* || true
 		;;
 	plan|apply|destroy|init|version|fmt|validate|state|providers|output|graph|workspace|taint|untaint|show)
 		# Pass-through OpenTofu commands

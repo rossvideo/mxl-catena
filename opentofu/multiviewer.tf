@@ -1,151 +1,27 @@
 // --- Multiviewer creation --------------------------------
 locals {
     INPUTS=[
-        {
-            name = "nature_ts2mxl"
-            label = "Nature dandylion"
-            uuid = "24328f33-d330-c9ec-83c5-000020260129"
-            # auuid = "fba2bbad-43e6-4b04-8f0c-f586e2c312af"
-            auuid = ""
-            port = "15000"
-            port2 = "15100"
-        },
-        {
-            name = "mxl_input4"
-            label = "Media IO COOL SPOT"
-            uuid = "3f9618cb-ff4c-49d9-8360-252fd6111d72"
-            # auuid = "fba2bbad-43e6-4b04-8f0c-f586e2c312af"
-            auuid = ""
-            port = "15003"
-            port2 = "15103"
-        },
-        {
-            name = "nature2_ts2mxl"
-            label = "Nature river"
-            uuid = "a42c729c-d330-efc4-9c11-000020260129"
-            # auuid = "69452270-0b81-425b-94e1-c439cbaf1832"
-            auuid = ""
-            port = "15001"
-            port2 = "15101"
-        },
-        {
-            name = "nature3_ts2mxl"
-            label = "Nature bird"
-            uuid = "896729f3-d330-73cf-1a5c-000020260129"
-            # auuid = "528fc92a-461b-426b-a130-15213ca95fae"
-            auuid = ""
-            port = "15002"
-            port2 = "15102"
-        },
-        
-
-        {
-            name = "ross_ts2mxl"
-            label = "Ross Logo"
-            uuid = "025aebb9-d330-f84d-a2cd-000020260129"
-            # auuid = "fba2bbad-43e6-4b04-8f0c-f586e2c312af"
-            auuid = ""
-            port = "15004"
-            port2 = "15104"
-        },
-        {
-            name = "tomsk_ts2mxl"
-            label = "Tomsk University"
-            uuid = "9ba70e57-d330-8756-9acc-000020260129"
-            # auuid = "fba2bbad-43e6-4b04-8f0c-f586e2c312af"
-            auuid = ""
-            port = "15005"
-            port2 = "15105"
-        },
-        {
-            name = "mxl_input8"
-            label = "This is the one tha MXL TO NDI has selectted"
-            uuid = "3f9618cb-ff4c-49d9-8360-252fd6111d72"
-            # auuid = "fba2bbad-43e6-4b04-8f0c-f586e2c312af"
-            auuid = ""
-            port = "15007"
-            port2 = "15107"
-        },
-        {
-            name = "uk_freeview_ts2mxl"
-            label = "Cartoon from UK Freeview"
-            uuid = "c3c715d3-d330-7fdd-baa5-000020260129"
-            # auuid = "fba2bbad-43e6-4b04-8f0c-f586e2c312af"
-            auuid = ""
-            port = "15006"
-            port2 = "15106"
-        },
-        
-
-        {
-            name = "mxl_input9"
-            label = "Gradient3"
-            uuid = "704d0193-b074-448e-af16-f14484c64dbf"
-            # auuid = "fba2bbad-43e6-4b04-8f0c-f586e2c312af"
-            auuid = ""
-            port = "15008"
-            port2 = "15108"
-        },
-        {
-            name = "mxl_input10"
-            label = "this is a supper "
-            uuid = "6ab164b9-9de1-44e3-be34-a4b7595d08d9"
-            # auuid = "fba2bbad-43e6-4b04-8f0c-f586e2c312af"
-            auuid = ""
-            port = "15009"
-            port2 = "15109"
-        },
-        {
-            name = "mxl_input11"
-            label = "SMPTE3"
-            uuid = "88c0b9ba-226d-4533-967e-1be89c516e5d"
-            # auuid = "fba2bbad-43e6-4b04-8f0c-f586e2c312af"
-            auuid = ""
-            port = "15010"
-            port2 = "15110"
-        },
-        {
-            name = "mxl_input12"
-            label = "MXL Out3"
-            uuid = "3f9618cb-ff4c-49d9-8360-252fd6111d72"
-            # auuid = "fba2bbad-43e6-4b04-8f0c-f586e2c312af"
-            auuid = ""
-            port = "15011"
-            port2 = "15111"
-        },
-
-        {
-            name = "mxl_input13"
-            label = "Gradient4"
-            uuid = "704d0193-b074-448e-af16-f14484c64dbf"
-            auuid = ""
-            port = "15012"
-            port2 = "15112"
-        },
-        {
-            name = "mxl_input14"
-            label = "Ball4"
-            uuid = "6ab164b9-9de1-44e3-be34-a4b7595d08d9"
-            auuid = ""
-            port = "15013"
-            port2 = "15113"
-        },
-        {
-            name = "mxl_input15"
-            label = "SMPTE4"
-            uuid = "88c0b9ba-226d-4533-967e-1be89c516e5d"
-            auuid = ""
-            port = "15014"
-            port2 = "15114"
-        },
-        {
-            name = "mxl_input16"
-            label = "MXL Out4"
-            uuid = "3f9618cb-ff4c-49d9-8360-252fd6111d72"
-            auuid = ""
-            port = "15015"
-            port2 = "15115"
-        }
+        merge(concat(
+            [
+                {
+                    name = local.OUTPUTS.name
+                    label = local.OUTPUTS.label
+                    uuid = local.OUTPUTS.uuid
+                    # auuid = "fba2bbad-43e6-4b04-8f0c-f586e2c312af"
+                    auuid = ""
+                    port = "15055"
+                    port2 = "15155"
+                }
+            ],
+            [ for idx, dev in local.CATENA_INPUTS :{
+                name = dev.container_name
+                label = dev.label
+                uuid = dev.uuid
+                auuid = ""
+                port = tostring(15000 + idx)
+                port2 = tostring(15100 + idx)
+            }])...
+        )
     ]
     OUTPUTS={
         name = "mxl_output"
@@ -169,34 +45,34 @@ locals {
         bgra_port = "14100"
         MXL_TO_GST_PORT="50000"
     }
-    TOOLS_INPUTS=[
-        {
-            name = "gst-to-mxl-gradient"
-            pattern = "gradient"
-            wave = "ticks"
-            uuid = local.INPUTS[0].uuid
-            auuid = local.INPUTS[0].auuid
-            width = local.CONTROL.XRES
-            height = local.CONTROL.YRES
-        },
-        {
-            name = "gst-to-mxl-ball"
-            pattern = "ball"
-            wave = "sine"
-            uuid = local.INPUTS[1].uuid
-            auuid = local.INPUTS[1].auuid
-            width = local.CONTROL.XRES
-            height = local.CONTROL.YRES
-        },
-        {
-            name = "gst-to-mxl-smpte"
-            pattern = "smpte"
-            wave = "white-noise"
-            uuid = local.INPUTS[2].uuid
-            auuid = local.INPUTS[2].auuid
-            width = local.CONTROL.XRES
-            height = local.CONTROL.YRES
-        }]
+    # TOOLS_INPUTS=[
+    #     {
+    #         name = "gst-to-mxl-gradient"
+    #         pattern = "gradient"
+    #         wave = "ticks"
+    #         uuid = local.INPUTS[0].uuid
+    #         auuid = local.INPUTS[0].auuid
+    #         width = local.CONTROL.XRES
+    #         height = local.CONTROL.YRES
+    #     },
+    #     {
+    #         name = "gst-to-mxl-ball"
+    #         pattern = "ball"
+    #         wave = "sine"
+    #         uuid = local.INPUTS[1].uuid
+    #         auuid = local.INPUTS[1].auuid
+    #         width = local.CONTROL.XRES
+    #         height = local.CONTROL.YRES
+    #     },
+    #     {
+    #         name = "gst-to-mxl-smpte"
+    #         pattern = "smpte"
+    #         wave = "white-noise"
+    #         uuid = local.INPUTS[2].uuid
+    #         auuid = local.INPUTS[2].auuid
+    #         width = local.CONTROL.XRES
+    #         height = local.CONTROL.YRES
+    #     }]
     TOOLS_OUTPUTS=[
         {
             name = "mxl-to-gst"
@@ -207,7 +83,7 @@ locals {
 //Inputs
 resource "docker_container" "input_containers" {
     for_each = { for input in local.INPUTS : input.name => input }
-    name  = each.value.name
+    name  = "${each.value.name}_input"
     image = docker_image.mxl_input.name
     command = concat(["/app/mxlInput", "${local.MXL_DOMAIN}", each.value.port, each.value.port2, "--uuid", each.value.uuid], try(length(trimspace(each.value.auuid)), 0) > 0 ? ["--auuid", each.value.auuid] : [])
 

@@ -34,47 +34,47 @@ for file in *.mp4; do
         echo "[ts] No mp4 files found in the project root."
     fi
 done
+## Removed for real demo videos
+# listof_ts_urls=(
+#     "https://tsduck.io/streams/uk-freeview/586000000.ts"
+#     "https://ftp.itec.aau.at/datasets/Nature-1k/Preview/0131_comp.MP4"
+#     "https://www.elecard.com/storage/video/TSU_1920x1080.mp4"
+#     "https://ftp.itec.aau.at/datasets/Nature-1k/Preview/0224_comp.MP4"
+#     "https://ftp.itec.aau.at/datasets/Nature-1k/Preview/0552_comp.MP4"
 
-listof_ts_urls=(
-    "https://tsduck.io/streams/uk-freeview/586000000.ts"
-    "https://ftp.itec.aau.at/datasets/Nature-1k/Preview/0131_comp.MP4"
-    "https://www.elecard.com/storage/video/TSU_1920x1080.mp4"
-    "https://ftp.itec.aau.at/datasets/Nature-1k/Preview/0224_comp.MP4"
-    "https://ftp.itec.aau.at/datasets/Nature-1k/Preview/0552_comp.MP4"
 
+# )
 
-)
-
-for url in "${listof_ts_urls[@]}"; do
-    filename=$(basename "$url")
-    # check if file already exists and is the same size
-    if [ -f "external/ts/$filename" ]; then
-        existing_size=$(stat -c%s "external/ts/$filename")
-        remote_size=$(curl -sI "$url" | grep -i Content-Length | awk '{print $2}' | tr -d '\r')
-        if [ "$existing_size" -eq "$remote_size" ]; then
-            echo "[ts] $filename already exists and is the same size. Skipping download."
-            continue
-        else
-            echo "[ts] $filename exists but size differs. Re-downloading."
-        fi
-    fi
-    echo "[ts] Downloading $filename from $url..."
-    # if the file is a .MP4, convert it to .ts after download
-    curl -L -o "external/ts/$filename" "$url"
-    if [[ "$filename" == *.MP4 || "$filename" == *.mp4 ]]; then
-        if [[ "$filename" == *.mp4 ]]; then
-            ts_filename="${filename%.mp4}.ts"
-        else
-            ts_filename="${filename%.MP4}.ts"
-        fi
-        echo "[ts] Converting $filename to $ts_filename using Docker ($FFMPEG_IMAGE)..."
-        docker run --rm \
-            -v "$PWD":/workspace \
-            -w /workspace \
-            "$FFMPEG_IMAGE" \
-            -y -fflags +genpts -re -i "external/ts/$filename" -an "external/ts/$ts_filename"
-        echo "[ts] Finished converting $filename to $ts_filename."
-        rm "external/ts/$filename"
-    fi
-    echo "[ts] Finished downloading $filename."
-done
+# for url in "${listof_ts_urls[@]}"; do
+#     filename=$(basename "$url")
+#     # check if file already exists and is the same size
+#     if [ -f "external/ts/$filename" ]; then
+#         existing_size=$(stat -c%s "external/ts/$filename")
+#         remote_size=$(curl -sI "$url" | grep -i Content-Length | awk '{print $2}' | tr -d '\r')
+#         if [ "$existing_size" -eq "$remote_size" ]; then
+#             echo "[ts] $filename already exists and is the same size. Skipping download."
+#             continue
+#         else
+#             echo "[ts] $filename exists but size differs. Re-downloading."
+#         fi
+#     fi
+#     echo "[ts] Downloading $filename from $url..."
+#     # if the file is a .MP4, convert it to .ts after download
+#     curl -L -o "external/ts/$filename" "$url"
+#     if [[ "$filename" == *.MP4 || "$filename" == *.mp4 ]]; then
+#         if [[ "$filename" == *.mp4 ]]; then
+#             ts_filename="${filename%.mp4}.ts"
+#         else
+#             ts_filename="${filename%.MP4}.ts"
+#         fi
+#         echo "[ts] Converting $filename to $ts_filename using Docker ($FFMPEG_IMAGE)..."
+#         docker run --rm \
+#             -v "$PWD":/workspace \
+#             -w /workspace \
+#             "$FFMPEG_IMAGE" \
+#             -y -fflags +genpts -re -i "external/ts/$filename" -an "external/ts/$ts_filename"
+#         echo "[ts] Finished converting $filename to $ts_filename."
+#         rm "external/ts/$filename"
+#     fi
+#     echo "[ts] Finished downloading $filename."
+# done
