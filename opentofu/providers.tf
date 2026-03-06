@@ -9,6 +9,10 @@ terraform {
       source  = "kreuzwerker/docker"
       version = "3.9.0"
     }
+    grafana = {
+      source = "opentofu/grafana"
+      version = "4.27.0"
+    }
   }
 }
 
@@ -28,4 +32,9 @@ provider "catena" {
   endpoint  = "10.62.152.123"
   transport = "grpc"
   executables_dir = "exe/"
+}
+
+provider "grafana" {
+  url  = "http://10.62.152.123:3000"
+  auth = "admin:admin"
 }

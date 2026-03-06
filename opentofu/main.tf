@@ -70,16 +70,6 @@ resource "docker_image" "cheetah_lite" {
   keep_locally = true
 }
 
-resource "docker_image" "prometheus" {
-  name = "prom/prometheus:v3.2.1"
-  keep_locally = true
-}
-
-resource "docker_image" "grafana" {
-  name = "grafana/grafana:12.3.3"
-  keep_locally = true
-}
-
 resource "docker_image" "multiviewer" {
   name = "${local.ECR_REGISTRY}/distcessna/multiviewer:${local.DISTCESSNA_TAG}"
   keep_locally = true
@@ -102,4 +92,16 @@ resource "docker_image" "mxl_tools" {
 //Docker network for Multiviewer
 resource "docker_network" "multiviewer_network" {
   name = "multiviewer_network"
+}
+
+// Grafana and Prometheus for monitoring
+
+resource "docker_image" "prometheus" {
+  name = "prom/prometheus:v3.2.1"
+  keep_locally = true
+}
+
+resource "docker_image" "grafana" {
+  name = "grafana/grafana:12.3.3"
+  keep_locally = true
 }

@@ -32,7 +32,7 @@ locals {
     MULTIVIEWER={
         name = "multiviewer"
         port = "19000"
-        port2 = "19001"
+        port2 = "19100"
     }
     CONTROL={
         name = "control"
@@ -81,17 +81,27 @@ locals {
 }
 //Inputs
 resource "docker_container" "input_containers" {
-    for_each = { for input in local.INPUTS : input.name => input }
+    for_each = {
+        for idx, input in local.INPUTS :
+        input.name => merge(input, { index = idx })
+    }
+
     name  = "${each.value.name}_input"
     image = docker_image.mxl_input.name
-    command = concat(["/app/mxlInput", "${local.MXL_DOMAIN}", each.value.port, each.value.port2, "--uuid", each.value.uuid], try(length(trimspace(each.value.auuid)), 0) > 0 ? ["--auuid", each.value.auuid] : [])
+
+    command = concat(
+        ["/app/mxlInput", "${local.MXL_DOMAIN}", each.value.port, each.value.port2, "--uuid", each.value.uuid],
+        try(length(trimspace(each.value.auuid)), 0) > 0 ? ["--auuid", each.value.auuid] : []
+    )
 
     volumes {
         host_path      = "${local.MXL_DOMAIN}"
         container_path = "${local.MXL_DOMAIN}"
     }
+
     networks_advanced {
-        name = docker_network.multiviewer_network.name
+        name    = docker_network.multiviewer_network.name
+        aliases = ["input${each.value.index + 1}"]
     }
 }
 //Outputs
@@ -106,6 +116,7 @@ resource "docker_container" "output_containers" {
     }
     networks_advanced {
         name = docker_network.multiviewer_network.name
+        aliases = ["output"]
     }
   
 }
@@ -113,9 +124,10 @@ resource "docker_container" "output_containers" {
 resource "docker_container" "multiviewer" {
     name  = "multiviewer"
     image = docker_image.multiviewer.name
-    command = ["./multiviewer", "19000", "19100"]
+    command = ["./multiviewer", "${local.MULTIVIEWER.port}", "${local.MULTIVIEWER.port2}"]
     networks_advanced {
         name = docker_network.multiviewer_network.name
+        aliases = ["multiviewer"]
     }
 }
 
@@ -199,6 +211,7 @@ resource "docker_container" "cheetah_lite" {
 # }
 
 resource "docker_container" "tools_outputs" {
+    depends_on = [ docker_container.output_containers ]
     for_each = { for tool in local.TOOLS_OUTPUTS : tool.name => tool }
     name  = each.value.name
     image = docker_image.mxl_tools.name
