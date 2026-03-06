@@ -15,6 +15,9 @@ echo "Uploading images and import script to $TARGET_SERVER:$TARGET_DIR ..."
 scp -r -i $SSH_KEY images "$TARGET_SERVER:$TARGET_DIR"
 scp -i $SSH_KEY import_multivewer.sh "$TARGET_SERVER:$TARGET_DIR"
 
+echo "Upload metrics to $TARGET_SERVER:$TARGET_DIR ..."
+scp -r -i $SSH_KEY metrics "$TARGET_SERVER:$TARGET_DIR"
+
 # run import script on target server
 echo "Running import script on target server..."
 ssh -i $SSH_KEY "$TARGET_SERVER" "cd $TARGET_DIR && sudo chmod +x import_multivewer.sh && ./import_multivewer.sh"
