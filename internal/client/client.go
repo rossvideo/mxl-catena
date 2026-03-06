@@ -309,6 +309,30 @@ func (c *Client) WaitReady(ctx context.Context, slot uint32, endpoint string, re
 	}
 }
 
+// WaitNotReady polls the given endpoint OID until the value differs from readyValue or timeout elapses.
+func (c *Client) WaitNotReady(ctx context.Context, slot uint32, endpoint string, readyValue string, timeout time.Duration) error {
+	if err := c.ensureConn(ctx); err != nil {
+		return err
+	}
+	deadline := time.Now().Add(timeout)
+	for {
+		if ctx.Err() != nil {
+			return ctx.Err()
+		}
+		val, err := c.GetStringValue(ctx, slot, endpoint)
+		if err == nil && val != readyValue {
+			return nil
+		}
+		if time.Now().After(deadline) {
+			if err != nil {
+				return err
+			}
+			return fmt.Errorf("timeout waiting for %s to differ from %q (last=%q)", endpoint, readyValue, val)
+		}
+		time.Sleep(1 * time.Second)
+	}
+}
+
 // GetStringValue fetches a value for an OID and returns its string representation.
 // If the underlying value is numeric or boolean, it is converted to a string.
 func (c *Client) GetStringValue(ctx context.Context, slot uint32, oid string) (string, error) {

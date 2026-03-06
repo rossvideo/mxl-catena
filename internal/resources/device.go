@@ -582,17 +582,26 @@ func (r *deviceResource) Delete(ctx context.Context, req resource.DeleteRequest,
 			}
 		}
 	}
-	// If using gRPC, only run stop_command when device_status indicates ready_value
-	if r.client != nil && r.client.Transport == "grpc" && state.DeviceStatus != nil {
-		endpoint := state.DeviceStatus.Endpoint.ValueString()
-		if endpoint == "" {
-			endpoint = state.DeviceStatus.Oid.ValueString()
-		}
-		ready := state.DeviceStatus.ReadyValue.ValueString()
+	// On destroy, if stop_command is configured, send it, wait 5s, then wait until status leaves ready_value.
+	if r.client != nil && r.client.Transport == "grpc" && !state.StopCommand.IsNull() && state.StopCommand.ValueString() != "" {
 		slot := uint32(state.Slot.ValueInt64())
-		if endpoint != "" && ready != "" && !state.StopCommand.IsNull() && state.StopCommand.ValueString() != "" {
-			if val, err := r.client.GetStringValue(ctx, slot, endpoint); err == nil && val == ready {
-				_ = r.client.RunStop(ctx, slot, state.StopCommand.ValueString())
+		if err := r.client.RunStop(ctx, slot, state.StopCommand.ValueString()); err != nil {
+			resp.Diagnostics.AddError("gRPC ExecuteCommand stop failed", err.Error())
+			return
+		}
+		time.Sleep(5 * time.Second)
+
+		if state.DeviceStatus != nil {
+			endpoint := state.DeviceStatus.Endpoint.ValueString()
+			if endpoint == "" {
+				endpoint = state.DeviceStatus.Oid.ValueString()
+			}
+			ready := state.DeviceStatus.ReadyValue.ValueString()
+			if endpoint != "" && ready != "" {
+				if err := r.client.WaitNotReady(ctx, slot, endpoint, ready, 60*time.Second); err != nil {
+					resp.Diagnostics.AddError("gRPC wait for stop failed", err.Error())
+					return
+				}
 			}
 		}
 	}

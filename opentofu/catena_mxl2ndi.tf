@@ -3,6 +3,7 @@
 
 resource "docker_container" "mxl2ndicontainer" {
   name  = "mxl2ndi_container"
+  hostname = "NDI_SOURCE"
   image = docker_image.mxl2ndi.name
   command = ["--log_dir", "/app/logs"]
   ports {
@@ -50,7 +51,11 @@ locals {
 }
 // --- device configuration ---------------------------
 resource "catena_device" "mxl2ndi" {
-  depends_on = [ catena_device.ts2mxl, docker_container.multiviewer]
+  depends_on = [
+    catena_device.ts2mxl,
+    docker_container.multiviewer,
+    docker_container.mxl2ndicontainer,
+  ]
   device_type  = "remote-grpc"
   name         = "Catena MXL to NDI Sink"
   slot         = 0
