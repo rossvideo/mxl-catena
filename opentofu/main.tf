@@ -7,6 +7,13 @@ locals {
   CATENA_INPUTS = [
     {
       container_name = "ross_ts2mxl_container"
+      external_port = "7249"
+      label = "Ross Logo Splash"
+      ts_file_path = "/ts/Ross_Loop_logo.ts"
+      uuid = "8c2d86e7-9c19-4e5a-ac9e-000020260129" 
+    },
+    {
+      container_name = "ross2_ts2mxl_container"
       external_port = "7250"
       label = "Ross Logo"
       ts_file_path = "/ts/ross_logo_loop2.ts"
