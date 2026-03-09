@@ -1,8 +1,0 @@
-apiVersion: 1
-providers:
-  - name: 'default'
-    type: file
-    disableDeletion: false
-    updateIntervalSeconds: 5
-    options:
-      path: /var/lib/grafana/dashboards   # <- directory with your JSONs

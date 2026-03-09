@@ -1,160 +1,203 @@
-# MXL Demo (OpenTofu)
+# MXL Demo (OpenTofu + Catena)
 
-A containerized demo that uses OpenTofu to spin up and manage Catena/MXL processing pipelines. It bundles a custom OpenTofu provider (local), NDI tooling, and transport stream sources to assemble a working demo stack.
----
-## Normal Start/Stop
-```bash
-# Start the stack
-./tofu start
+This repository deploys a Catena/MXL demo stack using OpenTofu and Docker. It includes:
 
-# Stop and clean shared memory files
-./tofu stop
-```
----
-## Project Tree
-```
-.
-├─ builder.Dockerfile           # Build toolchain image (Go/Make/protoc)
-├─ Dockerfile                   # Runtime image for tofu service
-├─ compose.yml                  # Docker Compose services (tofu, builder)
-├─ Makefile                     # Provider build/install + proto generation
-├─ main.go                      # Provider entry point
-├─ README.md                    # Quickstart notes
-├─ go.mod / go.sum              # Go module metadata
-├─ terraformrc                  # Tofu/Terraform CLI configuration (local registry)
-├─ ndi-builder.sh               # Helper to build NDI artifacts
-├─ ts-builder.sh                # Helper to build TS artifacts
-├─ tofu                         # Convenience wrapper for OpenTofu in Docker
-├─ external/
-│  ├─ ndi/                      # NDI Advanced SDK v6 Linux assets
-│  │  ├─ Install_NDI_Advanced_SDK_v6_Linux.sh   # The NDI install script you need to supply
-│  │  └─ ...
-│  └─ ts/                       # Demo transport streams
-│     ├─ ross_logo_loop2.ts
-│     └─ ...
-├─ internal/                    # Source code for the Tofu provider
-│  ├─ client/                   # Client helpers (e.g., SMPTE)
-│  ├─ datasources/genproto/     # Generated protobuf stubs
-│  ├─ provider/                 # Provider wiring
-│  └─ resources/                # Provider resources
-├─ opentofu/
-│  ├─ main.tf                   # Demo stack
-│  ├─ providers.tf              # Local provider registry
-│  ├─ inputs.tf                 # Input variables
-│  ├─ catena_*.tf               # Catena devices used in the demo
-│  └─ terraform.tfstate*        # State files
-├─ protos/
-│  ├─ download_protos.sh        # helper script for downloading the st2138 protos
-|  └─ ...
-└─ registry/
-   ├─ Dockerfile.ts2mxl         # TS→MXL pipeline container
-   ├─ Dockerfile.mxl2ndi_sink   # MXL→NDI sink container
-   └─ build.sh                  # container build helper for the mxl demo catena devices
+- A local custom OpenTofu provider (`local/catena`, version `0.1.0`)
+- Catena TS to MXL and MXL to NDI containers
+- Multiviewer-related containers
+- Prometheus and Grafana containers
 
-```
+The main operator entry point is the `./tofu` wrapper script.
+
+## Current Default Topology
+
+The repository is currently configured for a remote Docker/Catena host:
+
+- Docker provider host: `ssh://ansible@10.62.152.123`
+- Catena endpoint: `10.62.152.123` (gRPC)
+- Grafana endpoint: `http://10.62.152.123:3000`
+
+If you are not using that host, update the files listed in [Configuration You Will Likely Change](#configuration-you-will-likely-change).
 
 ## Prerequisites
-- Docker (Compose v2: `docker compose`)
-- Git
-- Linux with `/dev/shm` available (shared memory is used; the stop routine cleans `/dev/shm/mxl/*`).
-- RossVideo's Dashboard
 
+- Linux host with Docker Engine and Docker Compose v2 (`docker compose`)
+- Access to a target Docker host (or adjust config for local Docker)
+- SSH private key available at `~/IAC/.ssh/id_ed25519` (as currently referenced)
+- OpenTofu is not required on the host machine (it runs inside the `tofu` container)
+- NDI Advanced SDK Linux installer script (`Install_*.sh`) to stage `external/ndi` assets
+- MP4 source files (optional) if you want to generate `.ts` files with `ts-builder.sh`
 
-## Pulling the Project
-```bash
-git clone https://github.com/rossvideo/mxl-catena.git
-cd mxl-catena
-```
+## Quick Start
 
-If you copied from local files rather than git, ensure subfolders under `external/ndi` and `external/ts` are present.
-
-## First-Time Setup & Run
-The builder container handles Go/Make/protoc and builds the provider and images.
+From the repository root:
 
 ```bash
-# Build NDI and TS artifacts used in the demo
-./ndi-builder.sh # you will need to copy the NDI install sh to the correct place (external/ndi/)
-./ts-builder.sh  # if you have your own mp4's you can add them to the project root
+# 1) Stage external runtime assets
+./ndi-builder.sh
+./ts-builder.sh
 
-# Build provider inside builder + runtime docker image
+# 2) Build provider + runtime images
 ./tofu build
 
-# Initialize the OpenTofu workspace inside the tofu container
+# 3) Initialize OpenTofu workspace
 ./tofu init
 
-# Start the full demo stack (apply)
+# 4) Apply the stack
 ./tofu start
 ```
 
-Connect your dashboard to `localhost:7254` as a Catena device once the stack is up.
+To stop and tear down:
 
-Notes:
-- If you see permission issues on generated files, you can run:
-  ```bash
-  sudo chown -R 1000:1000 .
-  ```
-- The provider binary is written/versioned as `terraform-provider-catena_v0.1.0` in the project root during builds.
-
-## Normal Start/Stop
 ```bash
-# Start the stack
-./tofu start
-
-# Stop and clean shared memory files
 ./tofu stop
 ```
 
-Additional pass-through commands are available, e.g., `./tofu plan`, `./tofu destroy`, `./tofu validate`.
+Note: `./tofu stop` performs `tofu destroy -auto-approve`. It does not currently clean remote `/dev/shm` automatically.
 
-## How to Contribute
-- Fork the repo and create a feature branch: `feature/your-thing`
-- Keep changes focused and documented (update this README if relevant)
-- Follow Go conventions; run local builds via the builder container or your toolchain
-- Generate protobuf stubs when `.proto` files change:
-  ```bash
-  ./tofu build
-  ```
-- Build provider (dev):
-  ```bash
-  ./tofu build
-  ```
-- Open a pull request with a clear description, rationale, and test notes
+## `./tofu` Command Reference
+
+Project commands:
+
+- `./tofu build` - build provider in builder container, then build runtime image
+- `./tofu setup` - remove lock file, ensure image exists, run `tofu init`
+- `./tofu run` or `./tofu start` - run `tofu apply -auto-approve`
+- `./tofu end` or `./tofu stop` - run `tofu destroy -auto-approve`
+
+Pass-through OpenTofu commands (examples):
+
+- `./tofu plan`
+- `./tofu apply`
+- `./tofu destroy`
+- `./tofu validate`
+- `./tofu fmt`
+- `./tofu state`
+
+Shell utilities:
+
+- `./tofu --shell bash`
+- `./tofu --it bash`
+- `./tofu --inject bash`
+
+## Configuration You Will Likely Change
+
+The repo contains environment-specific defaults. Update these for your setup:
+
+- `compose.yml`
+  - SSH key bind mount path (`~/IAC/.ssh/id_ed25519`)
+- `opentofu/providers.tf`
+  - Docker SSH target
+  - Catena endpoint
+  - Grafana URL/auth
+- `opentofu/main.tf`
+  - `local.catena_endpoint`
+  - input list (`local.CATENA_INPUTS`) and labels/ports/UUIDs
+- `upload.sh`
+  - `TARGET_SERVER`, `SSH_KEY`, `TARGET_DIR`
+- `clean_server.sh`
+  - `TARGET_SERVER`, `SSH_KEY`
+
+## External Assets
+
+- `external/ndi` is populated by `./ndi-builder.sh`
+  - Requires `external/ndi/Install_*.sh` (NDI Advanced SDK Linux installer)
+  - Copies `libndi.so`, `libndi.so.6`, `libndi.so.6.0.0`
+- `external/ts` is populated by `./ts-builder.sh`
+  - Converts `*.mp4` from repo root into transport streams via containerized ffmpeg
+
+## Remote Host Setup Helpers
+
+- `setup server/setup.sh` - server bootstrap (user, SSH, Docker hardening)
+- `setup server/readme.md` - notes for target server setup
+- `upload.sh` - uploads `external/`, `images/`, `metrics/`, then runs `import_multivewer.sh` remotely
+- `import_multivewer.sh` - loads tarred Docker images from `images/`
+
+## Build and Development Notes
+
+- Provider binary output: `terraform-provider-catena_v0.1.0`
+- Provider source address served by `main.go`: `registry.opentofu.org/local/catena`
+- `Makefile` targets:
+  - `make build`
+  - `make build-smpte`
+  - `make install`
+  - `make proto-gen`
+
+`make proto-gen` reads from `proto/*.proto` and writes generated files to `internal/genproto/`.
+
+## Repository Layout (Current)
+
+```text
+.
+|- builder.Dockerfile
+|- Dockerfile
+|- compose.yml
+|- Makefile
+|- main.go
+|- go.mod / go.sum
+|- terraformrc
+|- tofu
+|- ndi-builder.sh
+|- ts-builder.sh
+|- upload.sh
+|- clean_server.sh
+|- import_multivewer.sh
+|- external/
+|  |- ndi/
+|  `- ts/
+|- images/
+|- internal/
+|  |- client/
+|  |- datasources/
+|  |- genproto/
+|  |- provider/
+|  `- resources/
+|- metrics/
+|- opentofu/
+|  |- providers.tf
+|  |- inputs.tf
+|  |- main.tf
+|  |- catena_ts2mxl.tf
+|  |- catena_mxl2ndi.tf
+|  |- multiviewer.tf
+|  `- grafana.tf
+|- proto/
+|  `- *.proto
+|- registry/
+|  |- Dockerfile.ts2mxl
+|  |- Dockerfile.mxl2ndi_sink
+|  |- entrypoint.sh
+|  `- build.sh
+`- setup server/
+```
 
 ## Troubleshooting
-- Most issues are solved by just:
+
+- Re-init workspace (removes lock first):
+  ```bash
+  ./tofu init
+  ```
+- Full recycle:
   ```bash
   ./tofu stop
   ./tofu start
   ```
-- Re-init the workspace (clears lock file):
+- Clean remote shared memory manually if needed:
   ```bash
-  ./tofu init
+  ./clean_server.sh
   ```
-- Clean shared memory leftovers after stop:
+- Fix local file ownership after container builds (if needed):
   ```bash
-  ./tofu stop
+  sudo chown -R 1000:1000 .
   ```
 
 ## External Links
+
 - OpenTofu: https://opentofu.org
 - Docker: https://docs.docker.com/
 - Go: https://go.dev/
 - Protocol Buffers: https://protobuf.dev/
 - gRPC for Go: https://grpc.io/docs/languages/go/
-- NDI (SDK & info): https://ndi.tv/sdk
-### Links for demo video sources
-- TSDuck sample streams: https://tsduck.io/streams/
-- VQEG video datasets: https://www.vqeg.org/video-datasets-and-organizations/
-### Links to Catana data models
-- [MXL Flow Definintion](https://github.com/rossvideo/Catena/blob/mxl-poc/sdks/cpp/connections/gRPC/examples/poc/templates/param.flow_def.yaml)
-- [ts2mxl Device Model](https://github.com/rossvideo/Catena/blob/mxl-poc/sdks/cpp/connections/gRPC/examples/poc/ts2mxl/device.ts2mxl.yaml)
-- [mxl2ndi Device Model](https://github.com/rossvideo/Catena/blob/mxl-poc/sdks/cpp/connections/gRPC/examples/poc/mxl2ndi_sink/device.mxl2ndi_sink.yaml)
-
-
-
----
-
-### FAQ
-#### you may need to delete the flows on the server if working in remote
-
-#### us ndi tools access manager to setup the discovery
+- NDI SDK: https://ndi.tv/sdk
+- Catena MXL Flow Definition: https://github.com/rossvideo/Catena/blob/mxl-poc/sdks/cpp/connections/gRPC/examples/poc/templates/param.flow_def.yaml
+- Catena `ts2mxl` model: https://github.com/rossvideo/Catena/blob/mxl-poc/sdks/cpp/connections/gRPC/examples/poc/ts2mxl/device.ts2mxl.yaml
+- Catena `mxl2ndi_sink` model: https://github.com/rossvideo/Catena/blob/mxl-poc/sdks/cpp/connections/gRPC/examples/poc/mxl2ndi_sink/device.mxl2ndi_sink.yaml
