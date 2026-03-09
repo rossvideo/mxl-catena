@@ -41,7 +41,7 @@ locals {
         YRES = "1080"
         RATE_NUM = "60000"
         RATE_DEN = "1000"
-        bgra_port = "14100"
+        metric_port = "14100"
         MXL_TO_GST_PORT="50000"
     }
     # TOOLS_INPUTS=[
@@ -133,7 +133,7 @@ resource "docker_container" "multiviewer" {
 
 //Control
 resource "docker_container" "control" {
-    depends_on = [docker_container.input_containers]
+    depends_on = [docker_container.input_containers, docker_container.multiviewer, docker_container.output_containers]
     name  = "control"
     image = docker_image.control.name
     command = concat(
@@ -149,7 +149,8 @@ resource "docker_container" "control" {
         ["/p"],
         ["/m", "multiviewer", local.MULTIVIEWER.port, local.MULTIVIEWER.port+1],
         ["/e", local.CONTROL.BACKLOG, local.CONTROL.XRES, local.CONTROL.YRES, local.CONTROL.RATE_NUM, local.CONTROL.RATE_DEN],
-        [ "bgra", local.CONTROL.bgra_port],
+        [ "bgra"],
+        [ local.CONTROL.metric_port]
     )
     
     networks_advanced {
@@ -159,6 +160,7 @@ resource "docker_container" "control" {
 }
 //cheetah-lite
 resource "docker_container" "cheetah_lite" {
+    depends_on = [ docker_container.control ]
     name  = "cheetah-lite"
     image = docker_image.cheetah_lite.name
     command = ["/app/cheetah-lite"]

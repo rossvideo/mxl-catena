@@ -90,7 +90,7 @@ resource "grafana_dashboard" "mv_dashboard" {
             "type": "gauge"
             "targets": [
                 {
-                "expr": "Control{instance=\"${local.CONTROL.name}:${local.CONTROL.bgra_port}\", type=\"fps\"}",
+                "expr": "Control{instance=\"${local.CONTROL.name}:${local.CONTROL.metric_port}\", type=\"fps\"}",
                 "instant": true,
                 "legendFormat": "1"
                 }
@@ -126,7 +126,7 @@ resource "grafana_dashboard" "mv_dashboard" {
             "type": "gauge",
             "targets": [
                 {
-                "expr": "DropsGauge{instance=\"${local.CONTROL.name}:${local.CONTROL.bgra_port}\"}",
+                "expr": "DropsGauge{instance=\"${local.CONTROL.name}:${local.CONTROL.metric_port}\"}",
                 "instant": true,
                 "legendFormat": "1"
                 }
@@ -159,7 +159,7 @@ resource "grafana_dashboard" "mv_dashboard" {
             "type": "stat",
             "targets": [
                 {
-                "expr": "DropsCounter{instance=\"${local.CONTROL.name}:${local.CONTROL.bgra_port}\"}",
+                "expr": "DropsCounter{instance=\"${local.CONTROL.name}:${local.CONTROL.metric_port}\"}",
                 "legendFormat": "1"
                 }
             ],
