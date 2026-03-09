@@ -56,7 +56,7 @@ Examples:
 	./tofu init
 USAGE
 }
-
+dirpath="$(dirname "$(readlink -f "$0")")"
 cmd=${1:-}
 case "$cmd" in
 	build)
@@ -85,10 +85,13 @@ case "$cmd" in
 		;;
 	setup)
 		shift || true
-		echo "[tofu] Ensuring docker image is built, then running 'tofu init'..."
-		rm -f opentofu/.terraform.lock.hcl
+		echo "[tofu] Setting user environment variables from tofu.env..."
+
+		. $dirpath/tofu.env
+		# echo "[tofu] Ensuring docker image is built, then running 'tofu init'..."
+		# rm -f opentofu/.terraform.lock.hcl
 		ensure_built
-		run_in_container init "$@"
+		run_in_container init "$@" -backend-config=username=$USERNAME -backend-config=password=$PASSWORD -migrate-state
 		;;
 	run|start)
 		shift || true

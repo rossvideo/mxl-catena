@@ -28,20 +28,35 @@ If you are not using that host, update the files listed in [Configuration You Wi
 - NDI Advanced SDK Linux installer script (`Install_*.sh`) to stage `external/ndi` assets
 - MP4 source files (optional) if you want to generate `.ts` files with `ts-builder.sh`
 
-## Quick Start
+## Remote vs local dev
+for remote server:
+  - setup access token [link to access tokens][https://srvottgitlab02.rossvideo.com/-/user_settings/personal_access_tokens]
+  - make `tofu.env` and put
+  ```yml
+    USERNAME="your.gitlab.username"
+    PASSWORD="Personal access token with api, read_api"
+  ```
+  - change `opentofu/backend.tf` to use your own state (not demo1)
+for local server:
+ - delete `opentofu/backend.tf`
+ - anytime it says to do `./tofu setup` do `./tofu init`
+ - dont run `./upload` run `import_multivewer.sh`
 
-From the repository root:
+---
+## Quick Start
+- From the repository root:
 
 ```bash
 # 1) Stage external runtime assets
 ./ndi-builder.sh
 ./ts-builder.sh
+./upload.sh
 
 # 2) Build provider + runtime images
 ./tofu build
 
 # 3) Initialize OpenTofu workspace
-./tofu init
+./tofu setup
 
 # 4) Apply the stack
 ./tofu start

@@ -13,3 +13,4 @@ opentofu/.terraform/*
 opentofu/.terraform.lock.hcl
 build/
 *.mp4
+tofu.env
