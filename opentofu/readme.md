@@ -13,73 +13,73 @@ flowchart TB
   %% Inputs: variables and locals
   %% -----------------------------
   subgraph VARS["Variables"]
-    V_WORKSPACE@{ shape: manual-input, label: "var.workspace_dir" }
+    V_WORKSPACE["var.workspace_dir"]
   end
 
   subgraph LOC_MAIN["Locals (main.tf)"]
-    L_CATENA_ENDPOINT@{ shape: doc, label: "local.catena_endpoint" }
-    L_NDI_PORTS@{ shape: doc, label: "local.ndi_ports" }
-    L_MXL_DOMAIN@{ shape: doc, label: "local.MXL_DOMAIN" }
-    L_CATENA_INPUTS@{ shape: doc, label: "local.CATENA_INPUTS" }
-    L_ECR_REG@{ shape: doc, label: "local.ECR_REGISTRY" }
-    L_MXL_TAG@{ shape: doc, label: "local.MXL_TAG" }
-    L_DIST_TAG@{ shape: doc, label: "local.DISTCESSNA_TAG" }
-    L_CHEETAH_TAG@{ shape: doc, label: "local.CHEETAH_LITE_TAG" }
+    L_CATENA_ENDPOINT["local.catena_endpoint"]
+    L_NDI_PORTS["local.ndi_ports"]
+    L_MXL_DOMAIN["local.MXL_DOMAIN"]
+    L_CATENA_INPUTS["local.CATENA_INPUTS"]
+    L_ECR_REG["local.ECR_REGISTRY"]
+    L_MXL_TAG["local.MXL_TAG"]
+    L_DIST_TAG["local.DISTCESSNA_TAG"]
+    L_CHEETAH_TAG["local.CHEETAH_LITE_TAG"]
   end
 
   subgraph LOC_MXL2NDI["Locals (catena_mxl2ndi.tf)"]
-    L_MXL_PARAMS@{ shape: doc, label: "local.mxl_params" }
+    L_MXL_PARAMS["local.mxl_params"]
   end
 
   subgraph LOC_MV["Locals (multiviewer.tf)"]
-    L_OUTPUTS@{ shape: doc, label: "local.OUTPUTS" }
-    L_INPUTS@{ shape: doc, label: "local.INPUTS" }
-    L_MULTIVIEWER@{ shape: doc, label: "local.MULTIVIEWER" }
-    L_CONTROL@{ shape: doc, label: "local.CONTROL" }
-    L_TOOLS_OUT@{ shape: doc, label: "local.TOOLS_OUTPUTS" }
+    L_OUTPUTS["local.OUTPUTS"]
+    L_INPUTS["local.INPUTS"]
+    L_MULTIVIEWER["local.MULTIVIEWER"]
+    L_CONTROL["local.CONTROL"]
+    L_TOOLS_OUT["local.TOOLS_OUTPUTS"]
   end
 
   %% -----------------------------
   %% Resources
   %% -----------------------------
   subgraph IMAGES["docker_image Resources"]
-    R_IMG_TS2MXL@{ shape: rect, label: "docker_image.ts2mxl" }
-    R_IMG_MXL2NDI@{ shape: stadium, label: "docker_image.mxl2ndi" }
-    R_IMG_CONTROL@{ shape: rect, label: "docker_image.control" }
-    R_IMG_CHEETAH@{ shape: rect, label: "docker_image.cheetah_lite" }
-    R_IMG_MV@{ shape: rect, label: "docker_image.multiviewer" }
-    R_IMG_MXL_IN@{ shape: rect, label: "docker_image.mxl_input" }
-    R_IMG_MXL_OUT@{ shape: stadium, label: "docker_image.mxl_output" }
-    R_IMG_MXL_TOOLS@{ shape: rect, label: "docker_image.mxl_tools" }
-    R_IMG_PROM@{ shape: rect, label: "docker_image.prometheus" }
-    R_IMG_GRAFANA@{ shape: stadium, label: "docker_image.grafana" }
+    R_IMG_TS2MXL["docker_image.ts2mxl"]
+    R_IMG_MXL2NDI["docker_image.mxl2ndi"]
+    R_IMG_CONTROL["docker_image.control"]
+    R_IMG_CHEETAH["docker_image.cheetah_lite"]
+    R_IMG_MV["docker_image.multiviewer"]
+    R_IMG_MXL_IN["docker_image.mxl_input"]
+    R_IMG_MXL_OUT["docker_image.mxl_output"]
+    R_IMG_MXL_TOOLS["docker_image.mxl_tools"]
+    R_IMG_PROM["docker_image.prometheus"]
+    R_IMG_GRAFANA["docker_image.grafana"]
   end
 
-  R_NET@{ shape: rect, label: "docker_network.multiviewer_network" }
+  R_NET["docker_network.multiviewer_network"]
 
   subgraph CONTAINERS["docker_container Resources"]
-    R_TS2MXL@{ shape: rect, label: "docker_container.ts2mxl_containers" }
-    R_MXL2NDI_C@{ shape: stadium, label: "docker_container.mxl2ndicontainer" }
-    R_IN@{ shape: rect, label: "docker_container.input_containers" }
-    R_OUT@{ shape: rect, label: "docker_container.output_containers" }
-    R_MV@{ shape: stadium, label: "docker_container.multiviewer" }
-    R_CTRL@{ shape: rect, label: "docker_container.control" }
-    R_CHEETAH@{ shape: rect, label: "docker_container.cheetah_lite" }
-    R_TOOLS_OUT@{ shape: stadium, label: "docker_container.tools_outputs" }
-    R_PROM@{ shape: rect, label: "docker_container.prometheus" }
-    R_GRAFANA_C@{ shape: stadium, label: "docker_container.grafana" }
+    R_TS2MXL["docker_container.ts2mxl_containers"]
+    R_MXL2NDI_C["docker_container.mxl2ndicontainer"]
+    R_IN["docker_container.input_containers"]
+    R_OUT["docker_container.output_containers"]
+    R_MV["docker_container.multiviewer"]
+    R_CTRL["docker_container.control"]
+    R_CHEETAH["docker_container.cheetah_lite"]
+    R_TOOLS_OUT["docker_container.tools_outputs"]
+    R_PROM["docker_container.prometheus"]
+    R_GRAFANA_C["docker_container.grafana"]
   end
 
   subgraph CATENA["catena_device Resources"]
-    R_CAT_TS2MXL@{ shape: rect, label: "catena_device.ts2mxl" }
-    R_CAT_MXL2NDI@{ shape: stadium, label: "catena_device.mxl2ndi" }
+    R_CAT_TS2MXL["catena_device.ts2mxl"]
+    R_CAT_MXL2NDI["catena_device.mxl2ndi"]
   end
 
   subgraph GRAFANA["grafana_* Resources"]
-    R_GRAF_ORG@{ shape: rect, label: "grafana_organization.org" }
-    R_GRAF_DS@{ shape: rect, label: "grafana_data_source.prometheus" }
-    R_GRAF_FOLDER@{ shape: rect, label: "grafana_folder.mv_folder" }
-    R_GRAF_DASH@{ shape: curv-trap, label: "grafana_dashboard.mv_dashboard" }
+    R_GRAF_ORG["grafana_organization.org"]
+    R_GRAF_DS["grafana_data_source.prometheus"]
+    R_GRAF_FOLDER["grafana_folder.mv_folder"]
+    R_GRAF_DASH["grafana_dashboard.mv_dashboard"]
   end
 
   %% -----------------------------
