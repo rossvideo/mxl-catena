@@ -105,3 +105,9 @@ resource "docker_image" "grafana" {
   name = "grafana/grafana:12.3.3"
   keep_locally = true
 }
+
+// Keycloak 
+resource "docker_image" "keycloak" {
+  name = "quay.io/keycloak/keycloak:latest"
+  keep_locally = true
+}

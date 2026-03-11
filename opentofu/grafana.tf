@@ -49,7 +49,7 @@ resource "grafana_organization" "org" {
 resource "grafana_data_source" "prometheus" {
   type                = "prometheus"
   name                = "Prometheus"
-  url                 = "http://prometheus:9090"
+  url                 = "http://${docker_container.prometheus.name}:${docker_container.prometheus.ports[0].external}"
   basic_auth_enabled  = false
   is_default         = true
   json_data_encoded = jsonencode({
