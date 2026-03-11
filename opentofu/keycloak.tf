@@ -23,7 +23,7 @@ resource "null_resource" "wait_for_keycloak" {
 
   provisioner "local-exec" {
     command = <<EOT
-until curl -s http://${local.target_ip}:8080/realms/master; do
+until curl -s http://${var.target_ip}:8080/realms/master; do
   echo "Waiting for Keycloak..."
   sleep 5
 done

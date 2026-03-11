@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-TARGET_SERVER="ansible@10.62.152.123"
+#load target server ip from opentofu/target_server.auto.tfvars
+TARGET_SERVER_IP=$(grep -oP '(?<=target_ip=")[^"]+' opentofu/target_server.auto.tfvars)
+
+TARGET_SERVER="ansible@$TARGET_SERVER_IP"
 TARGET_DIR="/workspace"
 SSH_KEY="~/IAC/.ssh/id_ed25519"
 

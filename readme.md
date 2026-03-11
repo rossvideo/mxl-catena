@@ -37,6 +37,7 @@ for remote server:
     PASSWORD="Personal access token with api, read_api"
   ```
   - change `opentofu/backend.tf` to use your own state (not demo1)
+  - change `target_server.auto.tfvars` to be your target server
 for local server:
  - delete `opentofu/backend.tf`
  - anytime it says to do `./tofu setup` do `./tofu init`

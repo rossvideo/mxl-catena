@@ -1,5 +1,5 @@
 locals {
-  catena_endpoint = "http://10.62.152.123"
+  catena_endpoint = "http://${var.target_ip}"
   // MXL DEMO 
   ndi_ports = ["5960", "5961", "5962", "5963", "5964", "5965", "5966", "5967", "5968", "5969"]
   MXL_DOMAIN = "/dev/shm"

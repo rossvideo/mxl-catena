@@ -1,8 +1,4 @@
-locals {
-  target_ip = "10.62.152.123"
-}
-
-terraform {
+  terraform {
   required_providers {
     catena = {
       source  = "local/catena"
@@ -36,7 +32,7 @@ terraform {
 #   host = "unix:///var/run/docker.sock"
 # }
 provider "docker" {
-  host     = "ssh://ansible@${local.target_ip}"
+  host     = "ssh://ansible@${var.target_ip}"
   ssh_opts = [
     "-i", "~/.ssh/id_ed25519", "-o", "StrictHostKeyChecking accept-new"
   ]
@@ -44,13 +40,13 @@ provider "docker" {
 
 # this is made localy for now
 provider "catena" {
-  endpoint  = "${local.target_ip}"
+  endpoint  = "http://${var.target_ip}"
   transport = "grpc"
   executables_dir = "exe/"
 }
 # https://search.opentofu.org/provider/opentofu/grafana/latest
 provider "grafana" {
-  url  = "http://${local.target_ip}:3000"
+  url  = "http://${var.target_ip}:3000"
   auth = "admin:admin"
 }
 
@@ -59,6 +55,6 @@ provider "keycloak" {
 	client_id     = "admin-cli"
 	username      = "admin"
 	password      = "admin"
-	url           = "http://${local.target_ip}:8080"
+	url           = "http://${var.target_ip}:8080"
   initial_login = false
 }

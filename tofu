@@ -91,7 +91,7 @@ case "$cmd" in
 		# echo "[tofu] Ensuring docker image is built, then running 'tofu init'..."
 		# rm -f opentofu/.terraform.lock.hcl
 		ensure_built
-		run_in_container init "$@" -backend-config=username=$USERNAME -backend-config=password=$PASSWORD -migrate-state
+		run_in_container init "$@" -backend-config=username=$USERNAME -backend-config=password=$PASSWORD -reconfigure
 		;;
 	run|start)
 		shift || true
