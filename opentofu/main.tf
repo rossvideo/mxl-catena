@@ -44,9 +44,9 @@ locals {
   // Multiviewer
   ECR_REGISTRY = "905418485545.dkr.ecr.us-east-1.amazonaws.com"
   ECR_REGION = "us-east-1"
-  MXL_TAG = "0.1.0-c66cb47f"
-  DISTCESSNA_TAG = "0.0.1-18deca61"
-  CHEETAH_LITE_TAG = "0.0.1-e094080b"
+  MXL_TAG = "0.1.0-baa2b45b"
+  DISTCESSNA_TAG = "0.0.1-67ea027a"
+  CHEETAH_LITE_TAG = "0.0.1-108d6ff2"
 }
 
 // Docker images for MXL Catena components
@@ -109,5 +109,11 @@ resource "docker_image" "grafana" {
 // Keycloak 
 resource "docker_image" "keycloak" {
   name = "quay.io/keycloak/keycloak:latest"
+  keep_locally = true
+}
+
+// RPM
+resource "docker_image" "rpm_database" {
+  name = "postgres:15"
   keep_locally = true
 }

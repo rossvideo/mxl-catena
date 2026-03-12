@@ -1,0 +1,22 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    dmidecode \
+    ca-certificates \
+    tar \
+    bash \
+    sudo \
+  && rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -p /opt/platform_manager /tmp/rpm
+
+COPY PlatformManager-*.tar.gz /tmp/rpm/
+COPY run-rpm-install.sh /usr/local/bin/run-rpm-install.sh
+COPY licensing.ini /opt/platform_manager/workspace/.metadata/.plugins/com.rossvideo.common.rwp/licensing.ini
+COPY database.ini /opt/platform_manager/workspace/.metadata/.plugins/com.rossvideo.common.rwp/database.ini
+RUN chmod +x /usr/local/bin/run-rpm-install.sh
+
+WORKDIR /opt/platform_manager
+ENTRYPOINT ["/usr/local/bin/run-rpm-install.sh"]

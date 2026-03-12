@@ -14,3 +14,4 @@ opentofu/.terraform.lock.hcl
 build/
 *.mp4
 tofu.env
+external/rpm/PlatformManager-3.13.0-SNAPSHOT-2087.20260311.1153.202c7d.tar.gz

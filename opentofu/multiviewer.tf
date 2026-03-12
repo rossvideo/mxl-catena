@@ -179,7 +179,7 @@ resource "docker_container" "cheetah_lite" {
     ],
     [
         "MAX_SOURCE_ID=${length(local.INPUTS)}",
-        "DEFAULT_LAYOUT=e_MVLayout_4_2_4_Ver",
+        "DEFAULT_LAYOUT=e_MVLayout_2_4",
     ]
     ))
     networks_advanced {
