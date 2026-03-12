@@ -169,13 +169,6 @@ resource "docker_container" "rpm" {
   name  = "rpm"
   image = docker_image.rpm.name
 
-  env = toset([
-    "DB_HOST=rpm_database",
-    "DB_PORT=5432",
-    "DB_NAME=platform_manager",
-    "DB_USER=postgres",
-    "DB_PASSWORD=password"
-  ])
   ports {
     internal = "80"
     external = "80"
