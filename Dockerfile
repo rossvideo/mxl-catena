@@ -53,9 +53,10 @@ RUN chmod +x $HOME/.terraform.d/plugins/registry.opentofu.org/local/catena/0.1.0
 # Configure Terraform/OpenTofu to use local plugin mirror
 COPY terraformrc /root/.terraformrc
 
-# install ssh client
+# install ssh client and psgl
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    openssh-client && \
+    openssh-client \
+    postgresql-client && \
     rm -rf /var/lib/apt/lists/* 
 # Workdir where examples will be mounted
 WORKDIR /workspace

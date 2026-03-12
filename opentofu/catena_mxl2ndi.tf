@@ -2,10 +2,10 @@
 
 
 resource "docker_container" "mxl2ndicontainer" {
-  name  = "mxl2ndi_container"
+  name     = "mxl2ndi_container"
   hostname = "NDI_SOURCE"
-  image = docker_image.mxl2ndi.name
-  command = ["--log_dir", "/app/logs"]
+  image    = docker_image.mxl2ndi.name
+  command  = ["--log_dir", "/app/logs"]
   ports {
     internal = "6254"
     external = "7254"
@@ -18,8 +18,8 @@ resource "docker_container" "mxl2ndicontainer" {
     }
   }
   volumes {
-    host_path      = "${local.MXL_DOMAIN}"
-    container_path = "${local.MXL_DOMAIN}"
+    host_path      = local.MXL_DOMAIN
+    container_path = local.MXL_DOMAIN
   }
   volumes {
     host_path      = "${var.workspace_dir}/external"
@@ -33,20 +33,20 @@ locals {
       "/selected_flow_id" = local.CATENA_INPUTS[0].uuid
     },
     merge(concat(
-    #   [
-    #   {
-    #   "/inputs/${length(local.mxl_inputs)}/name"    = "MV Output"
-    #   "/inputs/${length(local.mxl_inputs)}/domain"  = "${local.MXL_DOMAIN}"
-    #   "/inputs/${length(local.mxl_inputs)}/flow_id" = "3f9618cb-ff4c-49d9-8360-252fd6111d72"
-    #   }
-    # ],
-    [
-      for idx, dev in local.CATENA_INPUTS : {
-        "/inputs/${idx}/name"    = dev.label
-        "/inputs/${idx}/domain"  = "${local.MXL_DOMAIN}"
-        "/inputs/${idx}/flow_id" = dev.uuid
-      }
-    ])... )
+      #   [
+      #   {
+      #   "/inputs/${length(local.mxl_inputs)}/name"    = "MV Output"
+      #   "/inputs/${length(local.mxl_inputs)}/domain"  = "${local.MXL_DOMAIN}"
+      #   "/inputs/${length(local.mxl_inputs)}/flow_id" = "3f9618cb-ff4c-49d9-8360-252fd6111d72"
+      #   }
+      # ],
+      [
+        for idx, dev in local.CATENA_INPUTS : {
+          "/inputs/${idx}/name"    = dev.label
+          "/inputs/${idx}/domain"  = "${local.MXL_DOMAIN}"
+          "/inputs/${idx}/flow_id" = dev.uuid
+        }
+    ])...)
   )
 }
 // --- device configuration ---------------------------
@@ -56,12 +56,12 @@ resource "catena_device" "mxl2ndi" {
     docker_container.multiviewer,
     docker_container.mxl2ndicontainer,
   ]
-  device_type  = "remote-grpc"
-  name         = "Catena MXL to NDI Sink"
-  slot         = 0
-  address      = "${local.catena_endpoint}"
-  port         = 7254
-  
+  device_type = "remote-grpc"
+  name        = "Catena MXL to NDI Sink"
+  slot        = 0
+  address     = local.catena_endpoint
+  port        = 7254
+
   apply_all = false
   // for each catena_device above, map its target_flow to an input
 

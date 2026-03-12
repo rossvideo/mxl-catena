@@ -44,7 +44,7 @@ chmod 440 /etc/sudoers.d/ansible
 # --------------------------------------------------
 
 echo "==> Installing git and other dependencies..."
-apt install -y git apt-transport-https ca-certificates curl software-properties-common python3-pip virtualenv python3-setuptools
+apt install -y git apt-transport-https ca-certificates curl software-properties-common python3-pip virtualenv python3-setuptools postgresql-client
 
 # --------------------------------------------------
 # Install docker
