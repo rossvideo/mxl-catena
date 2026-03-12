@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS public."OGP_FRAME" (
 INSERT INTO public."OGP_FRAME"
 ("ID","NAME","HOSTNAME","PORT","PROTOCOL","USE_SSL","CONNECTION_SETTINGS","CREATED","MODIFIED")
 VALUES
-(2,'${catena_device.mxl2ndi.name}','${var.target_ip}',${catena_device.mxl2ndi.port},'CATENA',false,'<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd"><properties><comment>DashBoard Device Connection Settings</comment><entry key="node-id">${var.target_ip}:${catena_device.mxl2ndi.port}</entry><entry key="access">full</entry><entry key="address">${var.target_ip}</entry><entry key="port">${catena_device.mxl2ndi.port}</entry><entry key="node-name">${catena_device.mxl2ndi.name}</entry><entry key="rememberConnection">true</entry><entry key="connectionType">TCP</entry><entry key="discoveryType">MANUAL</entry><entry key="equipmentType">catena</entry></properties>',NOW(),NOW()),
+(2,'${catena_device.mxl2ndi.name}','${var.target_ip}',${catena_device.mxl2ndi.port},'CATENA',false,'<properties><entry key=\"node-id\">${var.target_ip}:${catena_device.mxl2ndi.port}</entry></properties>',NOW(),NOW()),
 ${join(",\n", [
   for idx, input in values(catena_device.ts2mxl) :
   "(${idx + 3}, '${input.name}', '${var.target_ip}', ${input.port}, 'CATENA', false, '<properties><entry key=\"node-id\">${var.target_ip}:${input.port}</entry></properties>', NOW(), NOW())"
