@@ -25,17 +25,6 @@ resource "docker_container" "rpm_database" {
     external = 5432
   }
 
-#   volumes {
-#     volume_name    = docker_volume.rpm_database_data.name
-#     container_path = "/var/lib/postgresql/data"
-#   }
-
-#   volumes {
-#     host_path      = "${var.workspace_dir}/external/sql"
-#     container_path = "/docker-entrypoint-initdb.d"
-#     read_only      = true
-#   }
-
   networks_advanced {
     name = docker_network.multiviewer_network.name
   }
