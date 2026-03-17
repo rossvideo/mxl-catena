@@ -1,0 +1,19 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    dmidecode \
+    ca-certificates \
+    tar \
+    bash \
+    sudo \
+  && rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -p /opt/MediaIO /tmp/media
+
+ADD Indigo-*.tar.gz /opt/MediaIO/
+COPY licensing.ini /opt/MediaIO/workspace/.metadata/.plugins/com.rossvideo.common.rwp/licensing.ini
+COPY endpoint.sh /endpoint.sh
+WORKDIR /opt/MediaIO
+ENTRYPOINT [ "/endpoint.sh" ]

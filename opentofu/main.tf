@@ -117,3 +117,4 @@ resource "docker_image" "rpm_database" {
   name         = "postgres:15"
   keep_locally = true
 }
+
