@@ -32,7 +32,7 @@ echo "Uploading images to $TARGET_SERVER:$TARGET_DIR (if changed)..."
 RSYNC_OUTPUT=$(rsync -av --checksum -e "ssh -i $SSH_KEY" images/ "$TARGET_SERVER:$TARGET_DIR/images/" 2>&1 || true)
 echo "$RSYNC_OUTPUT"
 # Check if any image files were actually transferred
-if echo "$RSYNC_OUTPUT" | grep -E "\.tar" | grep -qv "^total\|^sent\|^received"; then
+if echo "$RSYNC_OUTPUT" | grep -E "\.tar|\.tgz" | grep -qv "^total\|^sent\|^received"; then
   IMAGES_UPLOADED=1
 fi
 
@@ -48,5 +48,6 @@ if [[ $IMAGES_UPLOADED -eq 1 ]]; then
   ssh -i "$SSH_KEY" "$TARGET_SERVER" "cd $TARGET_DIR && sudo chmod +x import_multivewer.sh && ./import_multivewer.sh"
 else
   echo "No images were uploaded, skipping import script."
+  echo "ssh -i \"$SSH_KEY\" \"$TARGET_SERVER\" \"cd $TARGET_DIR && sudo chmod +x import_multivewer.sh && ./import_multivewer.sh\""
 fi
 

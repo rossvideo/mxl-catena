@@ -1,0 +1,4070 @@
+{
+    "ID": "1",
+    "name": "MPRDev",
+    "class": "player",
+    "type": "Stew",
+    "maxOpenClips": "5",
+    "timing": {
+        "openPlayDuration": "00:00:05:00",
+        "openRecordDuration": "00:00:05:00",
+        "timedPlayLatency": "00:00:00:02",
+        "timedStillLatency": "00:00:00:00",
+        "playLatency": "00:00:00:01",
+        "searchDuration": "00:00:00:10",
+        "stillLatency": "00:00:00:00",
+        "recordStartLatency": "00:00:00:00",
+        "recordStopLatency": "00:00:00:00",
+        "preroll": "00:00:00:00",
+        "postroll": "00:00:00:00",
+        "fileAvailableDelay": "00:00:01:00",
+        "fileUpdateInterval": "00:00:30:00",
+        "recordTCLatency": "00:00:00:00"
+    },
+    "settings": [
+        {
+            "ID": "2.1",
+            "setting": "MPR Deck : Decode Renderengine Thread Count",
+            "valueType": "Number",
+            "value": "8",
+            "default": ""
+        },
+        {
+            "ID": "2.2",
+            "setting": "MPR Deck : Decode Renderengine Parallel Jobs",
+            "valueType": "Number",
+            "value": "500",
+            "default": ""
+        },
+        {
+            "ID": "2.3",
+            "setting": "MPR Deck : Pre-Decode Ingest Stream if needed",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "2.4",
+            "setting": "MPR Deck : Switch to Idle mode after x Seconds",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "2.5",
+            "setting": "MPR Deck : Throttle Background Loading",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "2.6",
+            "setting": "MPR Deck : Replace Driveletter in path",
+            "valueType": "Text",
+            "value": "",
+            "default": ""
+        },
+        {
+            "ID": "2.7",
+            "setting": "MPR Deck : Replace Volumename in path",
+            "valueType": "Text",
+            "value": "",
+            "default": ""
+        },
+        {
+            "ID": "2.8",
+            "setting": "MPR Deck : Replace Localpath in path",
+            "valueType": "Text",
+            "value": "",
+            "default": ""
+        },
+        {
+            "ID": "2.9",
+            "setting": "MPR Deck : Startup Mode",
+            "valueType": "List",
+            "value": "Idle",
+            "default": ""
+        },
+        {
+            "ID": "2.10",
+            "setting": "MPR Deck : Startup Preset",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "2.11",
+            "setting": "MPR Deck : Auto Select Active Clip",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "10.1",
+            "setting": "Playout Stream : Main Stream",
+            "valueType": "List",
+            "value": "MXL Extension : MXL (1) - Stream 1",
+            "default": "",
+            "configuration": {
+                "ID": 5,
+                "name": "1080p"
+            }
+        },
+        {
+            "ID": "10.5",
+            "setting": "Playout Stream : Create Dummy Content",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "11.1",
+            "setting": "File Playback : Buffer Count",
+            "valueType": "Number",
+            "value": "50",
+            "default": ""
+        },
+        {
+            "ID": "11.3",
+            "setting": "File Playback : Silent Audio when Paused",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "11.6",
+            "setting": "File Playback : De-interlace when not at 100% Speed",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "11.7",
+            "setting": "File Playback : Renderengine Thread Count",
+            "valueType": "Number",
+            "value": "8",
+            "default": ""
+        },
+        {
+            "ID": "12.1",
+            "setting": "File Reader : Read Ahead Count",
+            "valueType": "Number",
+            "value": "10",
+            "default": ""
+        },
+        {
+            "ID": "13.2",
+            "setting": "\"Black\" Playblack : Frame Count",
+            "valueType": "Number",
+            "value": "1",
+            "default": ""
+        },
+        {
+            "ID": "13.5",
+            "setting": "\"Black\" Playblack : Background File",
+            "valueType": "Object URL",
+            "value": "",
+            "default": ""
+        },
+        {
+            "ID": "14.2",
+            "setting": "Monitor Stream : Local Video Monitoring",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "14.3",
+            "setting": "Monitor Stream : Local Audio Monitoring",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "14.4",
+            "setting": "Monitor Stream : Generate Preview Stream Output",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": "No"
+        },
+        {
+            "ID": "14.5",
+            "setting": "Monitor Stream : Create Dummy Content",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "14.7",
+            "setting": "Monitor Stream : Second Stream",
+            "valueType": "List",
+            "value": "",
+            "default": ""
+        },
+        {
+            "ID": "14.8",
+            "setting": "Monitor Stream : Third Stream",
+            "valueType": "List",
+            "value": "",
+            "default": ""
+        },
+        {
+            "ID": "20.1",
+            "setting": "Ingest Stream : Main Stream",
+            "valueType": "List",
+            "value": "TVIO : Simulation Device (1) - Stream 1",
+            "default": "",
+            "configuration": {
+                "ID": 5,
+                "name": "1080p"
+            }
+        },
+        {
+            "ID": "20.5",
+            "setting": "Ingest Stream : Create Dummy Content",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "20.6",
+            "setting": "Ingest Stream : Add Time-of-day Timecode",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "21.1",
+            "setting": "File Writer : Render Buffer Count",
+            "valueType": "Number",
+            "value": "250",
+            "default": ""
+        },
+        {
+            "ID": "21.2",
+            "setting": "File Writer : Renderengine Thread Count",
+            "valueType": "Number",
+            "value": "8",
+            "default": ""
+        },
+        {
+            "ID": "21.3",
+            "setting": "File Writer : Referenced Writes",
+            "valueType": "List",
+            "value": "Edit Settings",
+            "default": "",
+            "options": {
+                "referencedWrites": []
+            }
+        },
+        {
+            "ID": "21.4",
+            "setting": "File Writer : Conform to Broadcast Format",
+            "valueType": "List",
+            "value": "Off",
+            "default": ""
+        },
+        {
+            "ID": "30.1",
+            "setting": "Preview Stream Source : Port",
+            "valueType": "Number",
+            "value": "8080",
+            "default": ""
+        },
+        {
+            "ID": "30.2",
+            "setting": "Preview Stream Source : IP",
+            "valueType": "Text",
+            "value": "0.0.0.0",
+            "default": ""
+        },
+        {
+            "ID": "30.4",
+            "setting": "Preview Stream Out : Preview Stream Out Port",
+            "valueType": "Number",
+            "value": "8050",
+            "default": "0"
+        },
+        {
+            "ID": "30.5",
+            "setting": "Preview Stream Out : HLS Stream Out Path",
+            "valueType": "Object URL",
+            "value": "",
+            "default": ""
+        },
+        {
+            "ID": "30.6",
+            "setting": "Preview Stream Out : HLS Stream Segment Duration",
+            "valueType": "Number",
+            "value": "6",
+            "default": ""
+        },
+        {
+            "ID": "30.7",
+            "setting": "Preview Stream Out : HLS Format",
+            "valueType": "List",
+            "value": "Simple",
+            "default": ""
+        },
+        {
+            "ID": "30.8",
+            "setting": "Preview Stream Out : Preview Stream Audio Channel Count",
+            "valueType": "Number",
+            "value": "2",
+            "default": ""
+        },
+        {
+            "ID": "30.9",
+            "setting": "Preview Stream Out : Preview Stream Optimisations",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "30.10",
+            "setting": "Preview Stream Out : Web Stream Representations Count",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "31.10",
+            "setting": "Stream Encoding : Video Encoder",
+            "valueType": "List",
+            "value": "JPEG Encoder 'jpeg' - JPEG Codec Extension (Ross Video) Ext ",
+            "default": "",
+            "options": {
+                "extension": {
+                    "ID": 1785750887,
+                    "name": "JPEG Encoder",
+                    "type": 1,
+                    "vendorID": 1919906675,
+                    "preferenceID": 2699301559,
+                    "settings": [
+                        {
+                            "ID": 1,
+                            "name": "Trace Log",
+                            "type": "Boolean",
+                            "value": false,
+                            "default": false
+                        },
+                        {
+                            "ID": 2,
+                            "name": "DCT Method",
+                            "type": "Selection",
+                            "value": "Slow",
+                            "default": "Slow"
+                        },
+                        {
+                            "ID": 3,
+                            "name": "Colorspace",
+                            "type": "Selection",
+                            "value": "YUV",
+                            "default": "YUV"
+                        },
+                        {
+                            "ID": 4,
+                            "name": "Encoding Quality",
+                            "type": "Number",
+                            "value": 75,
+                            "default": 75
+                        },
+                        {
+                            "ID": 100000,
+                            "name": "Input Pixel Format",
+                            "type": "Selection",
+                            "value": "RGBA (Windows)",
+                            "default": "RGBA (Windows)"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "ID": "31.11",
+            "setting": "Stream Encoding : Video Width",
+            "valueType": "Number",
+            "value": "480",
+            "default": ""
+        },
+        {
+            "ID": "31.12",
+            "setting": "Stream Encoding : Video Height",
+            "valueType": "Number",
+            "value": "270",
+            "default": ""
+        },
+        {
+            "ID": "31.13",
+            "setting": "Stream Encoding : Range Mapping",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "31.14",
+            "setting": "Stream Encoding : Video Scale Filter",
+            "valueType": "List",
+            "value": "Auto Filter",
+            "default": ""
+        },
+        {
+            "ID": "31.15",
+            "setting": "Stream Encoding : Video Interlacing",
+            "valueType": "List",
+            "value": "Progressive (Field 1)",
+            "default": ""
+        },
+        {
+            "ID": "31.16",
+            "setting": "Stream Encoding : Video Anamorph Marking",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "31.17",
+            "setting": "Stream Encoding : Color Space",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "31.18",
+            "setting": "Stream Encoding : Transfer Function",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "31.19",
+            "setting": "Stream Encoding : Conversion Matrix",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "31.50",
+            "setting": "Stream Encoding : Audio Encoder",
+            "valueType": "List",
+            "value": "LPCM \"lpcm\" (Ross Video)",
+            "default": ""
+        },
+        {
+            "ID": "31.51",
+            "setting": "Stream Encoding : Audio Channels per Track",
+            "valueType": "Number",
+            "value": "2",
+            "default": ""
+        },
+        {
+            "ID": "31.52",
+            "setting": "Stream Encoding : Audio Sample Size (bits)",
+            "valueType": "Number",
+            "value": "16",
+            "default": ""
+        },
+        {
+            "ID": "31.53",
+            "setting": "Stream Encoding : Audio Samplerate",
+            "valueType": "List",
+            "value": "48 Khz",
+            "default": ""
+        },
+        {
+            "ID": "31.54",
+            "setting": "Stream Encoding : Audio is Big Endian",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "31.55",
+            "setting": "Stream Encoding : Audio Max Bitrate",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "31.56",
+            "setting": "Stream Encoding : Audio is Floating Point",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "31.58",
+            "setting": "Stream Encoding : Audio Number of Tracks (0: Auto)",
+            "valueType": "Number",
+            "value": "1",
+            "default": ""
+        },
+        {
+            "ID": "31.59",
+            "setting": "Stream Encoding : Audio NTSC Sequence",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "31.60",
+            "setting": "Stream Encoding : Audio Mapping",
+            "valueType": "List",
+            "value": "Label and Match to Stereo",
+            "default": ""
+        },
+        {
+            "ID": "31.61",
+            "setting": "Stream Encoding : Audio apply Source Tween Tracks",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "32.7",
+            "setting": "Video Display : Number of VU Meter Channels",
+            "valueType": "Number",
+            "value": "16",
+            "default": ""
+        },
+        {
+            "ID": "34.0",
+            "setting": "Stream Extensions Options : Use Highest Framerate",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "34.1",
+            "setting": "Stream Extensions Options : Loop Stream",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "34.2",
+            "setting": "Stream Extensions Options : Force FPS Numerator",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "34.3",
+            "setting": "Stream Extensions Options : Force FPS Denominator",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "34.4",
+            "setting": "Stream Extensions Options : Username",
+            "valueType": "Text",
+            "value": "",
+            "default": ""
+        },
+        {
+            "ID": "34.5",
+            "setting": "Stream Extensions Options : Password",
+            "valueType": "Text",
+            "value": "",
+            "default": ""
+        },
+        {
+            "ID": "34.6",
+            "setting": "Stream Extensions Options : Force HLS/DASH Mode",
+            "valueType": "List",
+            "value": "Auto",
+            "default": ""
+        },
+        {
+            "ID": "34.7",
+            "setting": "Stream Extensions Options : Preferred Bandwidth",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "34.8",
+            "setting": "Stream Extensions Options : Playback Mixed-down Audio",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "34.9",
+            "setting": "Stream Extensions Options : Override Range Mapping Info",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "34.10",
+            "setting": "Stream Extensions Options : Override Color Space Info",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "34.11",
+            "setting": "Stream Extensions Options : Override Transfer Function Info",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "34.12",
+            "setting": "Stream Extensions Options : Override Conversion Matrix Info",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "34.13",
+            "setting": "Stream Extensions Options : Playback Range Mapping",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "34.14",
+            "setting": "Stream Extensions Options : Playback Color Space",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "34.15",
+            "setting": "Stream Extensions Options : Playback Transfer Function",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "34.16",
+            "setting": "Stream Extensions Options : Playback Conversion Matrix",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "34.17",
+            "setting": "Stream Extensions Options : Ingested SD is Anamorphic",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "100.3",
+            "setting": "MP42 Writer : Movie Timescale (0: Auto)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "100.4",
+            "setting": "MP42 Writer : Movie Slot Size (Bytes)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "100.5",
+            "setting": "MP42 Writer : Compatibility",
+            "valueType": "List",
+            "value": "Automatic based on filename extension",
+            "default": ""
+        },
+        {
+            "ID": "100.6",
+            "setting": "MP42 Writer : Movie Update Interval (Seconds)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "100.7",
+            "setting": "MP42 Writer : Video Track Chunksize (0: Default)",
+            "valueType": "Number",
+            "value": "4194304",
+            "default": ""
+        },
+        {
+            "ID": "100.8",
+            "setting": "MP42 Writer : Audio Track Chunksize (0: Default)",
+            "valueType": "Number",
+            "value": "72000",
+            "default": ""
+        },
+        {
+            "ID": "100.9",
+            "setting": "MP42 Writer : File Buffer Size (Bytes, -1: Default, 0: Disable)",
+            "valueType": "Number",
+            "value": "-1",
+            "default": ""
+        },
+        {
+            "ID": "101.3",
+            "setting": "MP42 Writer : Movie Timescale (0: Auto)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "101.4",
+            "setting": "MP42 Writer : Movie Slot Size (Bytes)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "101.5",
+            "setting": "MP42 Writer : Compatibility",
+            "valueType": "List",
+            "value": "Automatic based on filename extension",
+            "default": ""
+        },
+        {
+            "ID": "101.6",
+            "setting": "MP42 Writer : Movie Update Interval (Seconds)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "101.7",
+            "setting": "MP42 Writer : Video Track Chunksize (0: Default)",
+            "valueType": "Number",
+            "value": "4194304",
+            "default": ""
+        },
+        {
+            "ID": "101.8",
+            "setting": "MP42 Writer : Audio Track Chunksize (0: Default)",
+            "valueType": "Number",
+            "value": "72000",
+            "default": ""
+        },
+        {
+            "ID": "101.9",
+            "setting": "MP42 Writer : File Buffer Size (Bytes, -1: Default, 0: Disable)",
+            "valueType": "Number",
+            "value": "-1",
+            "default": ""
+        },
+        {
+            "ID": "102.3",
+            "setting": "MP42 Writer : Movie Timescale (0: Auto)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "102.4",
+            "setting": "MP42 Writer : Movie Slot Size (Bytes)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "102.5",
+            "setting": "MP42 Writer : Compatibility",
+            "valueType": "List",
+            "value": "Automatic based on filename extension",
+            "default": ""
+        },
+        {
+            "ID": "102.6",
+            "setting": "MP42 Writer : Movie Update Interval (Seconds)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "102.7",
+            "setting": "MP42 Writer : Video Track Chunksize (0: Default)",
+            "valueType": "Number",
+            "value": "4194304",
+            "default": ""
+        },
+        {
+            "ID": "102.8",
+            "setting": "MP42 Writer : Audio Track Chunksize (0: Default)",
+            "valueType": "Number",
+            "value": "72000",
+            "default": ""
+        },
+        {
+            "ID": "102.9",
+            "setting": "MP42 Writer : File Buffer Size (Bytes, -1: Default, 0: Disable)",
+            "valueType": "Number",
+            "value": "-1",
+            "default": ""
+        },
+        {
+            "ID": "103.3",
+            "setting": "MP42 Writer : Movie Timescale (0: Auto)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "103.4",
+            "setting": "MP42 Writer : Movie Slot Size (Bytes)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "103.5",
+            "setting": "MP42 Writer : Compatibility",
+            "valueType": "List",
+            "value": "Automatic based on filename extension",
+            "default": ""
+        },
+        {
+            "ID": "103.6",
+            "setting": "MP42 Writer : Movie Update Interval (Seconds)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "103.7",
+            "setting": "MP42 Writer : Video Track Chunksize (0: Default)",
+            "valueType": "Number",
+            "value": "4194304",
+            "default": ""
+        },
+        {
+            "ID": "103.8",
+            "setting": "MP42 Writer : Audio Track Chunksize (0: Default)",
+            "valueType": "Number",
+            "value": "72000",
+            "default": ""
+        },
+        {
+            "ID": "103.9",
+            "setting": "MP42 Writer : File Buffer Size (Bytes, -1: Default, 0: Disable)",
+            "valueType": "Number",
+            "value": "-1",
+            "default": ""
+        },
+        {
+            "ID": "104.3",
+            "setting": "MP42 Writer : Movie Timescale (0: Auto)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "104.4",
+            "setting": "MP42 Writer : Movie Slot Size (Bytes)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "104.5",
+            "setting": "MP42 Writer : Compatibility",
+            "valueType": "List",
+            "value": "Automatic based on filename extension",
+            "default": ""
+        },
+        {
+            "ID": "104.6",
+            "setting": "MP42 Writer : Movie Update Interval (Seconds)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "104.7",
+            "setting": "MP42 Writer : Video Track Chunksize (0: Default)",
+            "valueType": "Number",
+            "value": "4194304",
+            "default": ""
+        },
+        {
+            "ID": "104.8",
+            "setting": "MP42 Writer : Audio Track Chunksize (0: Default)",
+            "valueType": "Number",
+            "value": "72000",
+            "default": ""
+        },
+        {
+            "ID": "104.9",
+            "setting": "MP42 Writer : File Buffer Size (Bytes, -1: Default, 0: Disable)",
+            "valueType": "Number",
+            "value": "-1",
+            "default": ""
+        },
+        {
+            "ID": "110.1",
+            "setting": "HLS/TS Writer : HLS Manifest Type",
+            "valueType": "List",
+            "value": "Growing VOD",
+            "default": ""
+        },
+        {
+            "ID": "110.2",
+            "setting": "HLS/TS Writer : Media Format",
+            "valueType": "List",
+            "value": "MPEG2 Transport Stream",
+            "default": ""
+        },
+        {
+            "ID": "110.3",
+            "setting": "HLS/TS Writer : Segment Duration",
+            "valueType": "Number",
+            "value": "5",
+            "default": ""
+        },
+        {
+            "ID": "110.4",
+            "setting": "HLS/TS Writer : Concatenate Segments",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "111.1",
+            "setting": "HLS/TS Writer : HLS Manifest Type",
+            "valueType": "List",
+            "value": "Growing VOD",
+            "default": ""
+        },
+        {
+            "ID": "111.2",
+            "setting": "HLS/TS Writer : Media Format",
+            "valueType": "List",
+            "value": "MPEG2 Transport Stream",
+            "default": ""
+        },
+        {
+            "ID": "111.3",
+            "setting": "HLS/TS Writer : Segment Duration",
+            "valueType": "Number",
+            "value": "5",
+            "default": ""
+        },
+        {
+            "ID": "111.4",
+            "setting": "HLS/TS Writer : Concatenate Segments",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "112.1",
+            "setting": "HLS/TS Writer : HLS Manifest Type",
+            "valueType": "List",
+            "value": "Growing VOD",
+            "default": ""
+        },
+        {
+            "ID": "112.2",
+            "setting": "HLS/TS Writer : Media Format",
+            "valueType": "List",
+            "value": "MPEG2 Transport Stream",
+            "default": ""
+        },
+        {
+            "ID": "112.3",
+            "setting": "HLS/TS Writer : Segment Duration",
+            "valueType": "Number",
+            "value": "5",
+            "default": ""
+        },
+        {
+            "ID": "112.4",
+            "setting": "HLS/TS Writer : Concatenate Segments",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "113.1",
+            "setting": "HLS/TS Writer : HLS Manifest Type",
+            "valueType": "List",
+            "value": "Growing VOD",
+            "default": ""
+        },
+        {
+            "ID": "113.2",
+            "setting": "HLS/TS Writer : Media Format",
+            "valueType": "List",
+            "value": "MPEG2 Transport Stream",
+            "default": ""
+        },
+        {
+            "ID": "113.3",
+            "setting": "HLS/TS Writer : Segment Duration",
+            "valueType": "Number",
+            "value": "5",
+            "default": ""
+        },
+        {
+            "ID": "113.4",
+            "setting": "HLS/TS Writer : Concatenate Segments",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "114.1",
+            "setting": "HLS/TS Writer : HLS Manifest Type",
+            "valueType": "List",
+            "value": "Growing VOD",
+            "default": ""
+        },
+        {
+            "ID": "114.2",
+            "setting": "HLS/TS Writer : Media Format",
+            "valueType": "List",
+            "value": "MPEG2 Transport Stream",
+            "default": ""
+        },
+        {
+            "ID": "114.3",
+            "setting": "HLS/TS Writer : Segment Duration",
+            "valueType": "Number",
+            "value": "5",
+            "default": ""
+        },
+        {
+            "ID": "114.4",
+            "setting": "HLS/TS Writer : Concatenate Segments",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "120.1",
+            "setting": "Media File Writer : Media File Type",
+            "valueType": "List",
+            "value": "BMX MXF",
+            "default": ""
+        },
+        {
+            "ID": "120.2",
+            "setting": "Media File Writer : Compatibility",
+            "valueType": "List",
+            "value": "Sony (RDD9 MXF, Adobe Premiere compatible)",
+            "default": ""
+        },
+        {
+            "ID": "120.3",
+            "setting": "Media File Writer : Growing File",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "120.4",
+            "setting": "Media File Writer : Partition Interval (Frames)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "120.5",
+            "setting": "Media File Writer : Expected Duration (Seconds)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "120.6",
+            "setting": "Media File Writer : Default Timecode",
+            "valueType": "Timecode",
+            "value": "00:00:00:00",
+            "default": "00:00:00:00"
+        },
+        {
+            "ID": "120.7",
+            "setting": "Media File Writer : Single Pass Writing",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "120.8",
+            "setting": "Media File Writer : Quick Close",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "120.9",
+            "setting": "Media File Writer : Non-D10 IMX",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "120.10",
+            "setting": "Media File Writer : AVC-Intra 512 byte SPS-PPS Header",
+            "valueType": "List",
+            "value": "Pass-Through",
+            "default": ""
+        },
+        {
+            "ID": "120.11",
+            "setting": "Media File Writer : File Buffer Size (Bytes, -1: Default, 0: Disable)",
+            "valueType": "Number",
+            "value": "-1",
+            "default": ""
+        },
+        {
+            "ID": "120.12",
+            "setting": "Media File Writer : Log Errors",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "120.13",
+            "setting": "Media File Writer : Log Warnings",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "120.14",
+            "setting": "Media File Writer : Log Info",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "120.15",
+            "setting": "Media File Writer : Log Debug Info",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "120.16",
+            "setting": "Media File Writer : Log Trace Info",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "121.1",
+            "setting": "Media File Writer : Media File Type",
+            "valueType": "List",
+            "value": "BMX MXF",
+            "default": ""
+        },
+        {
+            "ID": "121.2",
+            "setting": "Media File Writer : Compatibility",
+            "valueType": "List",
+            "value": "Sony (RDD9 MXF, Adobe Premiere compatible)",
+            "default": ""
+        },
+        {
+            "ID": "121.3",
+            "setting": "Media File Writer : Growing File",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "121.4",
+            "setting": "Media File Writer : Partition Interval (Frames)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "121.5",
+            "setting": "Media File Writer : Expected Duration (Seconds)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "121.6",
+            "setting": "Media File Writer : Default Timecode",
+            "valueType": "Timecode",
+            "value": "00:00:00:00",
+            "default": "00:00:00:00"
+        },
+        {
+            "ID": "121.7",
+            "setting": "Media File Writer : Single Pass Writing",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "121.8",
+            "setting": "Media File Writer : Quick Close",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "121.9",
+            "setting": "Media File Writer : Non-D10 IMX",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "121.10",
+            "setting": "Media File Writer : AVC-Intra 512 byte SPS-PPS Header",
+            "valueType": "List",
+            "value": "Pass-Through",
+            "default": ""
+        },
+        {
+            "ID": "121.11",
+            "setting": "Media File Writer : File Buffer Size (Bytes, -1: Default, 0: Disable)",
+            "valueType": "Number",
+            "value": "-1",
+            "default": ""
+        },
+        {
+            "ID": "121.12",
+            "setting": "Media File Writer : Log Errors",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "121.13",
+            "setting": "Media File Writer : Log Warnings",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "121.14",
+            "setting": "Media File Writer : Log Info",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "121.15",
+            "setting": "Media File Writer : Log Debug Info",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "121.16",
+            "setting": "Media File Writer : Log Trace Info",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "122.1",
+            "setting": "Media File Writer : Media File Type",
+            "valueType": "List",
+            "value": "BMX MXF",
+            "default": ""
+        },
+        {
+            "ID": "122.2",
+            "setting": "Media File Writer : Compatibility",
+            "valueType": "List",
+            "value": "Sony (RDD9 MXF, Adobe Premiere compatible)",
+            "default": ""
+        },
+        {
+            "ID": "122.3",
+            "setting": "Media File Writer : Growing File",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "122.4",
+            "setting": "Media File Writer : Partition Interval (Frames)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "122.5",
+            "setting": "Media File Writer : Expected Duration (Seconds)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "122.6",
+            "setting": "Media File Writer : Default Timecode",
+            "valueType": "Timecode",
+            "value": "00:00:00:00",
+            "default": "00:00:00:00"
+        },
+        {
+            "ID": "122.7",
+            "setting": "Media File Writer : Single Pass Writing",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "122.8",
+            "setting": "Media File Writer : Quick Close",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "122.9",
+            "setting": "Media File Writer : Non-D10 IMX",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "122.10",
+            "setting": "Media File Writer : AVC-Intra 512 byte SPS-PPS Header",
+            "valueType": "List",
+            "value": "Pass-Through",
+            "default": ""
+        },
+        {
+            "ID": "122.11",
+            "setting": "Media File Writer : File Buffer Size (Bytes, -1: Default, 0: Disable)",
+            "valueType": "Number",
+            "value": "-1",
+            "default": ""
+        },
+        {
+            "ID": "122.12",
+            "setting": "Media File Writer : Log Errors",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "122.13",
+            "setting": "Media File Writer : Log Warnings",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "122.14",
+            "setting": "Media File Writer : Log Info",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "122.15",
+            "setting": "Media File Writer : Log Debug Info",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "122.16",
+            "setting": "Media File Writer : Log Trace Info",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "123.1",
+            "setting": "Media File Writer : Media File Type",
+            "valueType": "List",
+            "value": "BMX MXF",
+            "default": ""
+        },
+        {
+            "ID": "123.2",
+            "setting": "Media File Writer : Compatibility",
+            "valueType": "List",
+            "value": "Sony (RDD9 MXF, Adobe Premiere compatible)",
+            "default": ""
+        },
+        {
+            "ID": "123.3",
+            "setting": "Media File Writer : Growing File",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "123.4",
+            "setting": "Media File Writer : Partition Interval (Frames)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "123.5",
+            "setting": "Media File Writer : Expected Duration (Seconds)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "123.6",
+            "setting": "Media File Writer : Default Timecode",
+            "valueType": "Timecode",
+            "value": "00:00:00:00",
+            "default": "00:00:00:00"
+        },
+        {
+            "ID": "123.7",
+            "setting": "Media File Writer : Single Pass Writing",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "123.8",
+            "setting": "Media File Writer : Quick Close",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "123.9",
+            "setting": "Media File Writer : Non-D10 IMX",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "123.10",
+            "setting": "Media File Writer : AVC-Intra 512 byte SPS-PPS Header",
+            "valueType": "List",
+            "value": "Pass-Through",
+            "default": ""
+        },
+        {
+            "ID": "123.11",
+            "setting": "Media File Writer : File Buffer Size (Bytes, -1: Default, 0: Disable)",
+            "valueType": "Number",
+            "value": "-1",
+            "default": ""
+        },
+        {
+            "ID": "123.12",
+            "setting": "Media File Writer : Log Errors",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "123.13",
+            "setting": "Media File Writer : Log Warnings",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "123.14",
+            "setting": "Media File Writer : Log Info",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "123.15",
+            "setting": "Media File Writer : Log Debug Info",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "123.16",
+            "setting": "Media File Writer : Log Trace Info",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "124.1",
+            "setting": "Media File Writer : Media File Type",
+            "valueType": "List",
+            "value": "BMX MXF",
+            "default": ""
+        },
+        {
+            "ID": "124.2",
+            "setting": "Media File Writer : Compatibility",
+            "valueType": "List",
+            "value": "Sony (RDD9 MXF, Adobe Premiere compatible)",
+            "default": ""
+        },
+        {
+            "ID": "124.3",
+            "setting": "Media File Writer : Growing File",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "124.4",
+            "setting": "Media File Writer : Partition Interval (Frames)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "124.5",
+            "setting": "Media File Writer : Expected Duration (Seconds)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "124.6",
+            "setting": "Media File Writer : Default Timecode",
+            "valueType": "Timecode",
+            "value": "00:00:00:00",
+            "default": "00:00:00:00"
+        },
+        {
+            "ID": "124.7",
+            "setting": "Media File Writer : Single Pass Writing",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "124.8",
+            "setting": "Media File Writer : Quick Close",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "124.9",
+            "setting": "Media File Writer : Non-D10 IMX",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "124.10",
+            "setting": "Media File Writer : AVC-Intra 512 byte SPS-PPS Header",
+            "valueType": "List",
+            "value": "Pass-Through",
+            "default": ""
+        },
+        {
+            "ID": "124.11",
+            "setting": "Media File Writer : File Buffer Size (Bytes, -1: Default, 0: Disable)",
+            "valueType": "Number",
+            "value": "-1",
+            "default": ""
+        },
+        {
+            "ID": "124.12",
+            "setting": "Media File Writer : Log Errors",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "124.13",
+            "setting": "Media File Writer : Log Warnings",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "124.14",
+            "setting": "Media File Writer : Log Info",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "124.15",
+            "setting": "Media File Writer : Log Debug Info",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "124.16",
+            "setting": "Media File Writer : Log Trace Info",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "130.1",
+            "setting": "AVI Writer : Index Entry Count",
+            "valueType": "Number",
+            "value": "500",
+            "default": ""
+        },
+        {
+            "ID": "130.2",
+            "setting": "AVI Writer : Super Index Entry Count",
+            "valueType": "Number",
+            "value": "500",
+            "default": ""
+        },
+        {
+            "ID": "130.3",
+            "setting": "AVI Writer : Update while Growing",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "131.1",
+            "setting": "AVI Writer : Index Entry Count",
+            "valueType": "Number",
+            "value": "500",
+            "default": ""
+        },
+        {
+            "ID": "131.2",
+            "setting": "AVI Writer : Super Index Entry Count",
+            "valueType": "Number",
+            "value": "500",
+            "default": ""
+        },
+        {
+            "ID": "131.3",
+            "setting": "AVI Writer : Update while Growing",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "132.1",
+            "setting": "AVI Writer : Index Entry Count",
+            "valueType": "Number",
+            "value": "500",
+            "default": ""
+        },
+        {
+            "ID": "132.2",
+            "setting": "AVI Writer : Super Index Entry Count",
+            "valueType": "Number",
+            "value": "500",
+            "default": ""
+        },
+        {
+            "ID": "132.3",
+            "setting": "AVI Writer : Update while Growing",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "133.1",
+            "setting": "AVI Writer : Index Entry Count",
+            "valueType": "Number",
+            "value": "500",
+            "default": ""
+        },
+        {
+            "ID": "133.2",
+            "setting": "AVI Writer : Super Index Entry Count",
+            "valueType": "Number",
+            "value": "500",
+            "default": ""
+        },
+        {
+            "ID": "133.3",
+            "setting": "AVI Writer : Update while Growing",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "134.1",
+            "setting": "AVI Writer : Index Entry Count",
+            "valueType": "Number",
+            "value": "500",
+            "default": ""
+        },
+        {
+            "ID": "134.2",
+            "setting": "AVI Writer : Super Index Entry Count",
+            "valueType": "Number",
+            "value": "500",
+            "default": ""
+        },
+        {
+            "ID": "134.3",
+            "setting": "AVI Writer : Update while Growing",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "500.1",
+            "setting": "Output Fileset 1 : Video",
+            "valueType": "List",
+            "value": "Render",
+            "default": ""
+        },
+        {
+            "ID": "500.2",
+            "setting": "Output Fileset 1 : Audio",
+            "valueType": "List",
+            "value": "Render",
+            "default": ""
+        },
+        {
+            "ID": "500.3",
+            "setting": "Output Fileset 1 : Timecode",
+            "valueType": "List",
+            "value": "On",
+            "default": ""
+        },
+        {
+            "ID": "500.4",
+            "setting": "Output Fileset 1 : Closed Captions",
+            "valueType": "List",
+            "value": "On",
+            "default": ""
+        },
+        {
+            "ID": "500.9",
+            "setting": "Output Fileset 1 : Embed Video Proxy",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "500.10",
+            "setting": "Output Fileset 1 : Embed Audio Proxy",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "500.11",
+            "setting": "Output Fileset 1 : File Pre Allocation Size (MB)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "501.1",
+            "setting": "Output Fileset 2 : Video",
+            "valueType": "List",
+            "value": "Render",
+            "default": ""
+        },
+        {
+            "ID": "501.2",
+            "setting": "Output Fileset 2 : Audio",
+            "valueType": "List",
+            "value": "Render",
+            "default": ""
+        },
+        {
+            "ID": "501.3",
+            "setting": "Output Fileset 2 : Timecode",
+            "valueType": "List",
+            "value": "On",
+            "default": ""
+        },
+        {
+            "ID": "501.4",
+            "setting": "Output Fileset 2 : Closed Captions",
+            "valueType": "List",
+            "value": "Off",
+            "default": ""
+        },
+        {
+            "ID": "501.9",
+            "setting": "Output Fileset 2 : Embed Video Proxy",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "501.10",
+            "setting": "Output Fileset 2 : Embed Audio Proxy",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "501.11",
+            "setting": "Output Fileset 2 : File Pre Allocation Size (MB)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "502.1",
+            "setting": "Output Fileset 3 : Video",
+            "valueType": "List",
+            "value": "Render",
+            "default": ""
+        },
+        {
+            "ID": "502.2",
+            "setting": "Output Fileset 3 : Audio",
+            "valueType": "List",
+            "value": "Render",
+            "default": ""
+        },
+        {
+            "ID": "502.3",
+            "setting": "Output Fileset 3 : Timecode",
+            "valueType": "List",
+            "value": "On",
+            "default": ""
+        },
+        {
+            "ID": "502.4",
+            "setting": "Output Fileset 3 : Closed Captions",
+            "valueType": "List",
+            "value": "Off",
+            "default": ""
+        },
+        {
+            "ID": "502.9",
+            "setting": "Output Fileset 3 : Embed Video Proxy",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "502.10",
+            "setting": "Output Fileset 3 : Embed Audio Proxy",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "502.11",
+            "setting": "Output Fileset 3 : File Pre Allocation Size (MB)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "503.1",
+            "setting": "Output Fileset 4 : Video",
+            "valueType": "List",
+            "value": "Render",
+            "default": ""
+        },
+        {
+            "ID": "503.2",
+            "setting": "Output Fileset 4 : Audio",
+            "valueType": "List",
+            "value": "Render",
+            "default": ""
+        },
+        {
+            "ID": "503.3",
+            "setting": "Output Fileset 4 : Timecode",
+            "valueType": "List",
+            "value": "On",
+            "default": ""
+        },
+        {
+            "ID": "503.4",
+            "setting": "Output Fileset 4 : Closed Captions",
+            "valueType": "List",
+            "value": "Off",
+            "default": ""
+        },
+        {
+            "ID": "503.9",
+            "setting": "Output Fileset 4 : Embed Video Proxy",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "503.10",
+            "setting": "Output Fileset 4 : Embed Audio Proxy",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "503.11",
+            "setting": "Output Fileset 4 : File Pre Allocation Size (MB)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "504.1",
+            "setting": "Output Fileset 5 : Video",
+            "valueType": "List",
+            "value": "Render",
+            "default": ""
+        },
+        {
+            "ID": "504.2",
+            "setting": "Output Fileset 5 : Audio",
+            "valueType": "List",
+            "value": "Render",
+            "default": ""
+        },
+        {
+            "ID": "504.3",
+            "setting": "Output Fileset 5 : Timecode",
+            "valueType": "List",
+            "value": "On",
+            "default": ""
+        },
+        {
+            "ID": "504.4",
+            "setting": "Output Fileset 5 : Closed Captions",
+            "valueType": "List",
+            "value": "Off",
+            "default": ""
+        },
+        {
+            "ID": "504.9",
+            "setting": "Output Fileset 5 : Embed Video Proxy",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "504.10",
+            "setting": "Output Fileset 5 : Embed Audio Proxy",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "504.11",
+            "setting": "Output Fileset 5 : File Pre Allocation Size (MB)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+			"ID": "510.10",
+			"setting": "Render Setup : Video Encoder",
+			"valueType": "List",
+			"value": "JPEG Encoder 'jpeg' - JPEG Codec Extension (Ross Video) Ext ",
+			"default": "",
+			"options": {
+				"extension": {
+					"ID": 1785750887,
+					"name": "JPEG Encoder",
+					"type": 1,
+					"vendorID": 1919906675,
+					"preferenceID": 0,
+					"settings": [
+						{
+							"ID": 1,
+							"name": "Trace Log",
+							"type": "Boolean",
+							"value": false,
+							"default": false
+						},
+						{
+							"ID": 2,
+							"name": "DCT Method",
+							"type": "Selection",
+							"value": "Slow",
+							"default": "Slow"
+						},
+						{
+							"ID": 3,
+							"name": "Colorspace",
+							"type": "Selection",
+							"value": "YUV",
+							"default": "YUV"
+						},
+						{
+							"ID": 4,
+							"name": "Encoding Quality",
+							"type": "Number",
+							"value": 75,
+							"default": 75
+						},
+						{
+							"ID": 100000,
+							"name": "Input Pixel Format",
+							"type": "Selection",
+							"value": "RGBA (Windows)",
+							"default": "RGBA (Windows)"
+						}
+					]
+				}
+			}
+		},
+        {
+            "ID": "510.11",
+            "setting": "Render Setup : Video Width",
+            "valueType": "Number",
+            "value": "0",
+            "default": "960"
+        },
+        {
+            "ID": "510.12",
+            "setting": "Render Setup : Video Height",
+            "valueType": "Number",
+            "value": "0",
+            "default": "540"
+        },
+        {
+            "ID": "510.13",
+            "setting": "Render Setup : Range Mapping",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "510.14",
+            "setting": "Render Setup : Video Scale Filter",
+            "valueType": "List",
+            "value": "Auto Filter",
+            "default": ""
+        },
+        {
+            "ID": "510.15",
+            "setting": "Render Setup : Video Interlacing",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "510.16",
+            "setting": "Render Setup : Video Anamorph Marking",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "510.17",
+            "setting": "Render Setup : Color Space",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "510.18",
+            "setting": "Render Setup : Transfer Function",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "510.19",
+            "setting": "Render Setup : Conversion Matrix",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "510.50",
+            "setting": "Render Setup : Audio Encoder",
+            "valueType": "List",
+            "value": "LPCM \"lpcm\" (Ross Video)",
+            "default": ""
+        },
+        {
+            "ID": "510.51",
+            "setting": "Render Setup : Audio Channels per Track",
+            "valueType": "Number",
+            "value": "2",
+            "default": ""
+        },
+        {
+            "ID": "510.52",
+            "setting": "Render Setup : Audio Sample Size (bits)",
+            "valueType": "Number",
+            "value": "16",
+            "default": ""
+        },
+        {
+            "ID": "510.53",
+            "setting": "Render Setup : Audio Samplerate",
+            "valueType": "List",
+            "value": "48 Khz",
+            "default": ""
+        },
+        {
+            "ID": "510.54",
+            "setting": "Render Setup : Audio is Big Endian",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "510.55",
+            "setting": "Render Setup : Audio Max Bitrate",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "510.56",
+            "setting": "Render Setup : Audio is Floating Point",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "510.58",
+            "setting": "Render Setup : Audio Number of Tracks (0: Auto)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "510.59",
+            "setting": "Render Setup : Audio NTSC Sequence",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "510.60",
+            "setting": "Render Setup : Audio Mapping",
+            "valueType": "List",
+            "value": "Label Discrete (Numbered)",
+            "default": ""
+        },
+        {
+            "ID": "510.61",
+            "setting": "Render Setup : Audio apply Source Tween Tracks",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "510.70",
+            "setting": "Render Setup : Timecode Encoder",
+            "valueType": "List",
+            "value": "QuickTime Timecode",
+            "default": ""
+        },
+        {
+            "ID": "510.71",
+            "setting": "Render Setup : Timecode Format",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "510.72",
+            "setting": "Render Setup : Timecode Source",
+            "valueType": "List",
+            "value": "Auto Select",
+            "default": ""
+        },
+        {
+            "ID": "510.73",
+            "setting": "Render Setup : Timecode Source Text",
+            "valueType": "Text",
+            "value": "",
+            "default": ""
+        },
+        {
+            "ID": "510.80",
+            "setting": "Render Setup : Closed Captions Encoder",
+            "valueType": "List",
+            "value": "QuickTime 708",
+            "default": ""
+        },
+        {
+            "ID": "511.10",
+            "setting": "Render Setup : Video Encoder",
+            "valueType": "List",
+            "value": "JPEG Encoder 'jpeg' - JPEG Codec Extension (Ross Video) Ext ",
+            "default": "",
+            "options": {
+                "extension": {
+                    "ID": 1785750887,
+                    "name": "JPEG Encoder",
+                    "type": 1,
+                    "vendorID": 1919906675,
+                    "preferenceID": 2699301561,
+                    "settings": [
+                        {
+                            "ID": 1,
+                            "name": "Trace Log",
+                            "type": "Boolean",
+                            "value": false,
+                            "default": false
+                        },
+                        {
+                            "ID": 2,
+                            "name": "DCT Method",
+                            "type": "Selection",
+                            "value": "Slow",
+                            "default": "Slow"
+                        },
+                        {
+                            "ID": 3,
+                            "name": "Colorspace",
+                            "type": "Selection",
+                            "value": "YUV",
+                            "default": "YUV"
+                        },
+                        {
+                            "ID": 4,
+                            "name": "Encoding Quality",
+                            "type": "Number",
+                            "value": 75,
+                            "default": 75
+                        },
+                        {
+                            "ID": 100000,
+                            "name": "Input Pixel Format",
+                            "type": "Selection",
+                            "value": "RGBA (Windows)",
+                            "default": "RGBA (Windows)"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "ID": "511.11",
+            "setting": "Render Setup : Video Width",
+            "valueType": "Number",
+            "value": "960",
+            "default": ""
+        },
+        {
+            "ID": "511.12",
+            "setting": "Render Setup : Video Height",
+            "valueType": "Number",
+            "value": "540",
+            "default": ""
+        },
+        {
+            "ID": "511.13",
+            "setting": "Render Setup : Range Mapping",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "511.14",
+            "setting": "Render Setup : Video Scale Filter",
+            "valueType": "List",
+            "value": "Auto Filter",
+            "default": ""
+        },
+        {
+            "ID": "511.15",
+            "setting": "Render Setup : Video Interlacing",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "511.16",
+            "setting": "Render Setup : Video Anamorph Marking",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "511.17",
+            "setting": "Render Setup : Color Space",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "511.18",
+            "setting": "Render Setup : Transfer Function",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "511.19",
+            "setting": "Render Setup : Conversion Matrix",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "511.50",
+            "setting": "Render Setup : Audio Encoder",
+            "valueType": "List",
+            "value": "LPCM \"lpcm\" (Ross Video)",
+            "default": ""
+        },
+        {
+            "ID": "511.51",
+            "setting": "Render Setup : Audio Channels per Track",
+            "valueType": "Number",
+            "value": "2",
+            "default": ""
+        },
+        {
+            "ID": "511.52",
+            "setting": "Render Setup : Audio Sample Size (bits)",
+            "valueType": "Number",
+            "value": "16",
+            "default": ""
+        },
+        {
+            "ID": "511.53",
+            "setting": "Render Setup : Audio Samplerate",
+            "valueType": "List",
+            "value": "48 Khz",
+            "default": ""
+        },
+        {
+            "ID": "511.54",
+            "setting": "Render Setup : Audio is Big Endian",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "511.55",
+            "setting": "Render Setup : Audio Max Bitrate",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "511.56",
+            "setting": "Render Setup : Audio is Floating Point",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "511.58",
+            "setting": "Render Setup : Audio Number of Tracks (0: Auto)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "511.59",
+            "setting": "Render Setup : Audio NTSC Sequence",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "511.60",
+            "setting": "Render Setup : Audio Mapping",
+            "valueType": "List",
+            "value": "Label Discrete (Numbered)",
+            "default": ""
+        },
+        {
+            "ID": "511.61",
+            "setting": "Render Setup : Audio apply Source Tween Tracks",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "511.70",
+            "setting": "Render Setup : Timecode Encoder",
+            "valueType": "List",
+            "value": "QuickTime Timecode",
+            "default": ""
+        },
+        {
+            "ID": "511.71",
+            "setting": "Render Setup : Timecode Format",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "511.72",
+            "setting": "Render Setup : Timecode Source",
+            "valueType": "List",
+            "value": "Auto Select",
+            "default": ""
+        },
+        {
+            "ID": "511.73",
+            "setting": "Render Setup : Timecode Source Text",
+            "valueType": "Text",
+            "value": "",
+            "default": ""
+        },
+        {
+            "ID": "511.80",
+            "setting": "Render Setup : Closed Captions Encoder",
+            "valueType": "List",
+            "value": "QuickTime 708",
+            "default": ""
+        },
+        {
+            "ID": "512.10",
+            "setting": "Render Setup : Video Encoder",
+            "valueType": "List",
+            "value": "JPEG Encoder 'jpeg' - JPEG Codec Extension (Ross Video) Ext ",
+            "default": "",
+            "options": {
+                "extension": {
+                    "ID": 1785750887,
+                    "name": "JPEG Encoder",
+                    "type": 1,
+                    "vendorID": 1919906675,
+                    "preferenceID": 2699301562,
+                    "settings": [
+                        {
+                            "ID": 1,
+                            "name": "Trace Log",
+                            "type": "Boolean",
+                            "value": false,
+                            "default": false
+                        },
+                        {
+                            "ID": 2,
+                            "name": "DCT Method",
+                            "type": "Selection",
+                            "value": "Slow",
+                            "default": "Slow"
+                        },
+                        {
+                            "ID": 3,
+                            "name": "Colorspace",
+                            "type": "Selection",
+                            "value": "YUV",
+                            "default": "YUV"
+                        },
+                        {
+                            "ID": 4,
+                            "name": "Encoding Quality",
+                            "type": "Number",
+                            "value": 75,
+                            "default": 75
+                        },
+                        {
+                            "ID": 100000,
+                            "name": "Input Pixel Format",
+                            "type": "Selection",
+                            "value": "RGBA (Windows)",
+                            "default": "RGBA (Windows)"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "ID": "512.11",
+            "setting": "Render Setup : Video Width",
+            "valueType": "Number",
+            "value": "960",
+            "default": ""
+        },
+        {
+            "ID": "512.12",
+            "setting": "Render Setup : Video Height",
+            "valueType": "Number",
+            "value": "540",
+            "default": ""
+        },
+        {
+            "ID": "512.13",
+            "setting": "Render Setup : Range Mapping",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "512.14",
+            "setting": "Render Setup : Video Scale Filter",
+            "valueType": "List",
+            "value": "Auto Filter",
+            "default": ""
+        },
+        {
+            "ID": "512.15",
+            "setting": "Render Setup : Video Interlacing",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "512.16",
+            "setting": "Render Setup : Video Anamorph Marking",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "512.17",
+            "setting": "Render Setup : Color Space",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "512.18",
+            "setting": "Render Setup : Transfer Function",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "512.19",
+            "setting": "Render Setup : Conversion Matrix",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "512.50",
+            "setting": "Render Setup : Audio Encoder",
+            "valueType": "List",
+            "value": "LPCM \"lpcm\" (Ross Video)",
+            "default": ""
+        },
+        {
+            "ID": "512.51",
+            "setting": "Render Setup : Audio Channels per Track",
+            "valueType": "Number",
+            "value": "2",
+            "default": ""
+        },
+        {
+            "ID": "512.52",
+            "setting": "Render Setup : Audio Sample Size (bits)",
+            "valueType": "Number",
+            "value": "16",
+            "default": ""
+        },
+        {
+            "ID": "512.53",
+            "setting": "Render Setup : Audio Samplerate",
+            "valueType": "List",
+            "value": "48 Khz",
+            "default": ""
+        },
+        {
+            "ID": "512.54",
+            "setting": "Render Setup : Audio is Big Endian",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "512.55",
+            "setting": "Render Setup : Audio Max Bitrate",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "512.56",
+            "setting": "Render Setup : Audio is Floating Point",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "512.58",
+            "setting": "Render Setup : Audio Number of Tracks (0: Auto)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "512.59",
+            "setting": "Render Setup : Audio NTSC Sequence",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "512.60",
+            "setting": "Render Setup : Audio Mapping",
+            "valueType": "List",
+            "value": "Label Discrete (Numbered)",
+            "default": ""
+        },
+        {
+            "ID": "512.61",
+            "setting": "Render Setup : Audio apply Source Tween Tracks",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "512.70",
+            "setting": "Render Setup : Timecode Encoder",
+            "valueType": "List",
+            "value": "QuickTime Timecode",
+            "default": ""
+        },
+        {
+            "ID": "512.71",
+            "setting": "Render Setup : Timecode Format",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "512.72",
+            "setting": "Render Setup : Timecode Source",
+            "valueType": "List",
+            "value": "Auto Select",
+            "default": ""
+        },
+        {
+            "ID": "512.73",
+            "setting": "Render Setup : Timecode Source Text",
+            "valueType": "Text",
+            "value": "",
+            "default": ""
+        },
+        {
+            "ID": "512.80",
+            "setting": "Render Setup : Closed Captions Encoder",
+            "valueType": "List",
+            "value": "QuickTime 708",
+            "default": ""
+        },
+        {
+            "ID": "513.10",
+            "setting": "Render Setup : Video Encoder",
+            "valueType": "List",
+            "value": "JPEG Encoder 'jpeg' - JPEG Codec Extension (Ross Video) Ext ",
+            "default": "",
+            "options": {
+                "extension": {
+                    "ID": 1785750887,
+                    "name": "JPEG Encoder",
+                    "type": 1,
+                    "vendorID": 1919906675,
+                    "preferenceID": 2699301563,
+                    "settings": [
+                        {
+                            "ID": 1,
+                            "name": "Trace Log",
+                            "type": "Boolean",
+                            "value": false,
+                            "default": false
+                        },
+                        {
+                            "ID": 2,
+                            "name": "DCT Method",
+                            "type": "Selection",
+                            "value": "Slow",
+                            "default": "Slow"
+                        },
+                        {
+                            "ID": 3,
+                            "name": "Colorspace",
+                            "type": "Selection",
+                            "value": "YUV",
+                            "default": "YUV"
+                        },
+                        {
+                            "ID": 4,
+                            "name": "Encoding Quality",
+                            "type": "Number",
+                            "value": 75,
+                            "default": 75
+                        },
+                        {
+                            "ID": 100000,
+                            "name": "Input Pixel Format",
+                            "type": "Selection",
+                            "value": "RGBA (Windows)",
+                            "default": "RGBA (Windows)"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "ID": "513.11",
+            "setting": "Render Setup : Video Width",
+            "valueType": "Number",
+            "value": "960",
+            "default": ""
+        },
+        {
+            "ID": "513.12",
+            "setting": "Render Setup : Video Height",
+            "valueType": "Number",
+            "value": "540",
+            "default": ""
+        },
+        {
+            "ID": "513.13",
+            "setting": "Render Setup : Range Mapping",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "513.14",
+            "setting": "Render Setup : Video Scale Filter",
+            "valueType": "List",
+            "value": "Auto Filter",
+            "default": ""
+        },
+        {
+            "ID": "513.15",
+            "setting": "Render Setup : Video Interlacing",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "513.16",
+            "setting": "Render Setup : Video Anamorph Marking",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "513.17",
+            "setting": "Render Setup : Color Space",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "513.18",
+            "setting": "Render Setup : Transfer Function",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "513.19",
+            "setting": "Render Setup : Conversion Matrix",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "513.50",
+            "setting": "Render Setup : Audio Encoder",
+            "valueType": "List",
+            "value": "LPCM \"lpcm\" (Ross Video)",
+            "default": ""
+        },
+        {
+            "ID": "513.51",
+            "setting": "Render Setup : Audio Channels per Track",
+            "valueType": "Number",
+            "value": "2",
+            "default": ""
+        },
+        {
+            "ID": "513.52",
+            "setting": "Render Setup : Audio Sample Size (bits)",
+            "valueType": "Number",
+            "value": "16",
+            "default": ""
+        },
+        {
+            "ID": "513.53",
+            "setting": "Render Setup : Audio Samplerate",
+            "valueType": "List",
+            "value": "48 Khz",
+            "default": ""
+        },
+        {
+            "ID": "513.54",
+            "setting": "Render Setup : Audio is Big Endian",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "513.55",
+            "setting": "Render Setup : Audio Max Bitrate",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "513.56",
+            "setting": "Render Setup : Audio is Floating Point",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "513.58",
+            "setting": "Render Setup : Audio Number of Tracks (0: Auto)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "513.59",
+            "setting": "Render Setup : Audio NTSC Sequence",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "513.60",
+            "setting": "Render Setup : Audio Mapping",
+            "valueType": "List",
+            "value": "Label Discrete (Numbered)",
+            "default": ""
+        },
+        {
+            "ID": "513.61",
+            "setting": "Render Setup : Audio apply Source Tween Tracks",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "513.70",
+            "setting": "Render Setup : Timecode Encoder",
+            "valueType": "List",
+            "value": "QuickTime Timecode",
+            "default": ""
+        },
+        {
+            "ID": "513.71",
+            "setting": "Render Setup : Timecode Format",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "513.72",
+            "setting": "Render Setup : Timecode Source",
+            "valueType": "List",
+            "value": "Auto Select",
+            "default": ""
+        },
+        {
+            "ID": "513.73",
+            "setting": "Render Setup : Timecode Source Text",
+            "valueType": "Text",
+            "value": "",
+            "default": ""
+        },
+        {
+            "ID": "513.80",
+            "setting": "Render Setup : Closed Captions Encoder",
+            "valueType": "List",
+            "value": "QuickTime 708",
+            "default": ""
+        },
+        {
+            "ID": "514.10",
+            "setting": "Render Setup : Video Encoder",
+            "valueType": "List",
+            "value": "JPEG Encoder 'jpeg' - JPEG Codec Extension (Ross Video) Ext ",
+            "default": "",
+            "options": {
+                "extension": {
+                    "ID": 1785750887,
+                    "name": "JPEG Encoder",
+                    "type": 1,
+                    "vendorID": 1919906675,
+                    "preferenceID": 2699301564,
+                    "settings": [
+                        {
+                            "ID": 1,
+                            "name": "Trace Log",
+                            "type": "Boolean",
+                            "value": false,
+                            "default": false
+                        },
+                        {
+                            "ID": 2,
+                            "name": "DCT Method",
+                            "type": "Selection",
+                            "value": "Slow",
+                            "default": "Slow"
+                        },
+                        {
+                            "ID": 3,
+                            "name": "Colorspace",
+                            "type": "Selection",
+                            "value": "YUV",
+                            "default": "YUV"
+                        },
+                        {
+                            "ID": 4,
+                            "name": "Encoding Quality",
+                            "type": "Number",
+                            "value": 75,
+                            "default": 75
+                        },
+                        {
+                            "ID": 100000,
+                            "name": "Input Pixel Format",
+                            "type": "Selection",
+                            "value": "RGBA (Windows)",
+                            "default": "RGBA (Windows)"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "ID": "514.11",
+            "setting": "Render Setup : Video Width",
+            "valueType": "Number",
+            "value": "960",
+            "default": ""
+        },
+        {
+            "ID": "514.12",
+            "setting": "Render Setup : Video Height",
+            "valueType": "Number",
+            "value": "540",
+            "default": ""
+        },
+        {
+            "ID": "514.13",
+            "setting": "Render Setup : Range Mapping",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "514.14",
+            "setting": "Render Setup : Video Scale Filter",
+            "valueType": "List",
+            "value": "Auto Filter",
+            "default": ""
+        },
+        {
+            "ID": "514.15",
+            "setting": "Render Setup : Video Interlacing",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "514.16",
+            "setting": "Render Setup : Video Anamorph Marking",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "514.17",
+            "setting": "Render Setup : Color Space",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "514.18",
+            "setting": "Render Setup : Transfer Function",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "514.19",
+            "setting": "Render Setup : Conversion Matrix",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "514.50",
+            "setting": "Render Setup : Audio Encoder",
+            "valueType": "List",
+            "value": "LPCM \"lpcm\" (Ross Video)",
+            "default": ""
+        },
+        {
+            "ID": "514.51",
+            "setting": "Render Setup : Audio Channels per Track",
+            "valueType": "Number",
+            "value": "2",
+            "default": ""
+        },
+        {
+            "ID": "514.52",
+            "setting": "Render Setup : Audio Sample Size (bits)",
+            "valueType": "Number",
+            "value": "16",
+            "default": ""
+        },
+        {
+            "ID": "514.53",
+            "setting": "Render Setup : Audio Samplerate",
+            "valueType": "List",
+            "value": "48 Khz",
+            "default": ""
+        },
+        {
+            "ID": "514.54",
+            "setting": "Render Setup : Audio is Big Endian",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "514.55",
+            "setting": "Render Setup : Audio Max Bitrate",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "514.56",
+            "setting": "Render Setup : Audio is Floating Point",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "514.58",
+            "setting": "Render Setup : Audio Number of Tracks (0: Auto)",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "514.59",
+            "setting": "Render Setup : Audio NTSC Sequence",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "514.60",
+            "setting": "Render Setup : Audio Mapping",
+            "valueType": "List",
+            "value": "Label Discrete (Numbered)",
+            "default": ""
+        },
+        {
+            "ID": "514.61",
+            "setting": "Render Setup : Audio apply Source Tween Tracks",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "514.70",
+            "setting": "Render Setup : Timecode Encoder",
+            "valueType": "List",
+            "value": "QuickTime Timecode",
+            "default": ""
+        },
+        {
+            "ID": "514.71",
+            "setting": "Render Setup : Timecode Format",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "514.72",
+            "setting": "Render Setup : Timecode Source",
+            "valueType": "List",
+            "value": "Auto Select",
+            "default": ""
+        },
+        {
+            "ID": "514.73",
+            "setting": "Render Setup : Timecode Source Text",
+            "valueType": "Text",
+            "value": "",
+            "default": ""
+        },
+        {
+            "ID": "514.80",
+            "setting": "Render Setup : Closed Captions Encoder",
+            "valueType": "List",
+            "value": "QuickTime 708",
+            "default": ""
+        },
+        {
+            "ID": "520.10",
+            "setting": "Embedded Proxy Render Setup : Video Encoder",
+            "valueType": "List",
+            "value": "JPEG Encoder 'jpeg' - JPEG Codec Extension (Ross Video) Ext ",
+            "default": "",
+            "options": {
+                "extension": {
+                    "ID": 1785750887,
+                    "name": "JPEG Encoder",
+                    "type": 1,
+                    "vendorID": 1919906675,
+                    "preferenceID": 2699301565,
+                    "settings": [
+                        {
+                            "ID": 1,
+                            "name": "Trace Log",
+                            "type": "Boolean",
+                            "value": false,
+                            "default": false
+                        },
+                        {
+                            "ID": 2,
+                            "name": "DCT Method",
+                            "type": "Selection",
+                            "value": "Slow",
+                            "default": "Slow"
+                        },
+                        {
+                            "ID": 3,
+                            "name": "Colorspace",
+                            "type": "Selection",
+                            "value": "YUV",
+                            "default": "YUV"
+                        },
+                        {
+                            "ID": 4,
+                            "name": "Encoding Quality",
+                            "type": "Number",
+                            "value": 75,
+                            "default": 75
+                        },
+                        {
+                            "ID": 100000,
+                            "name": "Input Pixel Format",
+                            "type": "Selection",
+                            "value": "RGBA (Windows)",
+                            "default": "RGBA (Windows)"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "ID": "520.11",
+            "setting": "Embedded Proxy Render Setup : Video Width",
+            "valueType": "Number",
+            "value": "480",
+            "default": ""
+        },
+        {
+            "ID": "520.12",
+            "setting": "Embedded Proxy Render Setup : Video Height",
+            "valueType": "Number",
+            "value": "270",
+            "default": ""
+        },
+        {
+            "ID": "520.13",
+            "setting": "Embedded Proxy Render Setup : Range Mapping",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "520.14",
+            "setting": "Embedded Proxy Render Setup : Video Scale Filter",
+            "valueType": "List",
+            "value": "Auto Filter",
+            "default": ""
+        },
+        {
+            "ID": "520.15",
+            "setting": "Embedded Proxy Render Setup : Video Interlacing",
+            "valueType": "List",
+            "value": "Progressive (Field 1)",
+            "default": ""
+        },
+        {
+            "ID": "520.16",
+            "setting": "Embedded Proxy Render Setup : Video Anamorph Marking",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "520.17",
+            "setting": "Embedded Proxy Render Setup : Color Space",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "520.18",
+            "setting": "Embedded Proxy Render Setup : Transfer Function",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "520.19",
+            "setting": "Embedded Proxy Render Setup : Conversion Matrix",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "520.50",
+            "setting": "Embedded Proxy Render Setup : Audio Encoder",
+            "valueType": "List",
+            "value": "LPCM \"lpcm\" (Ross Video)",
+            "default": ""
+        },
+        {
+            "ID": "520.51",
+            "setting": "Embedded Proxy Render Setup : Audio Channels per Track",
+            "valueType": "Number",
+            "value": "2",
+            "default": ""
+        },
+        {
+            "ID": "520.52",
+            "setting": "Embedded Proxy Render Setup : Audio Sample Size (bits)",
+            "valueType": "Number",
+            "value": "16",
+            "default": ""
+        },
+        {
+            "ID": "520.53",
+            "setting": "Embedded Proxy Render Setup : Audio Samplerate",
+            "valueType": "List",
+            "value": "48 Khz",
+            "default": ""
+        },
+        {
+            "ID": "520.54",
+            "setting": "Embedded Proxy Render Setup : Audio is Big Endian",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "520.55",
+            "setting": "Embedded Proxy Render Setup : Audio Max Bitrate",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "520.56",
+            "setting": "Embedded Proxy Render Setup : Audio is Floating Point",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "520.58",
+            "setting": "Embedded Proxy Render Setup : Audio Number of Tracks (0: Auto)",
+            "valueType": "Number",
+            "value": "1",
+            "default": ""
+        },
+        {
+            "ID": "520.59",
+            "setting": "Embedded Proxy Render Setup : Audio NTSC Sequence",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "520.60",
+            "setting": "Embedded Proxy Render Setup : Audio Mapping",
+            "valueType": "List",
+            "value": "Label and Match to Stereo",
+            "default": ""
+        },
+        {
+            "ID": "520.61",
+            "setting": "Embedded Proxy Render Setup : Audio apply Source Tween Tracks",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "521.10",
+            "setting": "Embedded Proxy Render Setup : Video Encoder",
+            "valueType": "List",
+            "value": "JPEG Encoder 'jpeg' - JPEG Codec Extension (Ross Video) Ext ",
+            "default": "",
+            "options": {
+                "extension": {
+                    "ID": 1785750887,
+                    "name": "JPEG Encoder",
+                    "type": 1,
+                    "vendorID": 1919906675,
+                    "preferenceID": 2699301566,
+                    "settings": [
+                        {
+                            "ID": 1,
+                            "name": "Trace Log",
+                            "type": "Boolean",
+                            "value": false,
+                            "default": false
+                        },
+                        {
+                            "ID": 2,
+                            "name": "DCT Method",
+                            "type": "Selection",
+                            "value": "Slow",
+                            "default": "Slow"
+                        },
+                        {
+                            "ID": 3,
+                            "name": "Colorspace",
+                            "type": "Selection",
+                            "value": "YUV",
+                            "default": "YUV"
+                        },
+                        {
+                            "ID": 4,
+                            "name": "Encoding Quality",
+                            "type": "Number",
+                            "value": 75,
+                            "default": 75
+                        },
+                        {
+                            "ID": 100000,
+                            "name": "Input Pixel Format",
+                            "type": "Selection",
+                            "value": "RGBA (Windows)",
+                            "default": "RGBA (Windows)"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "ID": "521.11",
+            "setting": "Embedded Proxy Render Setup : Video Width",
+            "valueType": "Number",
+            "value": "480",
+            "default": ""
+        },
+        {
+            "ID": "521.12",
+            "setting": "Embedded Proxy Render Setup : Video Height",
+            "valueType": "Number",
+            "value": "270",
+            "default": ""
+        },
+        {
+            "ID": "521.13",
+            "setting": "Embedded Proxy Render Setup : Range Mapping",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "521.14",
+            "setting": "Embedded Proxy Render Setup : Video Scale Filter",
+            "valueType": "List",
+            "value": "Auto Filter",
+            "default": ""
+        },
+        {
+            "ID": "521.15",
+            "setting": "Embedded Proxy Render Setup : Video Interlacing",
+            "valueType": "List",
+            "value": "Progressive (Field 1)",
+            "default": ""
+        },
+        {
+            "ID": "521.16",
+            "setting": "Embedded Proxy Render Setup : Video Anamorph Marking",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "521.17",
+            "setting": "Embedded Proxy Render Setup : Color Space",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "521.18",
+            "setting": "Embedded Proxy Render Setup : Transfer Function",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "521.19",
+            "setting": "Embedded Proxy Render Setup : Conversion Matrix",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "521.50",
+            "setting": "Embedded Proxy Render Setup : Audio Encoder",
+            "valueType": "List",
+            "value": "LPCM \"lpcm\" (Ross Video)",
+            "default": ""
+        },
+        {
+            "ID": "521.51",
+            "setting": "Embedded Proxy Render Setup : Audio Channels per Track",
+            "valueType": "Number",
+            "value": "2",
+            "default": ""
+        },
+        {
+            "ID": "521.52",
+            "setting": "Embedded Proxy Render Setup : Audio Sample Size (bits)",
+            "valueType": "Number",
+            "value": "16",
+            "default": ""
+        },
+        {
+            "ID": "521.53",
+            "setting": "Embedded Proxy Render Setup : Audio Samplerate",
+            "valueType": "List",
+            "value": "48 Khz",
+            "default": ""
+        },
+        {
+            "ID": "521.54",
+            "setting": "Embedded Proxy Render Setup : Audio is Big Endian",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "521.55",
+            "setting": "Embedded Proxy Render Setup : Audio Max Bitrate",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "521.56",
+            "setting": "Embedded Proxy Render Setup : Audio is Floating Point",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "521.58",
+            "setting": "Embedded Proxy Render Setup : Audio Number of Tracks (0: Auto)",
+            "valueType": "Number",
+            "value": "1",
+            "default": ""
+        },
+        {
+            "ID": "521.59",
+            "setting": "Embedded Proxy Render Setup : Audio NTSC Sequence",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "521.60",
+            "setting": "Embedded Proxy Render Setup : Audio Mapping",
+            "valueType": "List",
+            "value": "Label and Match to Stereo",
+            "default": ""
+        },
+        {
+            "ID": "521.61",
+            "setting": "Embedded Proxy Render Setup : Audio apply Source Tween Tracks",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "522.10",
+            "setting": "Embedded Proxy Render Setup : Video Encoder",
+            "valueType": "List",
+            "value": "JPEG Encoder 'jpeg' - JPEG Codec Extension (Ross Video) Ext ",
+            "default": "",
+            "options": {
+                "extension": {
+                    "ID": 1785750887,
+                    "name": "JPEG Encoder",
+                    "type": 1,
+                    "vendorID": 1919906675,
+                    "preferenceID": 2699301567,
+                    "settings": [
+                        {
+                            "ID": 1,
+                            "name": "Trace Log",
+                            "type": "Boolean",
+                            "value": false,
+                            "default": false
+                        },
+                        {
+                            "ID": 2,
+                            "name": "DCT Method",
+                            "type": "Selection",
+                            "value": "Slow",
+                            "default": "Slow"
+                        },
+                        {
+                            "ID": 3,
+                            "name": "Colorspace",
+                            "type": "Selection",
+                            "value": "YUV",
+                            "default": "YUV"
+                        },
+                        {
+                            "ID": 4,
+                            "name": "Encoding Quality",
+                            "type": "Number",
+                            "value": 75,
+                            "default": 75
+                        },
+                        {
+                            "ID": 100000,
+                            "name": "Input Pixel Format",
+                            "type": "Selection",
+                            "value": "RGBA (Windows)",
+                            "default": "RGBA (Windows)"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "ID": "522.11",
+            "setting": "Embedded Proxy Render Setup : Video Width",
+            "valueType": "Number",
+            "value": "480",
+            "default": ""
+        },
+        {
+            "ID": "522.12",
+            "setting": "Embedded Proxy Render Setup : Video Height",
+            "valueType": "Number",
+            "value": "270",
+            "default": ""
+        },
+        {
+            "ID": "522.13",
+            "setting": "Embedded Proxy Render Setup : Range Mapping",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "522.14",
+            "setting": "Embedded Proxy Render Setup : Video Scale Filter",
+            "valueType": "List",
+            "value": "Auto Filter",
+            "default": ""
+        },
+        {
+            "ID": "522.15",
+            "setting": "Embedded Proxy Render Setup : Video Interlacing",
+            "valueType": "List",
+            "value": "Progressive (Field 1)",
+            "default": ""
+        },
+        {
+            "ID": "522.16",
+            "setting": "Embedded Proxy Render Setup : Video Anamorph Marking",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "522.17",
+            "setting": "Embedded Proxy Render Setup : Color Space",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "522.18",
+            "setting": "Embedded Proxy Render Setup : Transfer Function",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "522.19",
+            "setting": "Embedded Proxy Render Setup : Conversion Matrix",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "522.50",
+            "setting": "Embedded Proxy Render Setup : Audio Encoder",
+            "valueType": "List",
+            "value": "LPCM \"lpcm\" (Ross Video)",
+            "default": ""
+        },
+        {
+            "ID": "522.51",
+            "setting": "Embedded Proxy Render Setup : Audio Channels per Track",
+            "valueType": "Number",
+            "value": "2",
+            "default": ""
+        },
+        {
+            "ID": "522.52",
+            "setting": "Embedded Proxy Render Setup : Audio Sample Size (bits)",
+            "valueType": "Number",
+            "value": "16",
+            "default": ""
+        },
+        {
+            "ID": "522.53",
+            "setting": "Embedded Proxy Render Setup : Audio Samplerate",
+            "valueType": "List",
+            "value": "48 Khz",
+            "default": ""
+        },
+        {
+            "ID": "522.54",
+            "setting": "Embedded Proxy Render Setup : Audio is Big Endian",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "522.55",
+            "setting": "Embedded Proxy Render Setup : Audio Max Bitrate",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "522.56",
+            "setting": "Embedded Proxy Render Setup : Audio is Floating Point",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "522.58",
+            "setting": "Embedded Proxy Render Setup : Audio Number of Tracks (0: Auto)",
+            "valueType": "Number",
+            "value": "1",
+            "default": ""
+        },
+        {
+            "ID": "522.59",
+            "setting": "Embedded Proxy Render Setup : Audio NTSC Sequence",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "522.60",
+            "setting": "Embedded Proxy Render Setup : Audio Mapping",
+            "valueType": "List",
+            "value": "Label and Match to Stereo",
+            "default": ""
+        },
+        {
+            "ID": "522.61",
+            "setting": "Embedded Proxy Render Setup : Audio apply Source Tween Tracks",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "523.10",
+            "setting": "Embedded Proxy Render Setup : Video Encoder",
+            "valueType": "List",
+            "value": "JPEG Encoder 'jpeg' - JPEG Codec Extension (Ross Video) Ext ",
+            "default": "",
+            "options": {
+                "extension": {
+                    "ID": 1785750887,
+                    "name": "JPEG Encoder",
+                    "type": 1,
+                    "vendorID": 1919906675,
+                    "preferenceID": 2699301568,
+                    "settings": [
+                        {
+                            "ID": 1,
+                            "name": "Trace Log",
+                            "type": "Boolean",
+                            "value": false,
+                            "default": false
+                        },
+                        {
+                            "ID": 2,
+                            "name": "DCT Method",
+                            "type": "Selection",
+                            "value": "Slow",
+                            "default": "Slow"
+                        },
+                        {
+                            "ID": 3,
+                            "name": "Colorspace",
+                            "type": "Selection",
+                            "value": "YUV",
+                            "default": "YUV"
+                        },
+                        {
+                            "ID": 4,
+                            "name": "Encoding Quality",
+                            "type": "Number",
+                            "value": 75,
+                            "default": 75
+                        },
+                        {
+                            "ID": 100000,
+                            "name": "Input Pixel Format",
+                            "type": "Selection",
+                            "value": "RGBA (Windows)",
+                            "default": "RGBA (Windows)"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "ID": "523.11",
+            "setting": "Embedded Proxy Render Setup : Video Width",
+            "valueType": "Number",
+            "value": "480",
+            "default": ""
+        },
+        {
+            "ID": "523.12",
+            "setting": "Embedded Proxy Render Setup : Video Height",
+            "valueType": "Number",
+            "value": "270",
+            "default": ""
+        },
+        {
+            "ID": "523.13",
+            "setting": "Embedded Proxy Render Setup : Range Mapping",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "523.14",
+            "setting": "Embedded Proxy Render Setup : Video Scale Filter",
+            "valueType": "List",
+            "value": "Auto Filter",
+            "default": ""
+        },
+        {
+            "ID": "523.15",
+            "setting": "Embedded Proxy Render Setup : Video Interlacing",
+            "valueType": "List",
+            "value": "Progressive (Field 1)",
+            "default": ""
+        },
+        {
+            "ID": "523.16",
+            "setting": "Embedded Proxy Render Setup : Video Anamorph Marking",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "523.17",
+            "setting": "Embedded Proxy Render Setup : Color Space",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "523.18",
+            "setting": "Embedded Proxy Render Setup : Transfer Function",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "523.19",
+            "setting": "Embedded Proxy Render Setup : Conversion Matrix",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "523.50",
+            "setting": "Embedded Proxy Render Setup : Audio Encoder",
+            "valueType": "List",
+            "value": "LPCM \"lpcm\" (Ross Video)",
+            "default": ""
+        },
+        {
+            "ID": "523.51",
+            "setting": "Embedded Proxy Render Setup : Audio Channels per Track",
+            "valueType": "Number",
+            "value": "2",
+            "default": ""
+        },
+        {
+            "ID": "523.52",
+            "setting": "Embedded Proxy Render Setup : Audio Sample Size (bits)",
+            "valueType": "Number",
+            "value": "16",
+            "default": ""
+        },
+        {
+            "ID": "523.53",
+            "setting": "Embedded Proxy Render Setup : Audio Samplerate",
+            "valueType": "List",
+            "value": "48 Khz",
+            "default": ""
+        },
+        {
+            "ID": "523.54",
+            "setting": "Embedded Proxy Render Setup : Audio is Big Endian",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "523.55",
+            "setting": "Embedded Proxy Render Setup : Audio Max Bitrate",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "523.56",
+            "setting": "Embedded Proxy Render Setup : Audio is Floating Point",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "523.58",
+            "setting": "Embedded Proxy Render Setup : Audio Number of Tracks (0: Auto)",
+            "valueType": "Number",
+            "value": "1",
+            "default": ""
+        },
+        {
+            "ID": "523.59",
+            "setting": "Embedded Proxy Render Setup : Audio NTSC Sequence",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "523.60",
+            "setting": "Embedded Proxy Render Setup : Audio Mapping",
+            "valueType": "List",
+            "value": "Label and Match to Stereo",
+            "default": ""
+        },
+        {
+            "ID": "523.61",
+            "setting": "Embedded Proxy Render Setup : Audio apply Source Tween Tracks",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "524.10",
+            "setting": "Embedded Proxy Render Setup : Video Encoder",
+            "valueType": "List",
+            "value": "JPEG Encoder 'jpeg' - JPEG Codec Extension (Ross Video) Ext ",
+            "default": "",
+            "options": {
+                "extension": {
+                    "ID": 1785750887,
+                    "name": "JPEG Encoder",
+                    "type": 1,
+                    "vendorID": 1919906675,
+                    "preferenceID": 2699301569,
+                    "settings": [
+                        {
+                            "ID": 1,
+                            "name": "Trace Log",
+                            "type": "Boolean",
+                            "value": false,
+                            "default": false
+                        },
+                        {
+                            "ID": 2,
+                            "name": "DCT Method",
+                            "type": "Selection",
+                            "value": "Slow",
+                            "default": "Slow"
+                        },
+                        {
+                            "ID": 3,
+                            "name": "Colorspace",
+                            "type": "Selection",
+                            "value": "YUV",
+                            "default": "YUV"
+                        },
+                        {
+                            "ID": 4,
+                            "name": "Encoding Quality",
+                            "type": "Number",
+                            "value": 75,
+                            "default": 75
+                        },
+                        {
+                            "ID": 100000,
+                            "name": "Input Pixel Format",
+                            "type": "Selection",
+                            "value": "RGBA (Windows)",
+                            "default": "RGBA (Windows)"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "ID": "524.11",
+            "setting": "Embedded Proxy Render Setup : Video Width",
+            "valueType": "Number",
+            "value": "480",
+            "default": ""
+        },
+        {
+            "ID": "524.12",
+            "setting": "Embedded Proxy Render Setup : Video Height",
+            "valueType": "Number",
+            "value": "270",
+            "default": ""
+        },
+        {
+            "ID": "524.13",
+            "setting": "Embedded Proxy Render Setup : Range Mapping",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "524.14",
+            "setting": "Embedded Proxy Render Setup : Video Scale Filter",
+            "valueType": "List",
+            "value": "Auto Filter",
+            "default": ""
+        },
+        {
+            "ID": "524.15",
+            "setting": "Embedded Proxy Render Setup : Video Interlacing",
+            "valueType": "List",
+            "value": "Progressive (Field 1)",
+            "default": ""
+        },
+        {
+            "ID": "524.16",
+            "setting": "Embedded Proxy Render Setup : Video Anamorph Marking",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "524.17",
+            "setting": "Embedded Proxy Render Setup : Color Space",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "524.18",
+            "setting": "Embedded Proxy Render Setup : Transfer Function",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "524.19",
+            "setting": "Embedded Proxy Render Setup : Conversion Matrix",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "524.50",
+            "setting": "Embedded Proxy Render Setup : Audio Encoder",
+            "valueType": "List",
+            "value": "LPCM \"lpcm\" (Ross Video)",
+            "default": ""
+        },
+        {
+            "ID": "524.51",
+            "setting": "Embedded Proxy Render Setup : Audio Channels per Track",
+            "valueType": "Number",
+            "value": "2",
+            "default": ""
+        },
+        {
+            "ID": "524.52",
+            "setting": "Embedded Proxy Render Setup : Audio Sample Size (bits)",
+            "valueType": "Number",
+            "value": "16",
+            "default": ""
+        },
+        {
+            "ID": "524.53",
+            "setting": "Embedded Proxy Render Setup : Audio Samplerate",
+            "valueType": "List",
+            "value": "48 Khz",
+            "default": ""
+        },
+        {
+            "ID": "524.54",
+            "setting": "Embedded Proxy Render Setup : Audio is Big Endian",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "524.55",
+            "setting": "Embedded Proxy Render Setup : Audio Max Bitrate",
+            "valueType": "Number",
+            "value": "0",
+            "default": ""
+        },
+        {
+            "ID": "524.56",
+            "setting": "Embedded Proxy Render Setup : Audio is Floating Point",
+            "valueType": "Flag",
+            "value": "No",
+            "default": ""
+        },
+        {
+            "ID": "524.58",
+            "setting": "Embedded Proxy Render Setup : Audio Number of Tracks (0: Auto)",
+            "valueType": "Number",
+            "value": "1",
+            "default": ""
+        },
+        {
+            "ID": "524.59",
+            "setting": "Embedded Proxy Render Setup : Audio NTSC Sequence",
+            "valueType": "List",
+            "value": "Same As Source",
+            "default": ""
+        },
+        {
+            "ID": "524.60",
+            "setting": "Embedded Proxy Render Setup : Audio Mapping",
+            "valueType": "List",
+            "value": "Label and Match to Stereo",
+            "default": ""
+        },
+        {
+            "ID": "524.61",
+            "setting": "Embedded Proxy Render Setup : Audio apply Source Tween Tracks",
+            "valueType": "Flag",
+            "value": "Yes",
+            "default": ""
+        },
+        {
+            "ID": "",
+            "setting": "Settings Info : Unique ID",
+            "valueType": "Number",
+            "value": "0x00000000A0E412B5",
+            "default": "0x0000000000000000"
+        },
+        {
+            "ID": "",
+            "setting": "Settings Info : Platform",
+            "valueType": "Text",
+            "value": "WinOS",
+            "default": ""
+        }
+    ]
+}

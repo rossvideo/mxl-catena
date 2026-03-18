@@ -14,6 +14,10 @@ RUN mkdir -p /opt/MediaIO /tmp/media
 
 ADD Indigo-*.tar.gz /opt/MediaIO/
 COPY licensing.ini /opt/MediaIO/workspace/.metadata/.plugins/com.rossvideo.common.rwp/licensing.ini
-COPY endpoint.sh /endpoint.sh
+COPY endpoint_indigo.sh /endpoint.sh
 WORKDIR /opt/MediaIO
+RUN sudo mkdir -p "/C:" /data && \
+    sudo ln -s /data "/C:/data" && \
+    sudo chown -R 1000:1000 "/C:" /data
+
 ENTRYPOINT [ "/endpoint.sh" ]
