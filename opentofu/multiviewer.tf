@@ -19,9 +19,18 @@ locals {
       auuid = ""
       port  = tostring(15001 + idx)
       port2 = tostring(15101 + idx)
-  }])
-
-
+  }],
+  [
+    {
+      name  = "engine"
+      label = "MediaIO"
+      uuid  = "977c03f8-4423-4f29-8726-40d4798f85a4"
+      auuid = ""
+      port  = "25000"
+      port2 = "25100"
+    }
+  ]
+  )
   OUTPUTS = {
     name  = "mxl_output"
     label = "Output"
@@ -179,7 +188,8 @@ resource "docker_container" "cheetah_lite" {
     ],
     [
       "MAX_SOURCE_ID=${length(local.INPUTS)}",
-      "DEFAULT_LAYOUT=e_MVLayout_2_4",
+      "DEFAULT_LAYOUT=e_MVLayout_2_4_4_Hor"
+      # "DEFAULT_LAYOUT=e_MVLayout_2_4",
     ]
   ))
   networks_advanced {

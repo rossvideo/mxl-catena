@@ -111,6 +111,7 @@ resource "docker_image" "indigo" {
   }
   # keep_locally = true
   force_remove = true
+
 }
 resource "docker_container" "indigo" {
   depends_on = [docker_image.indigo]
@@ -125,6 +126,7 @@ resource "docker_container" "indigo" {
     host_path      = "${var.workspace_dir}/external/media/YourTV_Cornwall.mp4"
     container_path = "/data/YourTV_Cornwall.mp4"
   }
+  
 }
 
 # Docker image for MediaIO engine
@@ -134,7 +136,7 @@ resource "docker_image" "engine" {
     context    = "${var.workspace_dir}/external/media"
     dockerfile = "Dockerfile.engine"
   }
-  keep_locally = true
+  force_remove = true
 }
 resource "docker_container" "engine" {
   name  = "engine"
