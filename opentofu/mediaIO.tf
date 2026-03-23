@@ -27,12 +27,17 @@ resource "docker_container" "mariadb" {
     internal = "3306"
     external = "3306"
   }
+  log_opts ={
+    "max-file" = "3",
+    "max-size" = "10m"
+  }
 }
 
 resource "null_resource" "mediadb_init" {
   depends_on = [docker_container.mariadb]
   triggers = {
-    always = timestamp()
+    target_ip  = var.target_ip
+    mariadb_id = docker_container.mariadb.id
   }
 
   provisioner "local-exec" {
@@ -119,12 +124,13 @@ resource "docker_container" "indigo" {
   image = docker_image.indigo.name
   network_mode="container:${docker_container.mariadb.name}"
   volumes {
-    host_path      = "/data"
-    container_path = "/data"
-  }
-  volumes {
     host_path      = "${var.workspace_dir}/external/media/YourTV_Cornwall.mp4"
     container_path = "/data/YourTV_Cornwall.mp4"
+    read_only      = false
+  }
+  log_opts ={
+    "max-file" = "3",
+    "max-size" = "10m"
   }
   
 }
@@ -148,17 +154,95 @@ resource "docker_container" "engine" {
   volumes {
     host_path      = local.MXL_DOMAIN
     container_path = "${local.MXL_DOMAIN}/mxl"
+    read_only      = false
   }
   volumes {
     host_path      = "${var.workspace_dir}/external/media/Settings.json"
     container_path = "/root/Settings.json"
-  }
-  volumes { 
-    host_path      = "/data"
-    container_path = "/data"
+    read_only      = false
   }
   volumes {
     host_path      = "${var.workspace_dir}/external/media/YourTV_Cornwall.mp4"
     container_path = "/data/YourTV_Cornwall.mp4"
+    read_only      = false
+  }
+  networks_advanced {
+    name = docker_network.multiviewer_network.name
+  }
+  log_opts ={
+    "max-file" = "3",
+    "max-size" = "10m"
+  }
+}
+
+
+# Catena Controler
+resource "null_resource" "wait_for_engine" {
+  depends_on = [docker_container.engine]
+
+  provisioner "local-exec" {
+    command = <<EOT
+    echo "Waiting for MediaIO Engine to be ready..."
+
+    until curl -s -i -N \
+      -H "Connection: Upgrade" \
+      -H "Upgrade: websocket" \
+      -H "Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==" \
+      -H "Sec-WebSocket-Version: 13" \
+      http://10.62.152.123:8180/interface 2>/dev/null | grep -q "101 Switching Protocols"
+    do
+      echo "MediaIO Engine not ready yet, retrying in 1 second..."
+      sleep 1
+    done
+
+    echo "MediaIO Engine is ready!"
+    EOT
+  }
+}
+
+resource "docker_image" "MIO_controller" {
+  depends_on = [ null_resource.wait_for_engine ]
+  name = "rossvideo/mediaio-catena:local"
+  keep_locally = true
+}
+resource "docker_container" "MIO_controller" {
+  name  = "MIO_controller"
+  image = docker_image.MIO_controller.name
+  ports {
+    internal = 6254
+    external = 7248
+  }
+  volumes {
+    host_path      = "${var.workspace_dir}/external/media/YourTV_Cornwall.mp4"
+    container_path = "/data/YourTV_Cornwall.mp4"
+    read_only      = false
+  }
+  networks_advanced {
+    name = docker_network.multiviewer_network.name
+  }
+  log_opts ={
+    "max-file" = "3",
+    "max-size" = "10m"
+  }
+}
+resource "catena_device" "MIO" {
+  depends_on  = [docker_container.MIO_controller]
+  device_type = "remote-grpc"
+  name        = docker_container.MIO_controller.name
+  slot        = 0
+  address     = local.catena_endpoint
+  port        = docker_container.MIO_controller.ports[0].external
+
+  apply_all = false
+  params_map = {
+    "/clip_store"  = "/data"
+  }
+
+  start_command = "/start"
+  stop_command  = "/stop"
+
+  device_status {
+    oid         = "/status"
+    ready_value = "1"
   }
 }

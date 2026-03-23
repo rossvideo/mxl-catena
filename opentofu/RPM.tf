@@ -28,12 +28,17 @@ resource "docker_container" "rpm_database" {
   networks_advanced {
     name = docker_network.multiviewer_network.name
   }
+  log_opts ={
+    "max-file" = "3",
+    "max-size" = "10m"
+  }
 }
 # ----- INIT the DATABASE
 resource "null_resource" "platform_manager" {
   depends_on = [docker_container.rpm_database]
   triggers = {
-    always = timestamp()
+    target_ip       = var.target_ip
+    rpm_database_id = docker_container.rpm_database.id
   }
 
   provisioner "local-exec" {
@@ -57,7 +62,8 @@ resource "null_resource" "platform_manager" {
 resource "null_resource" "license_key_table" {
     depends_on = [ null_resource.platform_manager ]
   triggers = {
-    always = timestamp()
+    target_ip           = var.target_ip
+    platform_manager_id = null_resource.platform_manager.id
   }
 
   provisioner "local-exec" {
@@ -130,9 +136,10 @@ INSERT INTO public."OGP_FRAME"
 ("ID","NAME","HOSTNAME","PORT","PROTOCOL","USE_SSL","CONNECTION_SETTINGS","CREATED","MODIFIED")
 VALUES
 (2,'${catena_device.mxl2ndi.name}','${var.target_ip}',${catena_device.mxl2ndi.port},'CATENA',false,'<properties><entry key=\"node-id\">${var.target_ip}:${catena_device.mxl2ndi.port}</entry></properties>',NOW(),NOW()),
+(3,'Media IO','${var.target_ip}',7248,'CATENA',false,'<properties><entry key=\"node-id\">${var.target_ip}:7248</entry></properties>',NOW(),NOW()),
 ${join(",\n", [
   for idx, input in values(catena_device.ts2mxl) :
-  "(${idx + 3}, '${input.name}', '${var.target_ip}', ${input.port}, 'CATENA', false, '<properties><entry key=\"node-id\">${var.target_ip}:${input.port}</entry></properties>', NOW(), NOW())"
+  "(${idx + 4}, '${input.name}', '${var.target_ip}', ${input.port}, 'CATENA', false, '<properties><entry key=\"node-id\">${var.target_ip}:${input.port}</entry></properties>', NOW(), NOW())"
 ])}
 
 ON CONFLICT ("ID") DO NOTHING;
@@ -164,6 +171,10 @@ resource "docker_container" "rpm" {
   }
   networks_advanced {
     name = docker_network.multiviewer_network.name
+  }
+  log_opts ={
+    "max-file" = "3",
+    "max-size" = "10m"
   }
 
 }

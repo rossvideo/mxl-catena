@@ -20,10 +20,16 @@ resource "docker_container" "mxl2ndicontainer" {
   volumes {
     host_path      = local.MXL_DOMAIN
     container_path = local.MXL_DOMAIN
+    read_only      = false
   }
   volumes {
     host_path      = "${var.workspace_dir}/external"
     container_path = "/external"
+    read_only      = false
+  }
+  log_opts ={
+    "max-file" = "3",
+    "max-size" = "10m"
   }
 }
 

@@ -13,6 +13,14 @@ dc() {
 	docker compose -f "$COMPOSE_FILE" "$@"
 }
 
+load_tofu_env() {
+	if [[ -f "$dirpath/tofu.env" ]]; then
+		set -a
+		. "$dirpath/tofu.env"
+		set +a
+	fi
+}
+
 ensure_built() {
 	if ! docker image inspect "$IMAGE_NAME" >/dev/null 2>&1; then
 		echo "[tofu] Building container image $IMAGE_NAME ..."
@@ -29,8 +37,15 @@ ensure_builder_built() {
 
 run_in_container() {
 	ensure_built
+	# Load local secrets/config and map app secret to OpenTofu variable when present.
+	load_tofu_env
+	local env_args=( -e "TF_VAR_workspace_dir=$TF_VAR_workspace_dir" )
+	if [[ -n "${OPENAI_API_KEY:-}" ]]; then
+		export TF_VAR_openai_api_key="$OPENAI_API_KEY"
+		env_args+=( -e "TF_VAR_openai_api_key=$TF_VAR_openai_api_key" )
+	fi
 	# Service config already sets working_dir; override if needed
-	dc run --rm -e "TF_VAR_workspace_dir=$TF_VAR_workspace_dir" "$SERVICE" "$@"
+	dc run --rm "${env_args[@]}" "$SERVICE" "$@"
 }
 
 usage() {
@@ -86,8 +101,7 @@ case "$cmd" in
 	setup)
 		shift || true
 		echo "[tofu] Setting user environment variables from tofu.env..."
-
-		. $dirpath/tofu.env
+		load_tofu_env
 		# echo "[tofu] Ensuring docker image is built, then running 'tofu init'..."
 		# rm -f opentofu/.terraform.lock.hcl
 		ensure_built

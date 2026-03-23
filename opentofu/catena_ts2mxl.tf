@@ -11,10 +11,16 @@ resource "docker_container" "ts2mxl_containers" {
   volumes {
     host_path      = local.MXL_DOMAIN
     container_path = local.MXL_DOMAIN
+    read_only      = false
   }
   volumes {
     host_path      = "${var.workspace_dir}/external/ts"
     container_path = "/ts"
+    read_only      = false
+  }
+  log_opts ={
+    "max-file" = "3",
+    "max-size" = "10m"
   }
 }
 

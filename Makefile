@@ -37,9 +37,20 @@ docker-apply:
 .PHONY: proto-gen
 PROTO_DIR := proto
 GEN_DIR := internal/genproto
-PROTO_FILES := $(shell find $(PROTO_DIR) -type f -name '*.proto')
+PROTO_API_URL := https://api.github.com/repos/SMPTE/st2138-a/contents/interface/proto?ref=main
 
 proto-gen:
+	@echo "Downloading .proto files from SMPTE/st2138-a ..."
+	@mkdir -p $(PROTO_DIR)
+	@curl -fsSL "$(PROTO_API_URL)" \
+		| grep '"download_url":' \
+		| sed -E 's/ *"download_url": "([^"]+)".*/\1/' \
+		| grep '\.proto$$' \
+		| while read url; do \
+			fname=$$(basename "$$url"); \
+			echo " -> $$fname"; \
+			curl -fsSL "$$url" -o "$(PROTO_DIR)/$$fname"; \
+		done
 	@mkdir -p $(GEN_DIR)
 	@if ! command -v protoc >/dev/null 2>&1; then \
 		echo "Error: protoc not found. Install it (e.g., apt-get install -y protobuf-compiler)"; \
@@ -56,7 +67,12 @@ proto-gen:
 		echo "Ensure $$GOPATH/bin is in your PATH."; \
 		exit 2; \
 	fi
-	@echo "Generating Go stubs to $(GEN_DIR) ..."
+	@PROTO_FILES=$$(find $(PROTO_DIR) -type f -name '*.proto'); \
+	if [ -z "$$PROTO_FILES" ]; then \
+		echo "Error: no .proto files found in $(PROTO_DIR) after download."; \
+		exit 2; \
+	fi; \
+	echo "Generating Go stubs to $(GEN_DIR) ..."; \
 	protoc -I $(PROTO_DIR) \
 		--go_out=$(GEN_DIR) \
 		--go_opt=paths=source_relative \
@@ -76,4 +92,4 @@ proto-gen:
 		--go-grpc_opt=Mdevice.proto=$(shell go list -m)/internal/genproto \
 		--go-grpc_opt=Mparam.proto=$(shell go list -m)/internal/genproto \
 		--go-grpc_opt=Mmenu.proto=$(shell go list -m)/internal/genproto \
-		$(PROTO_FILES)
+		$$PROTO_FILES

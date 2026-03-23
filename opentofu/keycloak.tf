@@ -15,6 +15,10 @@ resource "docker_container" "keycloak" {
     internal = 8080
     external = 8080
   }
+  log_opts ={
+    "max-file" = "3",
+    "max-size" = "10m"
+  }
   command = ["start-dev"]
 }
 

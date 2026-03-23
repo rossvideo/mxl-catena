@@ -1,5 +1,5 @@
 terraform {
-  # backend "http" {
+  # backend "http" { #shipped to NAB
   #   address        = "https://srvottgitlab02.rossvideo.com/api/v4/projects/525/terraform/state/demo2"
   #   lock_address   = "https://srvottgitlab02.rossvideo.com/api/v4/projects/525/terraform/state/demo2/lock"
   #   unlock_address = "https://srvottgitlab02.rossvideo.com/api/v4/projects/525/terraform/state/demo2/lock"

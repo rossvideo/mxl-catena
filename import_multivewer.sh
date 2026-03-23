@@ -22,6 +22,8 @@ printf '%s\n' \
   "images/control.tar" \
   "images/cheetah-lite.tar" \
   "images/mediaio.tgz" \
+  "images/catena-mcp-server-local.tgz" \
+  "images/mediaiocontrol.tgz" \
   | xargs -P 6 -n 1 sh -c 'docker load -i "$1"' sh || { echo "One or more docker load commands failed."; exit 1; }
 
 wait

@@ -11,6 +11,7 @@ resource "docker_container" "prometheus" {
   volumes {
     host_path      = "${var.workspace_dir}/metrics/prometheus.yml"
     container_path = "/etc/prometheus/prometheus.yml"
+    read_only      = false
   }
   ports {
     internal = "9090"
@@ -18,6 +19,10 @@ resource "docker_container" "prometheus" {
   }
   networks_advanced {
     name = docker_network.multiviewer_network.name
+  }
+  log_opts ={
+    "max-file" = "3",
+    "max-size" = "10m"
   }
 }
 
@@ -38,6 +43,11 @@ resource "docker_container" "grafana" {
   networks_advanced {
     name = docker_network.multiviewer_network.name
   }
+  log_opts ={
+    "max-file" = "3",
+    "max-size" = "10m"
+  }
+
 }
 
 // Optional (On-premise, not supported in Grafana Cloud): Create an organization

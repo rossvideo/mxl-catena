@@ -106,11 +106,16 @@ resource "docker_container" "input_containers" {
   volumes {
     host_path      = local.MXL_DOMAIN
     container_path = local.MXL_DOMAIN
+    read_only      = false
   }
 
   networks_advanced {
     name    = docker_network.multiviewer_network.name
     aliases = ["input${each.value.index + 1}"]
+  }
+  log_opts ={
+    "max-file" = "3",
+    "max-size" = "10m"
   }
 }
 //Outputs
@@ -122,10 +127,15 @@ resource "docker_container" "output_containers" {
   volumes {
     host_path      = local.MXL_DOMAIN
     container_path = local.MXL_DOMAIN
+    read_only      = false
   }
   networks_advanced {
     name    = docker_network.multiviewer_network.name
     aliases = ["output"]
+  }
+  log_opts ={
+    "max-file" = "3",
+    "max-size" = "10m"
   }
 
 }
@@ -137,6 +147,10 @@ resource "docker_container" "multiviewer" {
   networks_advanced {
     name    = docker_network.multiviewer_network.name
     aliases = ["multiviewer"]
+  }
+  log_opts ={
+    "max-file" = "3",
+    "max-size" = "10m"
   }
 }
 
@@ -164,6 +178,10 @@ resource "docker_container" "control" {
 
   networks_advanced {
     name = docker_network.multiviewer_network.name
+  }
+  log_opts ={
+    "max-file" = "3",
+    "max-size" = "10m"
   }
 
 }
@@ -195,7 +213,10 @@ resource "docker_container" "cheetah_lite" {
   networks_advanced {
     name = docker_network.multiviewer_network.name
   }
-
+  log_opts ={
+    "max-file" = "3",
+    "max-size" = "10m"
+  }
 }
 
 # //Part2
@@ -238,9 +259,13 @@ resource "docker_container" "tools_outputs" {
   volumes {
     host_path      = local.MXL_DOMAIN
     container_path = local.MXL_DOMAIN
+    read_only      = false
   }
   networks_advanced {
     name = docker_network.multiviewer_network.name
   }
-
+  log_opts ={
+    "max-file" = "3",
+    "max-size" = "10m"
+  }
 }
