@@ -122,7 +122,7 @@ resource "docker_container" "indigo" {
   depends_on = [docker_image.indigo]
   name  = "indigo"
   image = docker_image.indigo.name
-  network_mode="container:${docker_container.mariadb.name}"
+  network_mode="container:${docker_container.mariadb.id}"
   volumes {
     host_path      = "${var.workspace_dir}/external/media/YourTV_Cornwall.mp4"
     container_path = "/data/YourTV_Cornwall.mp4"
