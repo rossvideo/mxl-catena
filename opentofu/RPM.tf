@@ -43,17 +43,21 @@ resource "null_resource" "platform_manager" {
 
   provisioner "local-exec" {
     command = <<EOT
-    psql "postgresql://postgres:password@${var.target_ip}:5432" <<SQL
-    SELECT 'CREATE DATABASE platform_manager
-        LOCALE_PROVIDER = icu
-        ICU_LOCALE = ''und''
-        ENCODING = ''UTF8''
-        TEMPLATE = template0'
-        WHERE NOT EXISTS (
-    SELECT 1 FROM pg_database WHERE datname = 'platform_manager'
-    )\gexec
+until psql "postgresql://postgres:password@${var.target_ip}:5432" -c "SELECT 1" >/dev/null 2>&1; do
+  echo "Waiting for PostgreSQL to be ready..."
+  sleep 1
+done
+psql "postgresql://postgres:password@${var.target_ip}:5432" <<SQL
+SELECT 'CREATE DATABASE platform_manager
+    LOCALE_PROVIDER = icu
+    ICU_LOCALE = ''und''
+    ENCODING = ''UTF8''
+    TEMPLATE = template0'
+    WHERE NOT EXISTS (
+SELECT 1 FROM pg_database WHERE datname = 'platform_manager'
+)\gexec
 
-    SQL
+SQL
     EOT
   }
 }
@@ -136,7 +140,7 @@ INSERT INTO public."OGP_FRAME"
 ("ID","NAME","HOSTNAME","PORT","PROTOCOL","USE_SSL","CONNECTION_SETTINGS","CREATED","MODIFIED")
 VALUES
 (2,'${catena_device.mxl2ndi.name}','${var.target_ip}',${catena_device.mxl2ndi.port},'CATENA',false,'<properties><entry key=\"node-id\">${var.target_ip}:${catena_device.mxl2ndi.port}</entry></properties>',NOW(),NOW()),
-(3,'Media IO','${var.target_ip}',7248,'CATENA',false,'<properties><entry key=\"node-id\">${var.target_ip}:7248</entry></properties>',NOW(),NOW()),
+(3,'Media IO','${var.target_ip}',7248,'CATENA',false,'<properties></properties>',NOW(),NOW()),
 ${join(",\n", [
   for idx, input in values(catena_device.ts2mxl) :
   "(${idx + 4}, '${input.name}', '${var.target_ip}', ${input.port}, 'CATENA', false, '<properties><entry key=\"node-id\">${var.target_ip}:${input.port}</entry></properties>', NOW(), NOW())"
