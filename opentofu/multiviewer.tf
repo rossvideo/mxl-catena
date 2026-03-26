@@ -3,13 +3,29 @@ locals {
   INPUTS = concat(
     [
       {
+        name = "ndi2mxl"
+        label = "NDI to MXL"
+        uuid = "19736e97-a32d-40b3-a2b1-4aa0cf4a5f10"
+        auuid = ""
+        port = "15000"
+        port2 = "15100"
+      },
+      {
+        name  = "engine"
+        label = "MediaIO"
+        uuid  = "977c03f8-4423-4f29-8726-40d4798f85a4"
+        auuid = ""
+        port  = "15001"
+        port2 = "15101"
+      },
+      {
         name  = local.OUTPUTS.name
         label = local.OUTPUTS.label
         uuid  = local.OUTPUTS.uuid
         # auuid = "fba2bbad-43e6-4b04-8f0c-f586e2c312af"
         auuid = ""
-        port  = "15000"
-        port2 = "15100"
+        port  = "15002"
+        port2 = "15102"
       }
     ],
     [for idx, dev in local.CATENA_INPUTS : {
@@ -17,27 +33,9 @@ locals {
       label = dev.label
       uuid  = dev.uuid
       auuid = ""
-      port  = tostring(15001 + idx)
-      port2 = tostring(15101 + idx)
-  }],
-  [
-    {
-      name  = "engine"
-      label = "MediaIO"
-      uuid  = "977c03f8-4423-4f29-8726-40d4798f85a4"
-      auuid = ""
-      port  = "25000"
-      port2 = "25100"
-    },
-    {
-      name = "ndi2mxl"
-      label = "NDI to MXL"
-      uuid = "19736e97-a32d-40b3-a2b1-4aa0cf4a5f10"
-      auuid = ""
-      port = "26000"
-      port2 = "26100"
-    }
-  ]
+      port  = tostring(15003 + idx)
+      port2 = tostring(15103 + idx)
+  }]
   )
   OUTPUTS = {
     name  = "mxl_output"
@@ -61,34 +59,6 @@ locals {
     metric_port     = "14100"
     MXL_TO_GST_PORT = "50000"
   }
-  # TOOLS_INPUTS=[
-  #     {
-  #         name = "gst-to-mxl-gradient"
-  #         pattern = "gradient"
-  #         wave = "ticks"
-  #         uuid = local.INPUTS[0].uuid
-  #         auuid = local.INPUTS[0].auuid
-  #         width = local.CONTROL.XRES
-  #         height = local.CONTROL.YRES
-  #     },
-  #     {
-  #         name = "gst-to-mxl-ball"
-  #         pattern = "ball"
-  #         wave = "sine"
-  #         uuid = local.INPUTS[1].uuid
-  #         auuid = local.INPUTS[1].auuid
-  #         width = local.CONTROL.XRES
-  #         height = local.CONTROL.YRES
-  #     },
-  #     {
-  #         name = "gst-to-mxl-smpte"
-  #         pattern = "smpte"
-  #         wave = "white-noise"
-  #         uuid = local.INPUTS[2].uuid
-  #         auuid = local.INPUTS[2].auuid
-  #         width = local.CONTROL.XRES
-  #         height = local.CONTROL.YRES
-  #     }]
   TOOLS_OUTPUTS = [
     {
       name = "mxl-to-gst"
@@ -275,5 +245,14 @@ resource "docker_container" "tools_outputs" {
   log_opts ={
     "max-file" = "3",
     "max-size" = "10m"
+  }
+}
+
+# wait 5 seconds then restart tools_outputs
+resource "null_resource" "restart_tools_outputs" {
+  depends_on = [docker_container.tools_outputs]
+
+  provisioner "local-exec" {
+    command = "sleep 5 && docker restart ${join(" ", [for c in docker_container.tools_outputs : c.name])}"
   }
 }

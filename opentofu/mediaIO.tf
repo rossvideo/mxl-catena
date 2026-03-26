@@ -213,8 +213,8 @@ resource "docker_container" "MIO_controller" {
     external = 7248
   }
   volumes {
-    host_path      = "${var.workspace_dir}/external/media/YourTV_Cornwall.mp4"
-    container_path = "/data/YourTV_Cornwall.mp4"
+    host_path      = "${var.workspace_dir}/external/media/clips"
+    container_path = "/data"
     read_only      = false
   }
   networks_advanced {
@@ -238,11 +238,11 @@ resource "catena_device" "MIO" {
     "/clip_store"  = "/data"
   }
 
-  start_command = "/start"
-  stop_command  = "/stop"
+  start_command = "/start_session"
+  stop_command  = "/stop_session"
 
   device_status {
-    oid         = "/status"
+    oid         = "/websocket_connected"
     ready_value = "1"
   }
 }
