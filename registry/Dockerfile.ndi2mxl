@@ -1,0 +1,43 @@
+FROM ubuntu:24.04 AS base
+
+ARG WORKDIR=/app
+ARG USER_GROUP=1000:1000
+
+ENV CATENA_CONNECTION=gRPC
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
+    libcurl4 \
+    libavahi-common3 \
+    libavahi-client3 \
+    libboost-program-options1.83.0 \
+    && rm -rf /var/lib/apt/lists/*
+
+USER ${USER_GROUP}
+
+WORKDIR ${WORKDIR}
+
+COPY --chmod=755 ./entrypoint.sh /entrypoint.sh
+
+RUN mkdir -p ${WORKDIR}/logs && mkdir -p ${WORKDIR}/static
+
+ENTRYPOINT ["/bin/sh", "/entrypoint.sh"]
+
+ENV CATENA_PORT=6254
+ENV CATENA_LOG_DIR=${WORKDIR}/logs
+
+FROM base
+
+LABEL org.opencontainers.image.url="https://github.com/rossvideo/Catena-deployments"
+LABEL org.opencontainers.image.licenses="BSD-3-Clause"
+LABEL org.opencontainers.image.title="NDI to MXL Flow Catena gRPC Example"
+LABEL org.opencontainers.image.version="ndi2mxl-1.0.0"
+LABEL org.opencontainers.image.description="Self contained example for Catena ndi2mxl_sink gRPC module"
+LABEL org.opencontainers.image.vendor="Ross Video"
+LABEL org.opencontainers.image.ref.name="ubuntu"
+LABEL org.opencontainers.image.source="https://github.com/rossvideo/mxl-catena"
+
+COPY . /app/gRPC/ndi2mxl
+
+ENV CATENA_EXAMPLE=ndi2mxl
+ENV LD_LIBRARY_PATH=/app/gRPC/ndi2mxl/mxl:/external/ndi

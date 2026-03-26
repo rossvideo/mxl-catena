@@ -28,6 +28,14 @@ locals {
       auuid = ""
       port  = "25000"
       port2 = "25100"
+    },
+    {
+      name = "ndi2mxl"
+      label = "NDI to MXL"
+      uuid = "19736e97-a32d-40b3-a2b1-4aa0cf4a5f10"
+      auuid = ""
+      port = "26000"
+      port2 = "26100"
     }
   ]
   )

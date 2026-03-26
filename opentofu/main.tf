@@ -59,6 +59,13 @@ resource "docker_image" "ts2mxl" {
   name         = "ghcr.io/rossvideo/mxl-catena:ts2mxl"
   keep_locally = true
 }
+
+resource "docker_image" "ndi2mxl" {
+  name         = "ghcr.io/rossvideo/mxl-catena:ndi2mxl"
+  # keep_locally = true
+  force_remove = true
+}
+
 // Docker images for Multiviewer
 resource "docker_image" "control" {
   name         = "${local.ECR_REGISTRY}/distcessna/control:${local.DISTCESSNA_TAG}"
