@@ -9,3 +9,9 @@ variable "openai_api_key" {
   type      = string
   sensitive = true
 }
+variable "target_user" {
+  type = string
+}
+variable "ssh_private_key_path" {
+  type = string
+}

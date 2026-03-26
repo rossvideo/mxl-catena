@@ -54,8 +54,8 @@ locals {
     BACKLOG         = "1"
     XRES            = "1920"
     YRES            = "1080"
-    RATE_NUM        = "60000"
-    RATE_DEN        = "1000"
+    RATE_NUM        = "24000"
+    RATE_DEN        = "1001"
     metric_port     = "14100"
     MXL_TO_GST_PORT = "50000"
   }
@@ -251,8 +251,14 @@ resource "docker_container" "tools_outputs" {
 # wait 5 seconds then restart tools_outputs
 resource "null_resource" "restart_tools_outputs" {
   depends_on = [docker_container.tools_outputs]
-
-  provisioner "local-exec" {
-    command = "sleep 5 && docker restart ${join(" ", [for c in docker_container.tools_outputs : c.name])}"
+  connection {
+    type     = "ssh"
+    user     = var.target_user
+    private_key = file(var.ssh_private_key_path)
+    host     = var.target_ip
+  }
+  provisioner "remote-exec" {
+    inline =["sleep 5",
+    "sleep 5 && docker restart ${join(" ", [for c in docker_container.tools_outputs : c.name])}"]
   }
 }

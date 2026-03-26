@@ -108,7 +108,7 @@ resource "grafana_dashboard" "mv_dashboard" {
         "fieldConfig" : {
           "defaults" : {
             "decimals" : 4,
-            "max" : 59.94,
+            "max" :  "${local.CONTROL.RATE_NUM / (local.CONTROL.RATE_DEN -(local.CONTROL.RATE_DEN/10))}",
             "min" : 0,
             "thresholds" : {
               "mode" : "absolute",
@@ -118,11 +118,11 @@ resource "grafana_dashboard" "mv_dashboard" {
                 },
                 {
                   "color" : "yellow",
-                  "value" : 59
+                  "value" : "${local.CONTROL.RATE_NUM / (local.CONTROL.RATE_DEN +(local.CONTROL.RATE_DEN/10))}"
                 },
                 {
                   "color" : "green",
-                  "value" : 59.9
+                  "value" : "${local.CONTROL.RATE_NUM / local.CONTROL.RATE_DEN}"
                 }
               ]
             },
@@ -197,7 +197,7 @@ resource "grafana_dashboard" "mv_dashboard" {
         "type" : "gauge",
         "targets" : [
           {
-            "expr" : "Control{instance=\"control:14100\", type=\"load\"}",
+            "expr" : "Control{instance=\"${local.CONTROL.name}:${local.CONTROL.metric_port}\", type=\"load\"}",
             "instant" : true,
             "legendFormat" : "Control load"
           }
