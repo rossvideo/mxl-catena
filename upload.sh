@@ -24,23 +24,29 @@ ssh -i "$SSH_KEY" "$TARGET_SERVER" "sudo mkdir -p $TARGET_DIR && sudo chown ansi
 # Flag to track if images were uploaded
 IMAGES_UPLOADED=0
 
+# Common rsync options:
+# - itemize-changes: machine-readable changed-file lines for detection logic
+# - info=progress2: overall transfer progress in real time
+RSYNC_OPTS=(-av --checksum --itemize-changes --human-readable --info=progress2)
+
 # Things to upload - use rsync with checksum to only sync changed files.
 echo "Uploading external directory to $TARGET_SERVER:$TARGET_DIR (if changed)..."
-rsync -av --checksum -e "ssh -i $SSH_KEY" external/ "$TARGET_SERVER:$TARGET_DIR/external/" || true
+rsync "${RSYNC_OPTS[@]}" -e "ssh -i $SSH_KEY" external/ "$TARGET_SERVER:$TARGET_DIR/external/" || true
 
 echo "Uploading images to $TARGET_SERVER:$TARGET_DIR (if changed)..."
-RSYNC_OUTPUT=$(rsync -av --checksum -e "ssh -i $SSH_KEY" images/ "$TARGET_SERVER:$TARGET_DIR/images/" 2>&1 || true)
-echo "$RSYNC_OUTPUT"
+IMG_RSYNC_LOG=$(mktemp)
+rsync "${RSYNC_OPTS[@]}" -e "ssh -i $SSH_KEY" images/ "$TARGET_SERVER:$TARGET_DIR/images/" 2>&1 | tee "$IMG_RSYNC_LOG" || true
 # Check if any image files were actually transferred
-if echo "$RSYNC_OUTPUT" | grep -E "\.tar|\.tgz" | grep -qv "^total\|^sent\|^received"; then
+if grep -E '^>f' "$IMG_RSYNC_LOG" | grep -Eq '\.(tar|tgz)$'; then
   IMAGES_UPLOADED=1
 fi
+rm -f "$IMG_RSYNC_LOG"
 
 echo "Uploading import script to $TARGET_SERVER:$TARGET_DIR (if changed)..."
-rsync -av --checksum -e "ssh -i $SSH_KEY" import_multivewer.sh "$TARGET_SERVER:$TARGET_DIR/" || true
+rsync "${RSYNC_OPTS[@]}" -e "ssh -i $SSH_KEY" import_multivewer.sh "$TARGET_SERVER:$TARGET_DIR/" || true
 
 echo "Uploading metrics to $TARGET_SERVER:$TARGET_DIR (if changed)..."
-rsync -av --checksum -e "ssh -i $SSH_KEY" metrics/ "$TARGET_SERVER:$TARGET_DIR/metrics/" || true
+rsync "${RSYNC_OPTS[@]}" -e "ssh -i $SSH_KEY" metrics/ "$TARGET_SERVER:$TARGET_DIR/metrics/" || true
 
 # Run import script only if images were uploaded.
 if [[ $IMAGES_UPLOADED -eq 1 ]]; then
