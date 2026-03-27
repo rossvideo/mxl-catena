@@ -242,7 +242,7 @@ resource "catena_device" "MIO" {
   stop_command  = "/stop_session"
 
   device_status {
-    oid         = "/websocket_connected"
+    oid         = "/status"
     ready_value = "1"
   }
 }
