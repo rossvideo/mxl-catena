@@ -197,29 +197,6 @@ resource "docker_container" "cheetah_lite" {
   }
 }
 
-# //Part2
-# resource "docker_container" "tools_inputs" {
-#     depends_on = [ docker_container.cheetah_lite, docker_container.multiviewer, docker_container.control ]
-#     for_each = { for tool in local.TOOLS_INPUTS : tool.name => tool }
-#     name  = each.value.name
-#     image = docker_image.mxl_tools.name
-#     command = concat(["/app/gstToMxl",
-#      "--domain", "${local.MXL_DOMAIN}",
-#      "--pattern", each.value.pattern, 
-#      "--uuid", each.value.uuid, 
-#      "--width", each.value.width,
-#      "--height", each.value.height, 
-#      "--auuid", each.value.auuid,
-#      "--wave", each.value.wave])
-
-#     volumes {
-#         host_path      = "${local.MXL_DOMAIN}"
-#         container_path = "${local.MXL_DOMAIN}"
-#     }
-#     networks_advanced {
-#         name = docker_network.multiviewer_network.name
-#     }
-# }
 
 resource "docker_container" "tools_outputs" {
   depends_on = [docker_container.output_containers]

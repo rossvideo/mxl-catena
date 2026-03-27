@@ -162,8 +162,8 @@ resource "docker_container" "engine" {
     read_only      = false
   }
   volumes {
-    host_path      = "${var.workspace_dir}/external/media/YourTV_Cornwall.mp4"
-    container_path = "/data/YourTV_Cornwall.mp4"
+    host_path      = "${var.workspace_dir}/external/media/clips"
+    container_path = "/data"
     read_only      = false
   }
   networks_advanced {
