@@ -3,7 +3,6 @@
 
 resource "docker_container" "ndi2mxl_container" {
   name     = "ndi2mxl_container"
-  hostname = "NDI_SOURCE"
   image    = docker_image.ndi2mxl.name
   command  = ["--log_dir", "/app/logs"]
   network_mode = "host"
@@ -43,7 +42,8 @@ resource "catena_device" "ndi2mxl" {
   // for each catena_device above, map its target_flow to an input
 
   params_map = {
-    "/ndi_source_ips" = "10.62.152.123"
+    # "/ndi_source_ips" = "10.62.152.123"
+    "/ndi_source_ips" = "10.62.215.203,10.62.215.210,10.62.215.213,10.62.215.211"
   }
 
   start_command = "/start"
