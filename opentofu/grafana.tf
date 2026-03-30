@@ -80,6 +80,10 @@ resource "grafana_dashboard" "mv_dashboard" {
     "uid" : "cool-mxl-mv-dashboard",
     "preload" : false,
     "refresh" : "5s",
+    "time" : {
+      "from" : "now-15m",
+      "to" : "now"
+    },
     "timepicker" : {
       "refresh_intervals" : ["1s", "2s", "5s", "10s"]
     },
@@ -89,15 +93,10 @@ resource "grafana_dashboard" "mv_dashboard" {
         "gridPos" : { "h" : 1, "w" : 24, "x" : 0, "y" : 0 },
         "type" : "row"
       },
-      { // Control Row
-        "title" : "Control",
-        "gridPos" : { "h" : 1, "w" : 24, "x" : 0, "y" : 16 },
-        "type" : "row"
-      },
-      { // Control FPS Gauge
+      { // Overall FPS Gauge
         "title" : "FPS",
         "gridPos" : { "h" : 7, "w" : 3, "x" : 0, "y" : 1 },
-        "type" : "gauge"
+        "type" : "gauge",
         "targets" : [
           {
             "expr" : "Control{instance=\"${local.CONTROL.name}:${local.CONTROL.metric_port}\", type=\"fps\"}",
@@ -128,9 +127,9 @@ resource "grafana_dashboard" "mv_dashboard" {
             },
             "unit" : "fps"
           }
-        },
+        }
       },
-      { // Control Drops Gauge
+      { // Overall Drops Gauge
         "title" : "Drops",
         "gridPos" : { "h" : 7, "w" : 3, "x" : 3, "y" : 1 },
         "type" : "gauge",
@@ -161,15 +160,16 @@ resource "grafana_dashboard" "mv_dashboard" {
             },
             "unit" : "%"
           }
-        },
+        }
       },
-      { // Control Drops Counter stat
+      { // Overall Drops Counter stat
         "title" : "Drops Counter",
         "gridPos" : { "h" : 7, "w" : 3, "x" : 6, "y" : 1 },
         "type" : "stat",
         "targets" : [
           {
             "expr" : "DropsCounter{instance=\"${local.CONTROL.name}:${local.CONTROL.metric_port}\"}",
+            "instant" : true,
             "legendFormat" : "1"
           }
         ],
@@ -189,11 +189,158 @@ resource "grafana_dashboard" "mv_dashboard" {
               ]
             }
           }
-        },
+        }
+      },
+      { // Output Drops Row
+        "title" : "Output Drops",
+        "gridPos" : { "h" : 1, "w" : 24, "x" : 0, "y" : 8 },
+        "type" : "row"
+      },
+      { // Output Grains Written/s
+        "title" : "Grains Written/s",
+        "gridPos" : { "h" : 7, "w" : 6, "x" : 0, "y" : 9 },
+        "type" : "gauge",
+        "targets" : [
+          {
+            "expr" : "FpsGauge{instance=\"output:${local.OUTPUTS.port2}\"}",
+            "instant" : true,
+            "legendFormat" : "Output"
+          }
+        ],
+        "fieldConfig" : {
+          "defaults" : {
+            "decimals" : 0,
+            "max" : 59.94,
+            "min" : 0,
+            "thresholds" : {
+              "mode" : "absolute",
+              "steps" : [
+                {
+                  "color" : "red"
+                },
+                {
+                  "color" : "yellow",
+                  "value" : "${local.CONTROL.RATE_NUM / (local.CONTROL.RATE_DEN +(local.CONTROL.RATE_DEN/10))}"
+                },
+                {
+                  "color" : "green",
+                  "value" : "${local.CONTROL.RATE_NUM / local.CONTROL.RATE_DEN}"
+                }
+              ]
+            }
+          }
+        }
+      },
+      { // Output Drops Gauge
+        "title" : "Drops",
+        "gridPos" : { "h" : 7, "w" : 6, "x" : 6, "y" : 9 },
+        "type" : "gauge",
+        "targets" : [
+          {
+            "expr" : "DropsGauge{instance=\"output:${local.OUTPUTS.port2}\"}",
+            "instant" : true,
+            "legendFormat" : "Output"
+          }
+        ],
+        "options" : { "showThresholdMarkers" : false },
+        "fieldConfig" : {
+          "defaults" : {
+            "decimals" : 1,
+            "max" : 100,
+            "min" : 0,
+            "thresholds" : {
+              "mode" : "absolute",
+              "steps" : [
+                {
+                  "color" : "green"
+                },
+                {
+                  "color" : "red",
+                  "value" : 1.1754943508222875e-38
+                }
+              ]
+            },
+            "unit" : "%"
+          }
+        }
+      },
+      { // Output Drops Counter
+        "title" : "Drops Counter",
+        "gridPos" : { "h" : 7, "w" : 6, "x" : 12, "y" : 9 },
+        "type" : "stat",
+        "targets" : [
+          {
+            "expr" : "DropsCounter{instance=\"output:${local.OUTPUTS.port2}\"}",
+            "instant" : true,
+            "legendFormat" : "Output"
+          }
+        ],
+        "options" : { "showThresholdMarkers" : false },
+        "fieldConfig" : {
+          "defaults" : {
+            "thresholds" : {
+              "mode" : "absolute",
+              "steps" : [
+                {
+                  "color" : "green"
+                },
+                {
+                  "color" : "red",
+                  "value" : 1.1754943508222875e-38
+                }
+              ]
+            }
+          }
+        }
+      },
+      { // Unique Grains Written/s timeseries
+        "title" : "Unique Grains Written/s",
+        "gridPos" : { "h" : 8, "w" : 24, "x" : 0, "y" : 16 },
+        "type" : "timeseries",
+        "targets" : [
+          {
+            "expr" : "FpsGauge{instance=\"output:${local.OUTPUTS.port2}\"} - InvalidGrainsPerSec{instance=\"output:${local.OUTPUTS.port2}\"}",
+            "legendFormat" : "Output"
+          }
+        ],
+        "fieldConfig" : {
+          "defaults" : {
+            "decimals" : 0,
+            "min" : 0,
+            "custom" : {
+              "lineWidth" : 2,
+              "fillOpacity" : 0,
+              "lineInterpolation" : "stepAfter",
+              "pointSize" : 5,
+              "showPoints" : "auto"
+            },
+            "thresholds" : {
+              "mode" : "absolute",
+              "steps" : [
+                {
+                  "color" : "red"
+                },
+                {
+                  "color" : "yellow",
+                  "value" : "${local.CONTROL.RATE_NUM / (local.CONTROL.RATE_DEN +(local.CONTROL.RATE_DEN/10))}"
+                },
+                {
+                  "color" : "green",
+                  "value" : "${local.CONTROL.RATE_NUM / local.CONTROL.RATE_DEN}"
+                }
+              ]
+            }
+          }
+        }
+      },
+      { // Control Row
+        "title" : "Control",
+        "gridPos" : { "h" : 1, "w" : 24, "x" : 0, "y" : 24 },
+        "type" : "row"
       },
       { // Control Load Gauge
         "title" : "Control",
-        "gridPos" : { "h" : 5, "w" : 6, "x" : 0, "y" : 17 },
+        "gridPos" : { "h" : 5, "w" : 6, "x" : 0, "y" : 25 },
         "type" : "gauge",
         "targets" : [
           {
@@ -222,16 +369,16 @@ resource "grafana_dashboard" "mv_dashboard" {
             },
             "unit" : "%"
           }
-        },
+        }
       },
-      { // INPUT ROW
+      { // Inputs Row
         "title" : "Inputs",
-        "gridPos" : { "h" : 1, "w" : 24, "x" : 0, "y" : 22 },
+        "gridPos" : { "h" : 1, "w" : 24, "x" : 0, "y" : 30 },
         "type" : "row"
       },
-      { // INPUT load gauges
+      { // Inputs Load
         "title" : "Load",
-        "gridPos" : { "h" : 5, "w" : 40, "x" : 0, "y" : 28 },
+        "gridPos" : { "h" : 5, "w" : 40, "x" : 0, "y" : 31 },
         "type" : "gauge",
         "fieldConfig" : {
           "defaults" : {
@@ -259,18 +406,13 @@ resource "grafana_dashboard" "mv_dashboard" {
             "expr" : "Input{instance=\"input${idx + 1}:${input.port2}\", type=\"load\"}",
             "instant" : true,
             "legendFormat" : "${input.label}"
-
           }
-          ]
-        )
-
-
+        ])
       },
-      { // INPUT V210 Decode gauges
+      { // Inputs V210 Decode
         "title" : "V210 Decode",
-        "gridPos" : { "h" : 5, "w" : 24, "x" : 0, "y" : 22 },
-        "type" : "gauge"
-        "options" : { "showThresholdMarkers" : false },
+        "gridPos" : { "h" : 5, "w" : 40, "x" : 0, "y" : 36 },
+        "type" : "gauge",
         "fieldConfig" : {
           "defaults" : {
             "decimals" : 1,
@@ -291,22 +433,19 @@ resource "grafana_dashboard" "mv_dashboard" {
             "unit" : "%"
           }
         },
+        "options" : { "showThresholdMarkers" : false },
         "targets" : concat([
           for idx, input in local.INPUTS : {
             "expr" : "PixelConverter{instance=\"input${idx + 1}:${input.port2}\", type=\"load\"}",
             "instant" : true,
             "legendFormat" : "${input.label}"
-
           }
-          ]
-        )
-
+        ])
       },
-      { // INPUT Proxy Creation gauges
+      { // Inputs Proxy Creation
         "title" : "Proxy Creation",
+        "gridPos" : { "h" : 5, "w" : 40, "x" : 0, "y" : 41 },
         "type" : "gauge",
-        "gridPos" : { "h" : 5, "w" : 40, "x" : 0, "y" : 33 },
-        "options" : { "showThresholdMarkers" : false },
         "fieldConfig" : {
           "defaults" : {
             "decimals" : 1,
@@ -327,26 +466,167 @@ resource "grafana_dashboard" "mv_dashboard" {
             "unit" : "%"
           }
         },
+        "options" : { "showThresholdMarkers" : false },
         "targets" : concat([
           for idx, input in local.INPUTS : {
             "expr" : "OutputConverter{instance=\"input${idx + 1}:${input.port2}\", type=\"load\"}",
             "instant" : true,
             "legendFormat" : "${input.label}"
-
           }
-          ]
-        )
+        ])
       },
-      { //MV row
-        "title" : "MV",
-        "gridPos" : { "h" : 1, "w" : 24, "x" : 0, "y" : 121 },
+      { // Inputs Grains Read/s
+        "title" : "Grains Read/s",
+        "gridPos" : { "h" : 5, "w" : 40, "x" : 0, "y" : 46 },
+        "type" : "gauge",
+        "fieldConfig" : {
+          "defaults" : {
+            "decimals" : 0,
+            "max" : 59.94,
+            "min" : 0,
+            "thresholds" : {
+              "mode" : "absolute",
+              "steps" : [
+                {
+                  "color" : "red"
+                },
+                {
+                  "color" : "yellow",
+                  "value" : "${local.CONTROL.RATE_NUM / (local.CONTROL.RATE_DEN +(local.CONTROL.RATE_DEN/10))}"
+                },
+                {
+                  "color" : "green",
+                  "value" : "${local.CONTROL.RATE_NUM / local.CONTROL.RATE_DEN}"
+                }
+              ]
+            }
+          }
+        },
+        "options" : { "showThresholdMarkers" : false },
+        "targets" : concat([
+          for idx, input in local.INPUTS : {
+            "expr" : "FpsGauge{instance=\"input${idx + 1}:${input.port2}\"}",
+            "instant" : true,
+            "legendFormat" : "${idx + 1}"
+          }
+        ])
+      },
+      { // Input Drops Row
+        "title" : "Input Drops",
+        "gridPos" : { "h" : 1, "w" : 24, "x" : 0, "y" : 51 },
         "type" : "row"
       },
-      { // MV Transfer Gauges
-        "title" : "Transfer",
-        "gridPos" : { "h" : 5, "w" : 40, "x" : 0, "y" : 122 },
+      { // Input Drops Gauge
+        "title" : "Input Drops",
+        "gridPos" : { "h" : 5, "w" : 40, "x" : 0, "y" : 52 },
         "type" : "gauge",
+        "fieldConfig" : {
+          "defaults" : {
+            "decimals" : 1,
+            "max" : 100,
+            "min" : 0,
+            "thresholds" : {
+              "mode" : "absolute",
+              "steps" : [
+                {
+                  "color" : "green"
+                },
+                {
+                  "color" : "red",
+                  "value" : 1.1754943508222875e-38
+                }
+              ]
+            },
+            "unit" : "%"
+          }
+        },
         "options" : { "showThresholdMarkers" : false },
+        "targets" : concat([
+          for idx, input in local.INPUTS : {
+            "expr" : "DropsGauge{instance=\"input${idx + 1}:${input.port2}\"}",
+            "instant" : true,
+            "legendFormat" : "${idx + 1}"
+          }
+        ])
+      },
+      { // Input Drops Counter
+        "title" : "Input Drops Counter",
+        "gridPos" : { "h" : 5, "w" : 40, "x" : 0, "y" : 57 },
+        "type" : "stat",
+        "fieldConfig" : {
+          "defaults" : {
+            "thresholds" : {
+              "mode" : "absolute",
+              "steps" : [
+                {
+                  "color" : "green"
+                },
+                {
+                  "color" : "red",
+                  "value" : 1.1754943508222875e-38
+                }
+              ]
+            }
+          }
+        },
+        "options" : { "showThresholdMarkers" : false },
+        "targets" : concat([
+          for idx, input in local.INPUTS : {
+            "expr" : "DropsCounter{instance=\"input${idx + 1}:${input.port2}\"}",
+            "instant" : true,
+            "legendFormat" : "${idx + 1}"
+          }
+        ])
+      },
+      { // Unique Grains Read/s timeseries
+        "title" : "Unique Grains Read/s",
+        "gridPos" : { "h" : 8, "w" : 24, "x" : 0, "y" : 62 },
+        "type" : "timeseries",
+        "fieldConfig" : {
+          "defaults" : {
+            "decimals" : 0,
+            "min" : 0,
+            "custom" : {
+              "lineWidth" : 2,
+              "fillOpacity" : 0,
+              "lineInterpolation" : "stepAfter",
+              "pointSize" : 5,
+              "showPoints" : "auto"
+            },
+            "thresholds" : {
+              "mode" : "absolute",
+              "steps" : [
+                {
+                  "color" : "red"
+                },
+                {
+                  "color" : "yellow",
+                  "value" : "${local.CONTROL.RATE_NUM / (local.CONTROL.RATE_DEN +(local.CONTROL.RATE_DEN/10))}"
+                },
+                {
+                  "color" : "green",
+                  "value" : "${local.CONTROL.RATE_NUM / local.CONTROL.RATE_DEN}"
+                }
+              ]
+            }
+          }
+        },
+        "targets" : concat([
+          for idx, input in local.INPUTS : {
+            "expr" : "FpsGauge{instance=\"input${idx + 1}:${input.port2}\"} - InvalidGrainsPerSec{instance=\"input${idx + 1}:${input.port2}\"}",
+            "legendFormat" : "${idx + 1}"
+          }
+        ])
+      },
+      { // MV Row
+        "title" : "MV",
+        "gridPos" : { "h" : 1, "w" : 24, "x" : 0, "y" : 70 },
+        "type" : "row"
+      },
+      { // MV Transfer
+        "title" : "Transfer",
+        "gridPos" : { "h" : 5, "w" : 40, "x" : 0, "y" : 71 },
+        "type" : "gauge",
         "fieldConfig" : {
           "defaults" : {
             "decimals" : 1,
@@ -365,22 +645,21 @@ resource "grafana_dashboard" "mv_dashboard" {
               ]
             },
             "unit" : "%"
-          },
+          }
         },
+        "options" : { "showThresholdMarkers" : false },
         "targets" : concat([
           for idx, input in local.INPUTS : {
             "expr" : "VideoRead{instance=\"multiviewer:${local.MULTIVIEWER.port2}\", type=\"transfer\", name=\"Src${idx}\"}",
             "instant" : true,
-            "legendFormat" : "${input.label}"
+            "legendFormat" : "${idx + 1}"
           }
         ])
-
       },
-      { // MV Load Gauges
+      { // MV Load
         "title" : "Load",
-        "gridPos" : { "h" : 5, "w" : 6, "x" : 0, "y" : 137 },
+        "gridPos" : { "h" : 5, "w" : 6, "x" : 0, "y" : 76 },
         "type" : "gauge",
-        "options" : { "showThresholdMarkers" : false },
         "fieldConfig" : {
           "defaults" : {
             "decimals" : 1,
@@ -401,24 +680,24 @@ resource "grafana_dashboard" "mv_dashboard" {
             "unit" : "%"
           }
         },
+        "options" : { "showThresholdMarkers" : false },
         "targets" : [
           {
             "expr" : "MultiViewer{instance=\"multiviewer:${local.MULTIVIEWER.port2}\", type=\"load\"}",
             "instant" : true,
             "legendFormat" : "MultiViewer load"
           }
-        ],
+        ]
       },
-      { //Output row
+      { // Output Row
         "title" : "Output",
-        "gridPos" : { "h" : 1, "w" : 24, "x" : 0, "y" : 142 },
+        "gridPos" : { "h" : 1, "w" : 24, "x" : 0, "y" : 81 },
         "type" : "row"
       },
-      { // Output Transfer Gauges
+      { // Output Transfer
         "title" : "Transfer",
-        "gridPos" : { "h" : 5, "w" : 6, "x" : 0, "y" : 143 },
+        "gridPos" : { "h" : 5, "w" : 6, "x" : 0, "y" : 82 },
         "type" : "gauge",
-        "options" : { "showThresholdMarkers" : false },
         "fieldConfig" : {
           "defaults" : {
             "decimals" : 1,
@@ -439,6 +718,7 @@ resource "grafana_dashboard" "mv_dashboard" {
             "unit" : "%"
           }
         },
+        "options" : { "showThresholdMarkers" : false },
         "targets" : [
           {
             "expr" : "VideoRead{instance=\"output:${local.OUTPUTS.port2}\", type=\"transfer\", name=\"Src4\"}",
@@ -447,11 +727,10 @@ resource "grafana_dashboard" "mv_dashboard" {
           }
         ]
       },
-      { // Output Load Gauge
+      { // Output Load
         "title" : "Load",
-        "gridPos" : { "h" : 5, "w" : 6, "x" : 0, "y" : 153 },
+        "gridPos" : { "h" : 5, "w" : 6, "x" : 0, "y" : 87 },
         "type" : "gauge",
-        "options" : { "showThresholdMarkers" : false },
         "fieldConfig" : {
           "defaults" : {
             "decimals" : 1,
@@ -472,6 +751,7 @@ resource "grafana_dashboard" "mv_dashboard" {
             "unit" : "%"
           }
         },
+        "options" : { "showThresholdMarkers" : false },
         "targets" : [
           {
             "expr" : "Output{instance=\"output:${local.OUTPUTS.port2}\", type=\"load\"}",
@@ -479,7 +759,7 @@ resource "grafana_dashboard" "mv_dashboard" {
             "legendFormat" : "Output load"
           }
         ]
-      },
+      }
     ]
   })
 } 

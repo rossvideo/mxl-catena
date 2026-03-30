@@ -44,8 +44,8 @@ locals {
   // Multiviewer
   ECR_REGISTRY     = "905418485545.dkr.ecr.us-east-1.amazonaws.com"
   ECR_REGION       = "us-east-1"
-  MXL_TAG          = "0.1.0-baa2b45b"
-  DISTCESSNA_TAG   = "0.0.1-67ea027a"
+  MXL_TAG          = "0.1.0-ea5add7b"
+  DISTCESSNA_TAG   = "0.0.1-b5d82370"
   CHEETAH_LITE_TAG = "0.0.1-108d6ff2"
 }
 

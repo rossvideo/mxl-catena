@@ -77,8 +77,8 @@ resource "docker_container" "input_containers" {
   image = docker_image.mxl_input.name
 
   command = concat(
-    ["/app/mxlInput", "${local.MXL_DOMAIN}", each.value.port, each.value.port2, "--uuid", each.value.uuid],
-    try(length(trimspace(each.value.auuid)), 0) > 0 ? ["--auuid", each.value.auuid] : []
+    ["/app/mxlInput", each.value.port, each.value.port2,"-d",  "${local.MXL_DOMAIN}", "-v", each.value.uuid],
+    try(length(trimspace(each.value.auuid)), 0) > 0 ? ["-a", each.value.auuid] : []
   )
 
   volumes {
@@ -100,7 +100,7 @@ resource "docker_container" "input_containers" {
 resource "docker_container" "output_containers" {
   name    = local.OUTPUTS.name
   image   = docker_image.mxl_output.name
-  command = ["/app/mxlOutput", "${local.MXL_DOMAIN}", local.OUTPUTS.port, local.OUTPUTS.port2, "--uuid", local.OUTPUTS.uuid]
+  command = ["/app/mxlOutput",local.OUTPUTS.port, local.OUTPUTS.port2,"-d",  "${local.MXL_DOMAIN}", "-v", local.OUTPUTS.uuid]
 
   volumes {
     host_path      = local.MXL_DOMAIN
@@ -141,6 +141,7 @@ resource "docker_container" "control" {
     ["./control"],
     flatten([
       for idx, input in local.INPUTS : [
+        "mxl",
         "Input ${idx + 1}",
         "${input.name}_input",
         tostring(input.port),
@@ -197,28 +198,73 @@ resource "docker_container" "cheetah_lite" {
   }
 }
 
+# MediaMTX
+resource "docker_image" "mediamtx" {
+  name="bluenviron/mediamtx:1.17.0"
+  keep_locally = true
+}
 
+resource "docker_container" "mediamtx" {
+  name  = "mediamtx"
+  image = docker_image.mediamtx.name
+  env = [
+    "MTX_WEBRTCADDITIONALHOSTS=${var.target_ip}",
+    "MTX_WEBRTCICESERVERS2=[]",
+    "MTX_WEBRTCLOCALTCPADDRESS=:8189",
+    "MTX_HLS=no"
+  ]
+  ports {
+    internal = "8554"
+    external = "8554"
+  }
+  ports {
+    internal = "8889"
+    external = "8889"
+  }
+  ports {
+    internal = "8189"
+    external = "8189"
+    protocol = "udp"
+  }
+  ports {
+    internal = "8189"
+    external = "8189"
+    protocol = "tcp"
+  }
+  networks_advanced {
+    name = docker_network.multiviewer_network.name
+  }
+  log_opts ={
+    "max-file" = "3",
+    "max-size" = "10m"
+  }
+}
+
+
+# mxlToGst
 resource "docker_container" "tools_outputs" {
-  depends_on = [docker_container.output_containers]
+  depends_on = [docker_container.output_containers, docker_container.mediamtx]
   for_each   = { for tool in local.TOOLS_OUTPUTS : tool.name => tool }
   name       = each.value.name
   image      = docker_image.mxl_tools.name
   command = concat(["/app/mxlToGst",
-    "--domain", "${local.MXL_DOMAIN}",
-    "--uuid", each.value.uuid,
-  "--port", local.CONTROL.MXL_TO_GST_PORT])
-  ports {
-    internal = local.CONTROL.MXL_TO_GST_PORT
-    external = local.CONTROL.MXL_TO_GST_PORT
-  }
+    "-d", "${local.MXL_DOMAIN}",
+    "-v", each.value.uuid,
+    "-g", "!  video/x-raw,format=I420 ! svtav1enc preset=10 cqp=36 parameters-string=tile-rows=1:tile-columns=2 ! av1parse ! rtspclientsink location=rtsp://localhost:8554/mxl-mv-demo protocols=tcp"
+  ])
+  # ports {
+  #   internal = local.CONTROL.MXL_TO_GST_PORT
+  #   external = local.CONTROL.MXL_TO_GST_PORT
+  # }
   volumes {
     host_path      = local.MXL_DOMAIN
     container_path = local.MXL_DOMAIN
     read_only      = false
   }
-  networks_advanced {
-    name = docker_network.multiviewer_network.name
-  }
+  network_mode = "host"
+  # networks_advanced {
+  #   name = docker_network.multiviewer_network.name
+  # }
   log_opts ={
     "max-file" = "3",
     "max-size" = "10m"

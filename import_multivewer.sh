@@ -15,9 +15,9 @@ fi
 
 echo "Loading Docker images..."
 printf '%s\n' \
-  "images/mxl_tools.tar" \
-  "images/mxl_input.tar" \
-  "images/mxl_output.tar" \
+  "images/mxl-tools.tar" \
+  "images/mxl-input.tar" \
+  "images/mxl-output.tar" \
   "images/multiviewer.tar" \
   "images/control.tar" \
   "images/cheetah-lite.tar" \
