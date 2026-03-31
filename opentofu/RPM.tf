@@ -141,9 +141,10 @@ INSERT INTO public."OGP_FRAME"
 VALUES
 (2,'${catena_device.mxl2ndi.name}','${var.target_ip}',${catena_device.mxl2ndi.port},'CATENA',false,'<properties><entry key=\"node-id\">${var.target_ip}:${catena_device.mxl2ndi.port}</entry></properties>',NOW(),NOW()),
 (3,'Media IO','${var.target_ip}',7248,'CATENA',false,'<properties></properties>',NOW(),NOW()),
+(4,'${catena_device.ndi2mxl.name}','${var.target_ip}',${catena_device.ndi2mxl.port},'CATENA',false,'<properties><entry key=\"node-id\">${var.target_ip}:${catena_device.ndi2mxl.port}</entry></properties>',NOW(),NOW()),
 ${join(",\n", [
   for idx, input in values(catena_device.ts2mxl) :
-  "(${idx + 4}, '${input.name}', '${var.target_ip}', ${input.port}, 'CATENA', false, '<properties><entry key=\"node-id\">${var.target_ip}:${input.port}</entry></properties>', NOW(), NOW())"
+  "(${idx + 5}, '${input.name}', '${var.target_ip}', ${input.port}, 'CATENA', false, '<properties><entry key=\"node-id\">${var.target_ip}:${input.port}</entry></properties>', NOW(), NOW())"
 ])}
 
 ON CONFLICT ("ID") DO NOTHING;
