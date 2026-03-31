@@ -5,7 +5,6 @@ resource "docker_container" "mxl2ndicontainer" {
   name     = "mxl2ndi_container"
   hostname = "NDI_SOURCE"
   image    = docker_image.mxl2ndi.name
-  command  = ["--log_dir", "/app/logs"]
   ports {
     internal = "6254"
     external = "7254"

@@ -3,7 +3,6 @@ resource "docker_container" "ts2mxl_containers" {
   for_each = { for input in local.CATENA_INPUTS : input.container_name => input }
   name     = each.value.container_name
   image    = docker_image.ts2mxl.name
-  command  = ["--log_dir", "/app/logs"]
   ports {
     internal = "6254"
     external = each.value.external_port

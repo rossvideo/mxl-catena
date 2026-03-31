@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libcurl4 \
     libavahi-common3 \
     libavahi-client3 \
+    libboost-program-options1.83.0 \
     && rm -rf /var/lib/apt/lists/*
 
 USER ${USER_GROUP}
@@ -23,6 +24,7 @@ RUN mkdir -p ${WORKDIR}/logs && mkdir -p ${WORKDIR}/static
 ENTRYPOINT ["/bin/sh", "/entrypoint.sh"]
 
 ENV CATENA_PORT=6254
+ENV CATENA_LOG_DIR=${WORKDIR}/logs
 
 FROM base
 
