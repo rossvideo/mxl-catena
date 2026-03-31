@@ -43,7 +43,18 @@ resource "catena_device" "ndi2mxl" {
 
   params_map = {
     # "/ndi_source_ips" = "10.62.152.123"
-    "/ndi_source_ips" = "10.62.215.203,10.62.215.210,10.62.215.213,10.62.215.211"
+    # "/ndi_source_ips" = "10.62.215.203,10.62.215.210,10.62.215.213,10.62.215.211"
+    # comma separated list of IPs/DNS names to scan for NDI sources.
+    "/ndi_source_ips" = "127.0.0.1"
+    # Set to select a specific NDI source to start with. In the form of `<hostname> (<source_name>)`
+    "/selected_ndi_source" = ""
+    "/create_flow/domain" = local.MXL_DOMAIN
+    "/create_flow/id" = local.NDI2MXL_UUID
+    "/create_flow/label" = "NDI to MXL Converter"
+    "/create_flow/width" = 1920
+    "/create_flow/height" = 1080
+    "/create_flow/numerator" = 30000
+    "/create_flow/denominator" = 1001
   }
 
   start_command = "/start"

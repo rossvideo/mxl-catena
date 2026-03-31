@@ -47,6 +47,9 @@ locals {
   MXL_TAG          = "0.1.0-ea5add7b"
   DISTCESSNA_TAG   = "0.0.1-b5d82370"
   CHEETAH_LITE_TAG = "0.0.1-108d6ff2"
+
+  // ndi2mxl
+  NDI2MXL_UUID = "19736e97-a32d-40b3-a2b1-4aa0cf4a5f10"
 }
 
 // Docker images for MXL Catena components
