@@ -26,8 +26,6 @@ ENTRYPOINT ["/bin/sh", "/entrypoint.sh"]
 ENV CATENA_PORT=6254
 ENV CATENA_LOG_DIR=${WORKDIR}/logs
 
-FROM base
-
 LABEL org.opencontainers.image.url="https://github.com/rossvideo/Catena-deployments"
 LABEL org.opencontainers.image.licenses="BSD-3-Clause"
 LABEL org.opencontainers.image.title="NDI to MXL Flow Catena gRPC Example"
@@ -40,4 +38,11 @@ LABEL org.opencontainers.image.source="https://github.com/rossvideo/mxl-catena"
 COPY . /app/gRPC/ndi2mxl
 
 ENV CATENA_EXAMPLE=ndi2mxl
+
+FROM base AS ndibaked
+
+ENV LD_LIBRARY_PATH=/app/gRPC/ndi2mxl/mxl:/app/gRPC/ndi2mxl/ndi
+
+FROM base
+
 ENV LD_LIBRARY_PATH=/app/gRPC/ndi2mxl/mxl:/external/ndi
