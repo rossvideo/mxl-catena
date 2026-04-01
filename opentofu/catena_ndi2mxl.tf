@@ -4,7 +4,6 @@
 resource "docker_container" "ndi2mxl_container" {
   name     = "ndi2mxl_container"
   image    = docker_image.ndi2mxl.name
-  command  = ["--log_dir", "/app/logs"]
   network_mode = "host"
   env = [
     "CATENA_PORT=7260"
