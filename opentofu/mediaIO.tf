@@ -217,6 +217,11 @@ resource "docker_container" "MIO_controller" {
     container_path = "/data"
     read_only      = false
   }
+  volumes {
+    host_path = "${local.MXL_DOMAIN}"
+    container_path = "${local.MXL_DOMAIN}"
+    read_only = false
+  }
   networks_advanced {
     name = docker_network.multiviewer_network.name
   }

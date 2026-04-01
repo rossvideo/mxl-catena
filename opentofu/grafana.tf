@@ -70,6 +70,7 @@ resource "grafana_data_source" "prometheus" {
 
 // Create resources (optional: within the organization)
 resource "grafana_folder" "mv_folder" {
+  depends_on = [ grafana_organization.org ]
   title = "Multiviewer Metrics"
 }
 
