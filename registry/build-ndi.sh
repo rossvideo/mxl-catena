@@ -31,6 +31,6 @@ fi
 docker buildx build \
   -f $1 \
   --platform $TARGET_ARCH \
-  -t ghcr.io/rossvideo/mxl-catena-ndi:$DOCKERFILE_NAME \
+  -t rossvideo/mxl-catena-ndi:$DOCKERFILE_NAME \
   --target ndibaked \
   $TEMP_DIR
