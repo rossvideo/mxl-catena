@@ -1,0 +1,93 @@
+services:
+  rpm_database:
+    image: postgres:15
+    container_name: rpm_database
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: platform_manager
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - 5432:5432
+    command:
+      - postgres
+      - -c
+      - listen_addresses=*
+    volumes:
+      - ./db_init.sql:/docker-entrypoint-initdb.d/00_db_init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d platform_manager"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+  rpm:
+    image: rpm:latest
+    container_name: rpm
+    depends_on:
+      rpm_database:
+        condition: service_healthy
+    ports:
+      - "7280:80"
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  media_io_engine:
+    image: rossvideo/mediaio:latest
+    container_name: engine
+    ports:
+      - "8180:8180"
+    volumes:
+      - /dev/shm:/dev/shm/mxl
+      - ./MediaIOSettings.json:/root/Settings.json
+      - ./clips:/data
+    restart: unless-stopped
+
+  mio_controller:
+    image: rossvideo/mediaio-catena:local
+    container_name: MIO_controller
+    depends_on:
+      - media_io_engine
+    ports:
+      - "7248:6254"
+    volumes:
+      - /dev/shm:/dev/shm
+      - ./clips:/data
+    restart: unless-stopped
+
+  ndi2mxl:
+    image: rossvideo/mxl-catena-ndi:ndi2mxl
+    container_name: ndi2mxl_container
+    network_mode: host
+    environment:
+      CATENA_PORT: "7269"
+    volumes:
+      - /dev/shm:/dev/shm
+    restart: unless-stopped
+
+  python_proto_client:
+    build:
+      context: ./python-proto-client
+    container_name: python_proto_client
+    environment:
+      - "NDI_SOURCE_IPS=127.0.0.1"
+      - "SELECTED_NDI_SOURCE="
+      - "NDI2MXL_UUID=19736e97-a32d-40b3-a2b1-4aa0cf4a5f10"
+      - "FLOW_WIDTH=1920"
+      - "FLOW_HEIGHT=1080"
+      - "FLOW_NUMERATOR=60000"
+      - "FLOW_DENOMINATOR=1001"
+    volumes:
+      - ./python-proto-client/main.py:/app/main.py
+    depends_on:
+      - mio_controller
+      - ndi2mxl
+    restart: "no"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  rpm_database_data:
+
