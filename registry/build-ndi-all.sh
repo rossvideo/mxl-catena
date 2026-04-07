@@ -6,6 +6,6 @@ set -e
 
 echo "Saving images to mxl-ndi-images.tgz..."
 
-docker save ghcr.io/rossvideo/mxl-catena-ndi:mxl2ndi_sink \
-  ghcr.io/rossvideo/mxl-catena-ndi:ndi2mxl \
+docker save rossvideo/mxl-catena-ndi:mxl2ndi_sink \
+  rossvideo/mxl-catena-ndi:ndi2mxl \
   | gzip > mxl-ndi-images.tgz
