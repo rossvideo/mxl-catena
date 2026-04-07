@@ -20,6 +20,11 @@ services:
       interval: 5s
       timeout: 5s
       retries: 20
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 1G
     restart: unless-stopped
 
   rpm:
@@ -30,6 +35,11 @@ services:
         condition: service_healthy
     ports:
       - "7280:80"
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 4G
     restart: unless-stopped
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -43,19 +53,34 @@ services:
       - /dev/shm:/dev/shm/mxl
       - ./MediaIOSettings.json:/root/Settings.json
       - ./clips:/data
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 3G
     restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   mio_controller:
     image: rossvideo/mediaio-catena:local
     container_name: MIO_controller
     depends_on:
       - media_io_engine
+
     ports:
       - "7248:6254"
     volumes:
       - /dev/shm:/dev/shm
       - ./clips:/data
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 256M
     restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   ndi2mxl:
     image: rossvideo/mxl-catena-ndi:ndi2mxl
@@ -65,6 +90,11 @@ services:
       CATENA_PORT: "7269"
     volumes:
       - /dev/shm:/dev/shm
+    deploy:
+      resources:
+        limits:
+          cpus: "4.0"
+          memory: 4G
     restart: unless-stopped
 
   python_proto_client:
@@ -72,7 +102,7 @@ services:
       context: ./python-proto-client
     container_name: python_proto_client
     environment:
-      - "NDI_SOURCE_IPS=127.0.0.1"
+      - "NDI_SOURCE_IPS=10.62.152.123"
       - "SELECTED_NDI_SOURCE="
       - "NDI2MXL_UUID=19736e97-a32d-40b3-a2b1-4aa0cf4a5f10"
       - "FLOW_WIDTH=1920"
@@ -84,9 +114,15 @@ services:
     depends_on:
       - mio_controller
       - ndi2mxl
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 512M
     restart: "no"
     extra_hosts:
       - "host.docker.internal:host-gateway"
+
 
 volumes:
   rpm_database_data:

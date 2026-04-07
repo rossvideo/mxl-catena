@@ -31,7 +31,7 @@ def runCommand(targetURL, targetPort, command):
             respond=True,
         )
         response_count = 0
-        for response in stub.ExecuteCommand(payload, timeout=10):
+        for response in stub.ExecuteCommand(payload, timeout=120):
             response_count += 1
             if response.WhichOneof("kind") == "exception":
                 raise RuntimeError(response.exception.details or "Command execution failed")
@@ -110,6 +110,7 @@ targetPort = 7248
 time.sleep(5)  # wait for the container to be ready
 print("Setting parameters on the device...")
 setStringParam("host.docker.internal", targetPort, "/clip_store", "/data")
+setStringParam("host.docker.internal", targetPort, "/websocket_url", os.getenv("WEBSOCKET_URL", "ws://host.docker.internal:8180/interface"))
 time.sleep(1)
 runCommand("host.docker.internal", targetPort, "start_session")
 while getParam("host.docker.internal", targetPort, "/status") != "1":
