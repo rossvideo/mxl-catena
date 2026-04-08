@@ -248,7 +248,7 @@ resource "keycloak_user" "users" {
   realm_id       = keycloak_realm.catena.id
   enabled        = true
   username       = each.key
-  email          = "${each.value.first}.${each.value.last}@example.com"
+  email          = "${lower(each.value.first)}.${lower(each.value.last)}@example.com"
   email_verified = true
   first_name     = each.value.first
   last_name      = each.value.last
