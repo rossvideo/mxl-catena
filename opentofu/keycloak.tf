@@ -36,6 +36,7 @@ EOT
 }
 
 resource "keycloak_realm" "catena" {
+  depends_on = [null_resource.wait_for_keycloak]
   realm = "catena"
 
   default_signature_algorithm = "ES256"
@@ -120,6 +121,7 @@ resource "keycloak_openid_client" "dashboard" {
 }
 
 resource "keycloak_openid_client_default_scopes" "default_scopes" {
+  depends_on = [keycloak_generic_role_mapper.catena_scopes]
   realm_id       = keycloak_realm.catena.id
   client_id      = keycloak_openid_client.dashboard.id
   default_scopes = var.catena_scopes
