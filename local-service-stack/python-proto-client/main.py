@@ -112,22 +112,22 @@ print("Setting parameters on the device...")
 setStringParam("host.docker.internal", targetPort, "/clip_store", "/data")
 setStringParam("host.docker.internal", targetPort, "/websocket_url", os.getenv("WEBSOCKET_URL", "ws://host.docker.internal:8180/interface"))
 time.sleep(1)
-runCommand("host.docker.internal", targetPort, "start_session")
+runCommand("host.docker.internal", targetPort, "/start_session")
 while getParam("host.docker.internal", targetPort, "/status") != "1":
     print("Waiting for device to be ready...")
     time.sleep(1)
-
+runCommand("host.docker.internal", targetPort, "/play_clip")
 # print("Setting NDI to MXL configuration...")
 targetPort = 7269
 
-setStringParam("host.docker.internal", targetPort, "/ndi_source_ips", os.getenv("NDI_SOURCE_IPS", "127.0.0.1"))
+setStringParam("host.docker.internal", targetPort, "/ndi_source_ips", os.getenv("NDI_SOURCE_IPS", "10.0.1.74"))
 setStringParam("host.docker.internal", targetPort, "/selected_ndi_source", os.getenv("SELECTED_NDI_SOURCE", ""))
 setStringParam("host.docker.internal", targetPort, "/create_flow/domain", os.getenv("MXL_DOMAIN","/dev/shm"))
 setStringParam("host.docker.internal", targetPort, "/create_flow/id", os.getenv("NDI2MXL_UUID","19736e97-a32d-40b3-a2b1-4aa0cf4a5f10"))
 setStringParam("host.docker.internal", targetPort, "/create_flow/label", os.getenv("FLOW_LABEL", "NDI to MXL Converter"))
 setIntParam("host.docker.internal", targetPort, "/create_flow/width", int(os.getenv("FLOW_WIDTH", "1920")))
 setIntParam("host.docker.internal", targetPort, "/create_flow/height", int(os.getenv("FLOW_HEIGHT", "1080")))
-setIntParam("host.docker.internal", targetPort, "/create_flow/numerator", int(os.getenv("FLOW_NUMERATOR", "30000")))
+setIntParam("host.docker.internal", targetPort, "/create_flow/numerator", int(os.getenv("FLOW_NUMERATOR", "60000")))
 setIntParam("host.docker.internal", targetPort, "/create_flow/denominator", int(os.getenv("FLOW_DENOMINATOR", "1001")))
 time.sleep(1)
 runCommand("host.docker.internal", targetPort, "/start")
@@ -135,6 +135,13 @@ while getParam("host.docker.internal", targetPort, "/status") != "Running":
     print("Waiting for device to be ready...")
     time.sleep(1)
 # echo that its done and stop the container
+targetPort = 7254
+setStringParam("host.docker.internal", targetPort, "/domains", "/dev/shm/ross")
+runCommand("host.docker.internal", targetPort, "/start")
+while getParam("host.docker.internal", targetPort, "/status") != "Running":
+    print("Waiting for device to be ready...")
+    time.sleep(1)
+
 print("Configuration complete. Stopping container...")
 # send the stop_command to the device to stop it
 

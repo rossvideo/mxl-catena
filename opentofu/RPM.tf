@@ -160,6 +160,7 @@ resource "docker_image" "rpm" {
   build {
     context    = "${var.workspace_dir}/external/rpm"
     dockerfile = "Dockerfile.rpm"
+    tag     = ["rpm:latest"]
   }
   force_remove = true
 }

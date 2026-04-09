@@ -173,6 +173,8 @@ resource "docker_container" "engine" {
     "max-file" = "3",
     "max-size" = "10m"
   }
+  stop_signal = "SIGINT"
+  stop_timeout = 60
 }
 
 

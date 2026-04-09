@@ -6,6 +6,7 @@ COPY . /app
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl ca-certificates \
     && rm -rf /var/lib/apt/lists/*
+RUN chmod +x /app/download_protos.sh
 RUN ./download_protos.sh
 RUN mkdir -p /app/protos \
 && python -m grpc_tools.protoc -I/app --python_out=/app/protos --grpc_python_out=/app/protos /app/*.proto \

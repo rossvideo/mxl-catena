@@ -40,7 +40,8 @@ INSERT INTO public."OGP_FRAME"
 ("NAME","HOSTNAME","PORT","PROTOCOL","USE_SSL","CONNECTION_SETTINGS","CREATED","MODIFIED")
 VALUES
 ('Media IO', 'host.docker.internal', 7248, 'CATENA', false, '<properties></properties>', NOW(), NOW()),
-('Catena NDI to MXL Sink', 'host.docker.internal', 7269, 'CATENA', false, '<properties><entry key="node-id">127.0.0.1:7269</entry></properties>', NOW(), NOW())
+('Catena NDI to MXL Sink', 'host.docker.internal', 7269, 'CATENA', false, '<properties><entry key="node-id">127.0.0.1:7269</entry></properties>', NOW(), NOW()),
+('Catena MXL to NDI', 'host.docker.internal', 7254, 'CATENA', false, '<properties><entry key="node-id">127.0.0.1:7254</entry></properties>', NOW(), NOW())
 ;
 
 --

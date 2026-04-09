@@ -50,7 +50,7 @@ services:
     ports:
       - "8180:8180"
     volumes:
-      - /dev/shm:/dev/shm/mxl
+      - /dev/shm/ross:/dev/shm/mxl
       - ./MediaIOSettings.json:/root/Settings.json
       - ./clips:/data
     deploy:
@@ -71,7 +71,7 @@ services:
     ports:
       - "7248:6254"
     volumes:
-      - /dev/shm:/dev/shm
+      - /dev/shm/ross:/dev/shm
       - ./clips:/data
     deploy:
       resources:
@@ -89,6 +89,20 @@ services:
     environment:
       CATENA_PORT: "7269"
     volumes:
+      - /dev/shm/ross:/dev/shm
+    deploy:
+      resources:
+        limits:
+          cpus: "4.0"
+          memory: 4G
+    restart: unless-stopped
+  mxl2ndi:
+    image: rossvideo/mxl-catena-ndi:mxl2ndi_sink
+    container_name: mxl2ndi_container
+    ports:
+      - "7254:6254"
+      - "5960-5969:5960-5969"
+    volumes:
       - /dev/shm:/dev/shm
     deploy:
       resources:
@@ -102,7 +116,7 @@ services:
       context: ./python-proto-client
     container_name: python_proto_client
     environment:
-      - "NDI_SOURCE_IPS=10.62.152.123"
+      - "NDI_SOURCE_IPS=10.0.1.74"
       - "SELECTED_NDI_SOURCE="
       - "NDI2MXL_UUID=19736e97-a32d-40b3-a2b1-4aa0cf4a5f10"
       - "FLOW_WIDTH=1920"

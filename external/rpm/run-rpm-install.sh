@@ -6,11 +6,7 @@ ARCHIVE="$(ls -1 /tmp/rpm/PlatformManager-*.tar.gz 2>/dev/null | head -n 1 || tr
 MARKER_FILE="${APP_DIR}/.rpm_installed"
 
 if [[ -z "${ARCHIVE}" ]]; then
-  ARCHIVE="$(ls -1 /workspace/rpm/PlatformManager-*.tar.gz 2>/dev/null | head -n 1 || true)"
-fi
-
-if [[ -z "${ARCHIVE}" ]]; then
-  echo "No PlatformManager tarball found in /tmp/rpm or /workspace/rpm"
+  echo "No PlatformManager tarball found in /tmp/rpm"
   exit 1
 fi
 
