@@ -165,7 +165,7 @@ ALTER TABLE public."OGP_FRAME"
 ALTER COLUMN "ID" SET DEFAULT nextval('public."OGP_FRAME_ID_seq"');
 
 INSERT INTO public."OGP_FRAME"
-("ID","NAME","HOSTNAME","PORT","PROTOCOL","USE_SSL","CONNECTION_SETTINGS","CREATED","MODIFIED")
+("NAME","HOSTNAME","PORT","PROTOCOL","USE_SSL","CONNECTION_SETTINGS","CREATED","MODIFIED")
 VALUES
 ('${catena_device.mxl2ndi.name}','${var.target_ip}',${catena_device.mxl2ndi.port},'CATENA',false,'<properties><entry key=\"node-id\">${var.target_ip}:${catena_device.mxl2ndi.port}</entry></properties>',NOW(),NOW()),
 ('Media IO','${var.target_ip}',7248,'CATENA',false,'<properties></properties>',NOW(),NOW()),
