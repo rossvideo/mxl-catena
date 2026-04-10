@@ -40,7 +40,7 @@ resource "docker_image" "catena-mcp" {
 
 resource "docker_container" "catena_mcp_local" {
   depends_on = [docker_container.valkey_local]
-  
+
   name  = "catena-mcp-server-local"
   image = docker_image.catena-mcp.name
 
@@ -68,12 +68,15 @@ resource "docker_container" "catena_mcp_local" {
     "CATENA_AUTH_USERNAME=admin",
     # CatenaMCP@RRL
     "CATENA_AUTH_PASSWORD_HASH=$2a$10$01VOVzgiaOvRlcEJhnwovOXenSEThuz6OSyAh5GNUQnmHoPcN7ao6",
-    "CATENA_INFLUX_ENABLED=false"
+    "CATENA_INFLUX_ENABLED=false",
     
+    "VIRTUAL_HOST=catena-mcp.${var.base_domain}",
+    "VIRTUAL_PORT=8888",
 
   ])
   networks_advanced {
     name    = docker_network.multiviewer_network.name
+    aliases = ["catena-mcp"]
   }
   log_opts ={
     "max-file" = "3",

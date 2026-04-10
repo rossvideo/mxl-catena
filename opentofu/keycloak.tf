@@ -8,13 +8,22 @@ resource "docker_container" "keycloak" {
   image = docker_image.keycloak.name
   env = toset(concat([
     "KC_BOOTSTRAP_ADMIN_USERNAME=admin",
-    "KC_BOOTSTRAP_ADMIN_PASSWORD=admin"
+    "KC_BOOTSTRAP_ADMIN_PASSWORD=admin",
+
+    "VIRTUAL_HOST=keycloak.${var.base_domain}",
+    "VIRTUAL_PORT=8080",
     ]
   ))
   ports {
     internal = 8080
     external = 8080
   }
+
+  networks_advanced {
+    name = docker_network.multiviewer_network.name
+    aliases = ["keycloak"]
+  }
+
   log_opts ={
     "max-file" = "3",
     "max-size" = "10m"

@@ -211,7 +211,11 @@ resource "docker_container" "mediamtx" {
     "MTX_WEBRTCADDITIONALHOSTS=${var.target_ip}",
     "MTX_WEBRTCICESERVERS2=[]",
     "MTX_WEBRTCLOCALTCPADDRESS=:8189",
-    "MTX_HLS=no"
+    "MTX_HLS=no",
+
+    "VIRTUAL_HOST=stream.${var.base_domain}",
+    "VIRTUAL_PORT=8889",
+    "VIRTUAL_DEST=/mxl-mv-demo",
   ]
   ports {
     internal = "8554"

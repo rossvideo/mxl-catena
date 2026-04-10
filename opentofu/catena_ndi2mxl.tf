@@ -6,7 +6,11 @@ resource "docker_container" "ndi2mxl_container" {
   image    = docker_image.ndi2mxl.name
   network_mode = "host"
   env = [
-    "CATENA_PORT=7260"
+    "CATENA_PORT=7260",
+
+    "VIRTUAL_HOST=ndi2mxl.${var.base_domain}",
+    "VIRTUAL_PROTO=grpc",
+    "VIRTUAL_PORT=7260",
   ]
   volumes {
     host_path      = local.MXL_DOMAIN

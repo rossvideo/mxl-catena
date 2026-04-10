@@ -19,7 +19,12 @@ resource "docker_container" "prometheus" {
   }
   networks_advanced {
     name = docker_network.multiviewer_network.name
+    aliases = ["prometheus"]
   }
+  env = [
+    "VIRTUAL_HOST=prometheus.${var.base_domain}",
+    "VIRTUAL_PORT=9090",
+  ]
   log_opts ={
     "max-file" = "3",
     "max-size" = "10m"
@@ -38,10 +43,13 @@ resource "docker_container" "grafana" {
   }
   env = [
     "GF_AUTH_ANONYMOUS_ENABLED = true",
-    "GF_AUTH_ANONYMOUS_ORG_ROLE = Viewer"
+    "GF_AUTH_ANONYMOUS_ORG_ROLE = Viewer",
+    "VIRTUAL_HOST=grafana.${var.base_domain}",
+    "VIRTUAL_PORT=3000"
   ]
   networks_advanced {
     name = docker_network.multiviewer_network.name
+    aliases = ["grafana"]
   }
   log_opts ={
     "max-file" = "3",

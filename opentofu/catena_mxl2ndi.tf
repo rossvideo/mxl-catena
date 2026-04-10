@@ -16,6 +16,15 @@ resource "docker_container" "mxl2ndicontainer" {
       external = tonumber(ports.value)
     }
   }
+  networks_advanced {
+    name = docker_network.multiviewer_network.name
+    aliases = ["mxl2ndi"]
+  }
+  env = [
+    "VIRTUAL_HOST=mxl2ndi.${var.base_domain}",
+    "VIRTUAL_PROTO=grpc",
+    "VIRTUAL_PORT=6254",
+  ]
   volumes {
     host_path      = local.MXL_DOMAIN
     container_path = local.MXL_DOMAIN

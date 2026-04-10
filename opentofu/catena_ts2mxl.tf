@@ -7,6 +7,15 @@ resource "docker_container" "ts2mxl_containers" {
     internal = "6254"
     external = each.value.external_port
   }
+  networks_advanced {
+    name = docker_network.multiviewer_network.name
+    aliases = [each.value.container_name]
+  }
+  env = [
+    "VIRTUAL_HOST=${each.value.container_name}.${var.base_domain}",
+    "VIRTUAL_PROTO=grpc",
+    "VIRTUAL_PORT=6254",
+  ]
   volumes {
     host_path      = local.MXL_DOMAIN
     container_path = local.MXL_DOMAIN

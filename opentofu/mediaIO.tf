@@ -226,7 +226,13 @@ resource "docker_container" "MIO_controller" {
   }
   networks_advanced {
     name = docker_network.multiviewer_network.name
+    aliases = ["MIO_controller"]
   }
+  env = [
+    "VIRTUAL_HOST=mio-controller.${var.base_domain}",
+    "VIRTUAL_PROTO=grpc",
+    "VIRTUAL_PORT=6254",
+  ]
   log_opts ={
     "max-file" = "3",
     "max-size" = "10m"

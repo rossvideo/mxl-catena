@@ -205,6 +205,13 @@ resource "docker_container" "rpm" {
   networks_advanced {
     name = docker_network.multiviewer_network.name
   }
+
+  env = [
+    "VIRTUAL_HOST=rpm.${var.base_domain}",
+    "VIRTUAL_PROTO=http",
+    "VIRTUAL_PORT=80",
+  ]
+
   log_opts ={
     "max-file" = "3",
     "max-size" = "10m"
