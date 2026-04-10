@@ -1,0 +1,3 @@
+.venv/
+letsencrypt/
+creds.ini
