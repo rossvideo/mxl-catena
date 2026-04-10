@@ -74,7 +74,7 @@ resource "null_resource" "license_key_table" {
     command = <<EOT
 psql "postgresql://postgres:password@${var.target_ip}:5432/platform_manager" <<SQL
 
-CREATE TABLE IF NOT EXISTS public."LICENSE_KEY" (
+CREATE TABLE public."LICENSE_KEY" (
     "ID" bigint NOT NULL,
     "CREATED" timestamp without time zone,
     "FEATURE_ID" character varying(190),
@@ -88,6 +88,16 @@ CREATE TABLE IF NOT EXISTS public."LICENSE_KEY" (
     "NODE" bigint
 );
 ALTER TABLE public."LICENSE_KEY" OWNER TO postgres;
+
+CREATE SEQUENCE public."LICENSE_KEY_ID_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public."LICENSE_KEY_ID_seq" OWNER TO postgres;
 
 INSERT INTO public."LICENSE_KEY"
 ("ID","CREATED","FEATURE_ID","KEY","LICENSED_TO","MODIFIED","REQUEST_CODE","VERSION_ID","CREATED_BY","MODIFIED_BY","NODE")
@@ -124,30 +134,47 @@ resource "null_resource" "ogp_frame_table" {
     command = <<EOT
 psql "postgresql://postgres:password@${var.target_ip}:5432/platform_manager" <<SQL
 
-CREATE TABLE IF NOT EXISTS public."OGP_FRAME" (
-  "ID" bigint PRIMARY KEY,
-  "NAME" text,
-  "HOSTNAME" text,
-  "PORT" integer,
-  "PROTOCOL" text,
-  "USE_SSL" boolean,
-  "CONNECTION_SETTINGS" text,
-  "CREATED" timestamp,
-  "MODIFIED" timestamp
+CREATE TABLE public."OGP_FRAME" (
+    "ID" bigint NOT NULL,
+    "NAME" character varying(255) NOT NULL,
+    "HOSTNAME" character varying(255) NOT NULL,
+    "PORT" integer NOT NULL,
+    "PROTOCOL" character varying(255) NOT NULL,
+    "USE_SSL" boolean DEFAULT false,
+    "CONNECTION_SETTINGS" text,
+    "CREATED" timestamp without time zone,
+    "MODIFIED" timestamp without time zone
 );
+
+
+ALTER TABLE public."OGP_FRAME" OWNER TO postgres;
+
+
+CREATE SEQUENCE public."OGP_FRAME_ID_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public."OGP_FRAME_ID_seq" OWNER TO postgres;
+
+ALTER SEQUENCE public."OGP_FRAME_ID_seq" OWNED BY public."OGP_FRAME"."ID";
+ALTER TABLE public."OGP_FRAME"
+ALTER COLUMN "ID" SET DEFAULT nextval('public."OGP_FRAME_ID_seq"');
 
 INSERT INTO public."OGP_FRAME"
 ("ID","NAME","HOSTNAME","PORT","PROTOCOL","USE_SSL","CONNECTION_SETTINGS","CREATED","MODIFIED")
 VALUES
-(2,'${catena_device.mxl2ndi.name}','${var.target_ip}',${catena_device.mxl2ndi.port},'CATENA',false,'<properties><entry key=\"node-id\">${var.target_ip}:${catena_device.mxl2ndi.port}</entry></properties>',NOW(),NOW()),
-(3,'Media IO','${var.target_ip}',7248,'CATENA',false,'<properties></properties>',NOW(),NOW()),
-(4,'${catena_device.ndi2mxl.name}','${var.target_ip}',${catena_device.ndi2mxl.port},'CATENA',false,'<properties><entry key=\"node-id\">${var.target_ip}:${catena_device.ndi2mxl.port}</entry></properties>',NOW(),NOW()),
+('${catena_device.mxl2ndi.name}','${var.target_ip}',${catena_device.mxl2ndi.port},'CATENA',false,'<properties><entry key=\"node-id\">${var.target_ip}:${catena_device.mxl2ndi.port}</entry></properties>',NOW(),NOW()),
+('Media IO','${var.target_ip}',7248,'CATENA',false,'<properties></properties>',NOW(),NOW()),
+('${catena_device.ndi2mxl.name}','${var.target_ip}',${catena_device.ndi2mxl.port},'CATENA',false,'<properties><entry key=\"node-id\">${var.target_ip}:${catena_device.ndi2mxl.port}</entry></properties>',NOW(),NOW()),
 ${join(",\n", [
   for idx, input in values(catena_device.ts2mxl) :
-  "(${idx + 5}, '${input.name}', '${var.target_ip}', ${input.port}, 'CATENA', false, '<properties><entry key=\"node-id\">${var.target_ip}:${input.port}</entry></properties>', NOW(), NOW())"
+  "( '${input.name}', '${var.target_ip}', ${input.port}, 'CATENA', false, '<properties><entry key=\"node-id\">${var.target_ip}:${input.port}</entry></properties>', NOW(), NOW())"
 ])}
-
-ON CONFLICT ("ID") DO NOTHING;
+;
 
 SQL
 EOT
