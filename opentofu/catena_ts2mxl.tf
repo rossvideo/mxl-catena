@@ -9,10 +9,10 @@ resource "docker_container" "ts2mxl_containers" {
   }
   networks_advanced {
     name = docker_network.multiviewer_network.name
-    aliases = [each.value.container_name]
+    aliases = [each.value.uri]
   }
   env = [
-    "VIRTUAL_HOST=${each.value.container_name}.${var.base_domain}",
+    "VIRTUAL_HOST=${each.value.uri}.${var.base_domain}",
     "VIRTUAL_PROTO=grpc",
     "VIRTUAL_PORT=6254",
   ]

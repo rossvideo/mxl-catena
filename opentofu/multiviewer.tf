@@ -254,7 +254,8 @@ resource "docker_container" "tools_outputs" {
   command = concat(["/app/mxlToGst",
     "-d", "${local.MXL_DOMAIN}",
     "-v", each.value.uuid,
-    "-g", "!  video/x-raw,format=I420 ! svtav1enc preset=10 cqp=36 parameters-string=tile-rows=1:tile-columns=2 ! av1parse ! rtspclientsink location=rtsp://localhost:8554/mxl-mv-demo protocols=tcp"
+    # "-g", "!  video/x-raw,format=I420 ! svtav1enc preset=10 cqp=36 parameters-string=tile-rows=1:tile-columns=2 ! av1parse ! rtspclientsink location=rtsp://localhost:8554/mxl-mv-demo protocols=tcp"
+    "-g", "!video/x-raw,format=I420 ! x264enc tune=zerolatency speed-preset=ultrafast key-int-max=60 bframes=0 ! h264parse config-interval=1 ! rtspclientsink location=rtsp://localhost:8554/mxl-mv-demo protocols=tcp"
   ])
   # ports {
   #   internal = local.CONTROL.MXL_TO_GST_PORT

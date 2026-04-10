@@ -61,9 +61,9 @@ EOT
 }
 resource "null_resource" "ssg_curling" {
   depends_on = [docker_container.ssg]
-  triggers = {
-    always_run = timestamp()
-  }
+  # triggers = {
+  #   always_run = timestamp()
+  # }
   connection {
     type     = "ssh"
     user     = var.target_user

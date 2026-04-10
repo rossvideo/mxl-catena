@@ -7,6 +7,7 @@ locals {
   CATENA_INPUTS = [
     {
       container_name = "ross_ts2mxl_container"
+      uri            = "logosplash"
       external_port  = "7249"
       label          = "Ross Logo Splash"
       ts_file_path   = "/ts/Ross_Loop_logo.ts"
@@ -14,6 +15,7 @@ locals {
     },
     {
       container_name = "ross2_ts2mxl_container"
+      uri            = "logo"
       external_port  = "7250"
       label          = "Ross Logo"
       ts_file_path   = "/ts/ross_logo_loop2.ts"
@@ -21,6 +23,7 @@ locals {
     },
     {
       container_name = "madden_bowl_ts2mxl_container"
+      uri            = "maddenbowl"
       external_port  = "7251"
       label          = "Madden Bowl"
       ts_file_path   = "/ts/Madden_Bowl.ts"
@@ -28,6 +31,7 @@ locals {
     },
     {
       container_name = "sofi_stadium_ts2mxl_container"
+      uri            = "sofistadium"
       external_port  = "7252"
       label          = "Sofi Stadium"
       ts_file_path   = "/ts/SoFi_Stadium.ts"
@@ -35,6 +39,7 @@ locals {
     },
     {
       container_name = "zsc_lions_short_ts2mxl_container"
+      uri            = "zsclions"
       external_port  = "7253"
       label          = "ZSC Lions Short"
       ts_file_path   = "/ts/ZSC_Lions_Short.ts"

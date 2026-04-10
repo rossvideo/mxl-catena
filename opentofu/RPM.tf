@@ -123,7 +123,7 @@ EOT
   }
 }
 resource "null_resource" "ogp_frame_table" {
-  depends_on = [null_resource.platform_manager]
+  depends_on = [null_resource.platform_manager, catena_device.ts2mxl]
 
   triggers = {
     target_ip = var.target_ip
@@ -167,12 +167,13 @@ ALTER COLUMN "ID" SET DEFAULT nextval('public."OGP_FRAME_ID_seq"');
 INSERT INTO public."OGP_FRAME"
 ("NAME","HOSTNAME","PORT","PROTOCOL","USE_SSL","CONNECTION_SETTINGS","CREATED","MODIFIED")
 VALUES
-('${catena_device.mxl2ndi.name}','${var.target_ip}',${catena_device.mxl2ndi.port},'CATENA',false,'<properties><entry key=\"node-id\">${var.target_ip}:${catena_device.mxl2ndi.port}</entry></properties>',NOW(),NOW()),
-('Media IO','${var.target_ip}',7248,'CATENA',false,'<properties></properties>',NOW(),NOW()),
-('${catena_device.ndi2mxl.name}','${var.target_ip}',${catena_device.ndi2mxl.port},'CATENA',false,'<properties><entry key=\"node-id\">${var.target_ip}:${catena_device.ndi2mxl.port}</entry></properties>',NOW(),NOW()),
+('Authz', 'authz.${var.base_domain}', 443, 'CATENA', true, '<properties><entry key="node-id">authz.${var.base_domain}:443</entry></properties>', NOW(), NOW()),
+('${catena_device.mxl2ndi.name}','mxl2ndi.${var.base_domain}',443,'CATENA',true,'<properties><entry key=\"node-id\">mxl2ndi.${var.base_domain}:443</entry></properties>',NOW(),NOW()),
+('Media IO','mio-controller.${var.base_domain}',443,'CATENA',true,'<properties></properties>',NOW(),NOW()),
+('${catena_device.ndi2mxl.name}','ndi2mxl.${var.base_domain}',443,'CATENA',true,'<properties><entry key=\"node-id\">ndi2mxl.${var.base_domain}:443</entry></properties>',NOW(),NOW()),
 ${join(",\n", [
-  for idx, input in values(catena_device.ts2mxl) :
-  "( '${input.name}', '${var.target_ip}', ${input.port}, 'CATENA', false, '<properties><entry key=\"node-id\">${var.target_ip}:${input.port}</entry></properties>', NOW(), NOW())"
+  for input in local.CATENA_INPUTS  :
+  "( '${input.label}', '${input.uri}.${var.base_domain}', 443, 'CATENA', true, '<properties><entry key=\"node-id\">${input.uri}.${var.base_domain}:443</entry></properties>', NOW(), NOW())"
 ])}
 ;
 
