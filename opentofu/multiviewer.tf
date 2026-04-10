@@ -204,6 +204,10 @@ resource "docker_image" "mediamtx" {
   keep_locally = true
 }
 
+locals {
+  mediamtx_host = "stream.${var.base_domain}"
+}
+
 resource "docker_container" "mediamtx" {
   name  = "mediamtx"
   image = docker_image.mediamtx.name
@@ -213,9 +217,8 @@ resource "docker_container" "mediamtx" {
     "MTX_WEBRTCLOCALTCPADDRESS=:8189",
     "MTX_HLS=no",
 
-    "VIRTUAL_HOST=stream.${var.base_domain}",
+    "VIRTUAL_HOST=${local.mediamtx_host}",
     "VIRTUAL_PORT=8889",
-    "VIRTUAL_DEST=/mxl-mv-demo",
   ]
   ports {
     internal = "8554"

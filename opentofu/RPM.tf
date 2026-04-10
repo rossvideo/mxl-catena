@@ -190,7 +190,7 @@ resource "docker_image" "rpm" {
     dockerfile = "Dockerfile.rpm"
     tag     = ["rpm:latest"]
   }
-  force_remove = true
+  keep_locally = true
 }
 
 resource "docker_container" "rpm" {

@@ -35,4 +35,9 @@ resource "docker_container" "nginx_proxy" {
     container_path = "/etc/nginx/certs/${var.base_domain}.key"
     read_only      = true
   }
+
+  upload {
+    content = "location = / {\n    return 302 /mxl-mv-demo/;\n}\n"
+    file    = "/etc/nginx/vhost.d/${local.mediamtx_host}"
+  }
 }
