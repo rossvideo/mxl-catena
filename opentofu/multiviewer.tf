@@ -1,6 +1,6 @@
 // --- Multiviewer creation --------------------------------
 locals {
-  INPUTS = concat(
+    INPUTS = concat(
     [
       {
         name = "ndi2mxl"
@@ -19,13 +19,21 @@ locals {
         port2 = "15101"
       },
       {
+        name  = "ssg"
+        label = "SSG Output"
+        uuid  = "550e8400-e29b-41d4-a716-446655440000"
+        auuid = ""
+        port  = "15002"
+        port2 = "15102"
+      },
+      {
         name  = local.OUTPUTS.name
         label = local.OUTPUTS.label
         uuid  = local.OUTPUTS.uuid
         # auuid = "fba2bbad-43e6-4b04-8f0c-f586e2c312af"
         auuid = ""
-        port  = "15002"
-        port2 = "15102"
+        port  = "15003"
+        port2 = "15103"
       }
     ],
     [for idx, dev in local.CATENA_INPUTS : {
@@ -33,8 +41,8 @@ locals {
       label = dev.label
       uuid  = dev.uuid
       auuid = ""
-      port  = tostring(15003 + idx)
-      port2 = tostring(15103 + idx)
+      port  = tostring(15004 + idx)
+      port2 = tostring(15104 + idx)
   }]
   )
   OUTPUTS = {
