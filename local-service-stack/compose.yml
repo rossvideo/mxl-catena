@@ -86,6 +86,7 @@ services:
     image: rossvideo/mxl-catena-ndi:ndi2mxl
     container_name: ndi2mxl_container
     network_mode: host
+    user: "root"
     environment:
       CATENA_PORT: "7269"
     volumes:
@@ -99,6 +100,7 @@ services:
   mxl2ndi:
     image: rossvideo/mxl-catena-ndi:mxl2ndi_sink
     container_name: mxl2ndi_container
+    user: "root"
     ports:
       - "7254:6254"
       - "5960-5969:5960-5969"
