@@ -20,13 +20,13 @@ resource "docker_container" "nginx_proxy" {
   }
 
   volumes {
-    host_path      = "${var.workspace_dir}/certs/letsencrypt/live/${var.base_domain}/fullchain.pem"
+    host_path      = "${var.workspace_dir}/external/certs/letsencrypt/live/${var.base_domain}/fullchain.pem"
     container_path = "/etc/nginx/certs/${var.base_domain}.crt"
     read_only      = true
   }
 
   volumes {
-    host_path      = "${var.workspace_dir}/certs/letsencrypt/live/${var.base_domain}/privkey.pem"
+    host_path      = "${var.workspace_dir}/external/certs/letsencrypt/live/${var.base_domain}/privkey.pem"
     container_path = "/etc/nginx/certs/${var.base_domain}.key"
     read_only      = true
   }
