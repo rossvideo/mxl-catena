@@ -12,6 +12,8 @@ resource "docker_image" "ssg" {
   name = "media-plane:latest"
   keep_locally = true
 }
+
+# SSG = SoftGear Streaming Gateway
 resource "docker_container" "ssg" {
   name  = "ssg"
   # image = docker_tag.ssg.target_image
@@ -87,7 +89,7 @@ locals {
 EOT
 }
 resource "null_resource" "ssg_curling" {
-  depends_on = [docker_container.ssg]
+  depends_on = [docker_container.ssg, catena_device.mxl2ndi]
   triggers = {
     always_run = timestamp()
   }
@@ -98,7 +100,7 @@ resource "null_resource" "ssg_curling" {
     host     = var.target_ip
   }
   provisioner "remote-exec" {
-    inline =[ "sleep 5",
+    inline =[ "sleep 10",
       "curl -X PUT 'http://localhost:8839/api/v1/licenses?activation=https://activation.rossvideo.com&productkeys=FT9DK-3VW26-C3YRN'",
       "curl -X POST 'http://localhost:8839/api/v1/pipeline' --data '${local.pipeline_json}' -H 'Content-Type: application/json'",
       "curl -X PUT 'http://localhost:8839/pipelines/example_ndi_to_mxl/state?name=playing'"]
