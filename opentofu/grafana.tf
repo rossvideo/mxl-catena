@@ -516,7 +516,7 @@ resource "grafana_dashboard" "mv_dashboard" {
           for idx, input in local.INPUTS : {
             "expr" : "FpsGauge{instance=\"input${idx + 1}:${input.port2}\"}",
             "instant" : true,
-            "legendFormat" : "${idx + 1}"
+            "legendFormat" : "${input.label}"
           }
         ])
       },
@@ -554,7 +554,7 @@ resource "grafana_dashboard" "mv_dashboard" {
           for idx, input in local.INPUTS : {
             "expr" : "DropsGauge{instance=\"input${idx + 1}:${input.port2}\"}",
             "instant" : true,
-            "legendFormat" : "${idx + 1}"
+            "legendFormat" : "${input.label}"
           }
         ])
       },
@@ -583,7 +583,7 @@ resource "grafana_dashboard" "mv_dashboard" {
           for idx, input in local.INPUTS : {
             "expr" : "DropsCounter{instance=\"input${idx + 1}:${input.port2}\"}",
             "instant" : true,
-            "legendFormat" : "${idx + 1}"
+            "legendFormat" : "${input.label}"
           }
         ])
       },
@@ -623,7 +623,7 @@ resource "grafana_dashboard" "mv_dashboard" {
         "targets" : concat([
           for idx, input in local.INPUTS : {
             "expr" : "FpsGauge{instance=\"input${idx + 1}:${input.port2}\"} - InvalidGrainsPerSec{instance=\"input${idx + 1}:${input.port2}\"}",
-            "legendFormat" : "${idx + 1}"
+            "legendFormat" : "${input.label}"
           }
         ])
       },
@@ -661,7 +661,7 @@ resource "grafana_dashboard" "mv_dashboard" {
           for idx, input in local.INPUTS : {
             "expr" : "VideoRead{instance=\"multiviewer:${local.MULTIVIEWER.port2}\", type=\"transfer\", name=\"Src${idx}\"}",
             "instant" : true,
-            "legendFormat" : "${idx + 1}"
+            "legendFormat" : "${input.label}"
           }
         ])
       },
