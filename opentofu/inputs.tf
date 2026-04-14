@@ -15,3 +15,6 @@ variable "target_user" {
 variable "ssh_private_key_path" {
   type = string
 }
+variable "base_domain" {
+  type    = string
+}

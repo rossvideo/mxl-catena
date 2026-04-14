@@ -3,6 +3,7 @@ set -euo pipefail
 
 # Load target server IP from opentofu/target_server.auto.tfvars, allowing optional spaces.
 TARGET_SERVER_IP=$(sed -n 's/^[[:space:]]*target_ip[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' opentofu/target_server.auto.tfvars | head -n1)
+TARGET_SERVER_URL=$(sed -n 's/^[[:space:]]*base_domain[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' opentofu/target_server.auto.tfvars | head -n1 )
 
 if [[ -z "$TARGET_SERVER_IP" ]]; then
   echo "Error: could not parse target_ip from opentofu/target_server.auto.tfvars" >&2
@@ -48,12 +49,10 @@ rsync "${RSYNC_OPTS[@]}" -e "ssh -i $SSH_KEY" import_multivewer.sh "$TARGET_SERV
 echo "Uploading metrics to $TARGET_SERVER:$TARGET_DIR (if changed)..."
 rsync "${RSYNC_OPTS[@]}" -e "ssh -i $SSH_KEY" metrics/ "$TARGET_SERVER:$TARGET_DIR/metrics/" || true
 
-# Run import script only if images were uploaded.
-if [[ $IMAGES_UPLOADED -eq 1 ]]; then
-  echo "Running import script on target server..."
-  ssh -i "$SSH_KEY" "$TARGET_SERVER" "cd $TARGET_DIR && sudo chmod +x import_multivewer.sh && ./import_multivewer.sh"
-else
-  echo "No images were uploaded, skipping import script."
-  echo "ssh -i \"$SSH_KEY\" \"$TARGET_SERVER\" \"cd $TARGET_DIR && sudo chmod +x import_multivewer.sh && ./import_multivewer.sh\""
-fi
+
+
+echo "easy commands to run on target server:"
+echo "ssh -i \"$SSH_KEY\" \"$TARGET_SERVER\" \"cd $TARGET_DIR && sudo chmod +x import_multivewer.sh && ./import_multivewer.sh\""
+echo "ssh -i \"$SSH_KEY\" \"$TARGET_SERVER\" \"cd $TARGET_DIR/external/certs && sudo chmod +x certbot.sh && ./certbot.sh *.$TARGET_SERVER_URL\""
+
 

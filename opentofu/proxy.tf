@@ -1,8 +1,3 @@
-variable "base_domain" {
-  default = "catena.demo.rossvideo.com"
-  type    = string
-}
-
 resource "docker_container" "nginx_proxy" {
   name  = "nginx_proxy"
   image = "jwilder/nginx-proxy:latest"
