@@ -27,12 +27,18 @@ resource "docker_container" "ssg" {
     container_path = "/dev/shm"
     read_only = false
   }
-  volumes {
-    host_path      = "${var.workspace_dir}/external/ndi"
-    container_path = "/root/.ndi"
-    read_only      = false
+  upload {
+    content = jsonencode({
+      "ndi" = {
+        "networks" = {
+          "ips"       = "10.62.152.123"
+          "discovery" = ""
+        }
+      }
+    })
+    file = "/root/.ndi/ndi-config.v1.json"
   }
-  log_opts ={
+  log_opts = {
     "max-file" = "3",
     "max-size" = "10m"
   }
