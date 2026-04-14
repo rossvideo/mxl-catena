@@ -219,7 +219,7 @@ resource "grafana_dashboard" "mv_dashboard" {
         "fieldConfig" : {
           "defaults" : {
             "decimals" : 0,
-            "max" : 59.94,
+            "max" : "${local.CONTROL.RATE_NUM / (local.CONTROL.RATE_DEN -(local.CONTROL.RATE_DEN/10))}",
             "min" : 0,
             "thresholds" : {
               "mode" : "absolute",
@@ -491,7 +491,7 @@ resource "grafana_dashboard" "mv_dashboard" {
         "fieldConfig" : {
           "defaults" : {
             "decimals" : 0,
-            "max" : 59.94,
+            "max" : "${local.CONTROL.RATE_NUM / (local.CONTROL.RATE_DEN -(local.CONTROL.RATE_DEN/10))}",
             "min" : 0,
             "thresholds" : {
               "mode" : "absolute",
