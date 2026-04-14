@@ -5,10 +5,20 @@ set -e
 # always run from the directory this script lives in
 cd "$(dirname "$0")"
 
+# parse flags
+FORCE=false
+while getopts ":f" opt; do
+  case $opt in
+    f) FORCE=true ;;
+    *) ;;
+  esac
+done
+shift $((OPTIND - 1))
+
 # get domain from arg 1
 DOMAIN="$1"
 if [[ -z "$DOMAIN" ]]; then
-  echo "Usage: $0 <domain>"
+  echo "Usage: $0 [-f] <domain>"
   exit 1
 fi
 
@@ -40,10 +50,12 @@ USER_ID=$(id -u)
 GROUP_ID=$(id -g)
 
 # ask the user if they really want to run
-read -p "This will run certbot to obtain a certificate for '$DOMAIN'. You shouldn't just run this without understanding what it does. Do you want to continue? (y/n) " -n 1 -r
-echo
-if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-    exit 1
+if [[ "$FORCE" != true ]]; then
+  read -p "This will run certbot to obtain a certificate for '$DOMAIN'. You shouldn't just run this without understanding what it does. Do you want to continue? (y/n) " -n 1 -r
+  echo
+  if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+      exit 1
+  fi
 fi
 
 # ensure .gitignore exists to protect secrets and generated files
