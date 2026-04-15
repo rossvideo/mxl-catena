@@ -45,49 +45,77 @@ resource "docker_container" "ssg" {
     "max-size" = "10m"
   }
 }
+
 locals {
-  pipeline_json=<<EOT
-{
-  "version": "1.0",
-  "name": "example_ndi_to_mxl",
-  "source": [
-    {
-      "name": "NDI Source",
-      "protocol": "NDI",
-      "url": "10.62.152.123:5961",
-      "video": [
-        {
-          "name": "example_ndi_to_mxl_video"
-        }
-      ],
-      "audio": [
-        {
-          "name": "example_ndi_to_mxl_audio"
-        }
-      ]
-    }
-  ],
-  "dest": [
-    {
+  pipeline_json = jsonencode({
+    "version": "1.0",
+    "name": "srt_to_mxl",
+    "source": [{
+      "name": "srt_to_mxl",
+      "protocol": "SRT",
+      "srtSettings": {
+        # "srtUrl": "srt://10.62.122.221:9000",
+        "srtUrl": "srt://10.62.122.98:9006",
+        "mode": "caller",
+        "latency": 200
+      },
+      "video": [{ "name": "srt_to_mxl_video" }],
+      "audio": []
+    }],
+    "dest": [{
       "protocol": "MXL",
       "mxlSettings": {
         "domain": "/dev/shm",
-        "flowId": "550e8400-e29b-41d4-a716-446655440000",
+        "flowId": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
         "authorityPort": 5000
       },
-      "video": [
-        {
-          "inputs": {
-            "sourceName": "example_ndi_to_mxl_video"
-          }
-        }
-      ]
-    }
-  ],
-  "process": null
+      "video": [{ "inputs": { "sourceName": "srt_to_mxl_video" } }]
+    }]
+  })
 }
-EOT
-}
+# locals {
+#   pipeline_json=<<EOT
+# {
+#   "version": "1.0",
+#   "name": "example_ndi_to_mxl",
+#   "source": [
+#     {
+#       "name": "NDI Source",
+#       "protocol": "NDI",
+#       "url": "10.62.152.123:5961",
+#       "video": [
+#         {
+#           "name": "example_ndi_to_mxl_video"
+#         }
+#       ],
+#       "audio": [
+#         {
+#           "name": "example_ndi_to_mxl_audio"
+#         }
+#       ]
+#     }
+#   ],
+#   "dest": [
+#     {
+#       "protocol": "MXL",
+#       "mxlSettings": {
+#         "domain": "/dev/shm",
+#         "flowId": "550e8400-e29b-41d4-a716-446655440000",
+#         "authorityPort": 5000
+#       },
+#       "video": [
+#         {
+#           "inputs": {
+#             "sourceName": "example_ndi_to_mxl_video"
+#           }
+#         }
+#       ]
+#     }
+#   ],
+#   "process": null
+# }
+# EOT
+# }
 resource "null_resource" "ssg_curling" {
   depends_on = [docker_container.ssg, catena_device.mxl2ndi]
   triggers = {
@@ -103,6 +131,6 @@ resource "null_resource" "ssg_curling" {
     inline =[ "sleep 10",
       "curl -X PUT 'http://localhost:8839/api/v1/licenses?activation=https://activation.rossvideo.com&productkeys=FT9DK-3VW26-C3YRN'",
       "curl -X POST 'http://localhost:8839/api/v1/pipeline' --data '${local.pipeline_json}' -H 'Content-Type: application/json'",
-      "curl -X PUT 'http://localhost:8839/pipelines/example_ndi_to_mxl/state?name=playing'"]
+      "curl -X PUT 'http://localhost:8839/pipelines/srt_to_mxl/state?name=playing'"]
   }  
 }
