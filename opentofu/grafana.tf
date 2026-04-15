@@ -311,7 +311,7 @@ resource "grafana_dashboard" "mv_dashboard" {
                       viz     = false
                     }
                   }
-                  decimals = 1
+                  decimals = 2
                   mappings = []
                   max      = 100
                   min      = 0
