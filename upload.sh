@@ -53,6 +53,6 @@ rsync "${RSYNC_OPTS[@]}" -e "ssh -i $SSH_KEY" metrics/ "$TARGET_SERVER:$TARGET_D
 
 echo "easy commands to run on target server:"
 echo "ssh -i \"$SSH_KEY\" \"$TARGET_SERVER\" \"cd $TARGET_DIR && sudo chmod +x import_multivewer.sh && ./import_multivewer.sh\""
-echo "ssh -i \"$SSH_KEY\" \"$TARGET_SERVER\" \"cd $TARGET_DIR/external/certs && sudo chmod +x certbot.sh && ./certbot.sh *.$TARGET_SERVER_URL\""
+echo "ssh -i \"$SSH_KEY\" \"$TARGET_SERVER\" \"cd $TARGET_DIR/external/certs && sudo chmod +x certbot.sh && ./certbot.sh -f *.$TARGET_SERVER_URL\""
 
 
