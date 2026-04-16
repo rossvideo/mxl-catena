@@ -249,6 +249,7 @@ resource "catena_device" "MIO" {
   apply_all = false
   params_map = {
     "/clip_store"  = "/data"
+    "/websocket_url" = "ws://${var.target_ip}:8180/interface"
   }
 
   start_command = "/start_session"
