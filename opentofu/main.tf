@@ -55,6 +55,9 @@ locals {
 
   // ndi2mxl
   NDI2MXL_UUID = "19736e97-a32d-40b3-a2b1-4aa0cf4a5f10"
+
+  // SSG
+  SSG_UUID = "f47ac10b-58cc-4372-a567-0e02b2c3d479"
 }
 
 // Docker images for MXL Catena components

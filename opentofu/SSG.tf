@@ -66,7 +66,7 @@ locals {
       "protocol": "MXL",
       "mxlSettings": {
         "domain": "/dev/shm",
-        "flowId": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+        "flowId": "${local.SSG_UUID}",
         "authorityPort": 5000
       },
       "video": [{ "inputs": { "sourceName": "srt_to_mxl_video" } }]

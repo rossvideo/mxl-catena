@@ -21,7 +21,7 @@ locals {
       {
         name  = "ssg"
         label = "SSG Output"
-        uuid  = "550e8400-e29b-41d4-a716-446655440000"
+        uuid  = local.SSG_UUID
         auuid = ""
         port  = "15002"
         port2 = "15102"
