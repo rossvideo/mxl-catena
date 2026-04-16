@@ -171,6 +171,7 @@ VALUES
 ('${catena_device.mxl2ndi.name}','mxl2ndi.${var.base_domain}',443,'CATENA',true,'<properties><entry key=\"node-id\">mxl2ndi.${var.base_domain}:443</entry></properties>',NOW(),NOW()),
 ('Media IO','mio-controller.${var.base_domain}',443,'CATENA',true,'<properties></properties>',NOW(),NOW()),
 ('${catena_device.ndi2mxl.name}','ndi2mxl.${var.base_domain}',443,'CATENA',true,'<properties><entry key=\"node-id\">ndi2mxl.${var.base_domain}:443</entry></properties>',NOW(),NOW()),
+('${catena_device.cheetah.name}','cheetah.${var.base_domain}',443,'CATENA',true,'<properties><entry key=\"node-id\">cheetah.${var.base_domain}:443</entry></properties>',NOW(),NOW()),
 ${join(",\n", [
   for input in local.CATENA_INPUTS  :
   "( '${input.label}', '${input.uri}.${var.base_domain}', 443, 'CATENA', true, '<properties><entry key=\"node-id\">${input.uri}.${var.base_domain}:443</entry></properties>', NOW(), NOW())"

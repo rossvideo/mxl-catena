@@ -301,3 +301,49 @@ resource "null_resource" "restart_tools_outputs" {
     "sleep 5 && docker restart ${join(" ", [for c in docker_container.tools_outputs : c.name])}"]
   }
 }
+
+resource docker_container "cheetah_catena" {
+  name  = "cheetah-catena"
+  image = docker_image.cheetah_catena.name
+  ports {
+    internal = "6254"
+    external = "7247"
+  }
+  networks_advanced {
+    name = docker_network.multiviewer_network.name
+  }
+  env = [
+    # this one's defaulting to a weird port for some reason
+    "CATENA_PORT=6254",
+
+    "VIRTUAL_HOST=cheetah.${var.base_domain}",
+    "VIRTUAL_PROTO=grpc",
+    "VIRTUAL_PORT=6254",
+  ]
+  log_opts ={
+    "max-file" = "3",
+    "max-size" = "10m"
+  }
+}
+
+resource "catena_device" "cheetah" {
+  depends_on = [ docker_container.cheetah_catena ]
+  device_type = "remote-grpc"
+  name        = "Cheetah Catena Control"
+  slot        = 0
+  address     = local.catena_endpoint
+  port        = docker_container.cheetah_catena.ports[0].external
+
+  apply_all = false
+  params_map = {
+    "/websocket_url" = "${var.target_ip}:${docker_container.cheetah_lite.ports[0].external}"
+  }
+
+  start_command = "/open_websocket"
+  stop_command  = "/close_websocket"
+
+  device_status {
+    oid         = "/status"
+    ready_value = "1"
+  }
+}

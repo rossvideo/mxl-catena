@@ -134,3 +134,8 @@ resource "docker_image" "rpm_database" {
   keep_locally = true
   
 }
+
+resource "docker_image" "cheetah_catena" {
+  name         = "cheetah-catena-proxy:local"
+  keep_locally = true
+}
