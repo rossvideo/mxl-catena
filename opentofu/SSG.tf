@@ -46,91 +46,57 @@ resource "docker_container" "ssg" {
   }
 }
 
-locals {
-  pipeline_json = jsonencode({
-    "version": "1.0",
-    "name": "srt_to_mxl",
-    "source": [{
-      "name": "srt_to_mxl",
-      "protocol": "SRT",
-      "srtSettings": {
-        # "srtUrl": "srt://10.62.122.221:9000",
-        "srtUrl": "srt://10.62.122.98:9006",
-        "mode": "caller",
-        "latency": 200
-      },
-      "video": [{ "name": "srt_to_mxl_video" }],
-      "audio": []
-    }],
-    "dest": [{
-      "protocol": "MXL",
-      "mxlSettings": {
-        "domain": "/dev/shm",
-        "flowId": "${local.SSG_UUID}",
-        "authorityPort": 5000
-      },
-      "video": [{ "inputs": { "sourceName": "srt_to_mxl_video" } }]
-    }]
-  })
+resource "docker_image" "ssg_control" {
+  name         = "ssg-control:local"
+  keep_locally = true
 }
-# locals {
-#   pipeline_json=<<EOT
-# {
-#   "version": "1.0",
-#   "name": "example_ndi_to_mxl",
-#   "source": [
-#     {
-#       "name": "NDI Source",
-#       "protocol": "NDI",
-#       "url": "10.62.152.123:5961",
-#       "video": [
-#         {
-#           "name": "example_ndi_to_mxl_video"
-#         }
-#       ],
-#       "audio": [
-#         {
-#           "name": "example_ndi_to_mxl_audio"
-#         }
-#       ]
-#     }
-#   ],
-#   "dest": [
-#     {
-#       "protocol": "MXL",
-#       "mxlSettings": {
-#         "domain": "/dev/shm",
-#         "flowId": "550e8400-e29b-41d4-a716-446655440000",
-#         "authorityPort": 5000
-#       },
-#       "video": [
-#         {
-#           "inputs": {
-#             "sourceName": "example_ndi_to_mxl_video"
-#           }
-#         }
-#       ]
-#     }
-#   ],
-#   "process": null
-# }
-# EOT
-# }
-resource "null_resource" "ssg_curling" {
-  depends_on = [docker_container.ssg, catena_device.mxl2ndi]
-  triggers = {
-    always_run = timestamp()
+
+resource "docker_container" "ssg_control" {
+  depends_on = [docker_container.ssg]
+  name       = "ssg_control"
+  image      = docker_image.ssg_control.name
+  env = [
+    "VIRTUAL_HOST=ssg.${var.base_domain}",
+    "VIRTUAL_PROTO=grpc",
+    "VIRTUAL_PORT=6254",
+  ]
+  networks_advanced {
+    name = docker_network.multiviewer_network.name
   }
-  connection {
-    type     = "ssh"
-    user     = var.target_user
-    private_key = file(var.ssh_private_key_path)
-    host     = var.target_ip
+  ports {
+    internal = "6254"
+    external = "7246"
   }
-  provisioner "remote-exec" {
-    inline =[ "sleep 10",
-      "curl -X PUT 'http://localhost:8839/api/v1/licenses?activation=https://activation.rossvideo.com&productkeys=FT9DK-3VW26-C3YRN'",
-      "curl -X POST 'http://localhost:8839/api/v1/pipeline' --data '${local.pipeline_json}' -H 'Content-Type: application/json'",
-      "curl -X PUT 'http://localhost:8839/pipelines/srt_to_mxl/state?name=playing'"]
-  }  
+  log_opts = {
+    "max-file" = "3",
+    "max-size" = "10m"
+  }
+}
+
+resource "catena_device" "ssg" {
+  depends_on  = [docker_container.ssg_control]
+  device_type = "remote-grpc"
+  name        = "SSG Control"
+  slot        = 0
+  address     = local.catena_endpoint
+  port        = 7246
+
+  apply_all = false
+  params_map = {
+    "/ssg_url"     = "${var.target_ip}:8839"
+    "/ssg_mode"    = 1 # 1 = SRT to MXL, 0 = NDI to MXL
+    "/ndi_url"     = "${var.target_ip}:5961"
+    "/source_name" = "ssg_to_mxl"
+    "/srt_url"     = "srt://10.62.122.98:9006"
+    "/srt_mode"    = "caller"
+    "/mxl_domain"  = "/dev/shm"
+    "/mxl_flow_id" = local.SSG_UUID
+  }
+
+  device_status {
+    oid         = "/source_name"
+    ready_value = "ssg_to_mxl"
+  }
+
+  start_command = "/start_ssg"
 }
