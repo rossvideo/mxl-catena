@@ -33,7 +33,7 @@ resource "docker_container" "ssg" {
     content = jsonencode({
       "ndi" = {
         "networks" = {
-          "ips"       = "10.62.152.123"
+          "ips"       = var.target_ip
           "discovery" = ""
         }
       }
