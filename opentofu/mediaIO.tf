@@ -143,6 +143,7 @@ resource "docker_image" "engine" {
     dockerfile = "Dockerfile.engine"
   }
   force_remove = true
+  # keep_locally = true
 }
 resource "docker_container" "engine" {
   name  = "engine"
@@ -191,7 +192,7 @@ resource "null_resource" "wait_for_engine" {
       -H "Upgrade: websocket" \
       -H "Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==" \
       -H "Sec-WebSocket-Version: 13" \
-      http://10.62.152.123:8180/interface 2>/dev/null | grep -q "101 Switching Protocols"
+      http://${var.target_ip}:8180/interface 2>/dev/null | grep -q "101 Switching Protocols"
     do
       echo "MediaIO Engine not ready yet, retrying in 1 second..."
       sleep 1

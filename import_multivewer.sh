@@ -13,20 +13,24 @@ if [ ! -d "images" ]; then
     exit 1
 fi
 
-echo "Loading Docker images..."
-printf '%s\n' \
-  "images/mxl-tools.tar" \
-  "images/mxl-input.tar" \
-  "images/mxl-output.tar" \
-  "images/multiviewer.tar" \
-  "images/control.tar" \
-  "images/cheetah-lite.tar" \
-  "images/mediaio.tgz" \
-  "images/catena-mcp-server-local.tgz" \
-  "images/mediaio-catena.tgz" \
-  "images/media-plane-mxl.tar" \
-  | xargs -P 6 -n 1 sh -c 'docker load -i "$1"' sh || { echo "One or more docker load commands failed."; exit 1; }
+# echo "Loading Docker images..."
+# printf '%s\n' \
+#   "images/mxl-tools.tar" \
+#   "images/mxl-input.tar" \
+#   "images/mxl-output.tar" \
+#   "images/multiviewer.tar" \
+#   "images/control.tar" \
+#   "images/cheetah-lite.tar" \
+#   "images/mediaio.tgz" \
+#   "images/catena-mcp-server-local.tgz" \
+#   "images/mediaio-catena.tgz" \
+#   "images/media-plane-mxl.tar" \
+#   | xargs -P 6 -n 1 sh -c 'docker load -i "$1"' sh || { echo "One or more docker load commands failed."; exit 1; }
 
+echo "Loading Docker images..."
+printf '%s\n' images/* \
+  | xargs -P 6 -n 1 sh -c 'docker load -i "$1"' sh \
+  || { echo "One or more docker load commands failed."; exit 1; }
 wait
 
 echo "Import Done"
