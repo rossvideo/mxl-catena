@@ -9,7 +9,7 @@ locals {
   },
   {
     tag="use-commands",
-    uri="multiviewer"
+    uri="use-commands"
   },
   {
     tag="status-update-JSON",
@@ -25,7 +25,7 @@ locals {
   },
   {
     tag="use-menus",
-    uri="menus"
+    uri="use-menus"
   },
   {
     tag="status-update",
@@ -45,11 +45,15 @@ resource "docker_container" "catena_rests" {
   for_each = { for idx, img in local.rest_imgs : img.tag => img }
   name  = each.value.tag
   image = docker_image.catena_rest_imgs[each.key].name
-
+  
+  networks_advanced {
+    name = docker_network.multiviewer_network.name
+    aliases = [each.value.uri]
+  }
   env = [
-    "VIRTUAL_HOST=${each.value.uri}.${var.base_domain}",
+    "VIRTUAL_HOST=st2138-${each.value.uri}-REST.${var.base_domain}",
     "VIRTUAL_PROTO=http",
-    "VIRTUAL_PORT=6254"
+    "VIRTUAL_PORT=443"
   ]
   log_opts = {
     "max-size" = "10m",
