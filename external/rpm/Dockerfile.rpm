@@ -8,6 +8,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     tar \
     bash \
     sudo \
+    libavahi-client3 \
+    libavahi-common3 \
+    libglib2.0-0 \
   && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /opt/platform_manager /tmp/rpm

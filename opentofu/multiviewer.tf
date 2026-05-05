@@ -225,9 +225,24 @@ resource "docker_container" "mediamtx" {
     "MTX_WEBRTCLOCALTCPADDRESS=:8189",
     "MTX_HLS=no",
 
+    "MTX_WEBRTCENCRYPTION=yes",
+    "MTX_WEBRTCSERVERKEY=/certs/server.key",
+    "MTX_WEBRTCSERVERCERT=/certs/server.crt",
+
     "VIRTUAL_HOST=${local.mediamtx_host}",
+    "VIRTUAL_PROTO=https",
     "VIRTUAL_PORT=8889",
   ]
+  volumes {
+    host_path      = "${var.workspace_dir}/external/certs/letsencrypt/live/${var.base_domain}/fullchain.pem"
+    container_path = "/certs/server.crt"
+    read_only      = true
+  }
+  volumes {
+    host_path      = "${var.workspace_dir}/external/certs/letsencrypt/live/${var.base_domain}/privkey.pem"
+    container_path = "/certs/server.key"
+    read_only      = true
+  }
   ports {
     internal = "8554"
     external = "8554"

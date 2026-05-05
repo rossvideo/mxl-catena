@@ -203,19 +203,33 @@ resource "docker_container" "rpm" {
   name  = "rpm"
   image = docker_image.rpm.name
 
-  ports {
-    internal = "80"
-    external = "80"
-  }
-  networks_advanced {
-    name = docker_network.multiviewer_network.name
-  }
+  network_mode = "host"
 
   env = [
     "VIRTUAL_HOST=rpm.${var.base_domain}",
     "VIRTUAL_PROTO=http",
     "VIRTUAL_PORT=80",
+
+    "LD_LIBRARY_PATH=/external/ndi"
   ]
+
+  volumes {
+    host_path      = "${var.workspace_dir}/external/ndi"
+    container_path = "/external/ndi"
+    read_only      = false
+  }
+
+  upload {
+    content = jsonencode({
+      "ndi" = {
+        "networks" = {
+          "ips"       = var.target_ip
+          "discovery" = ""
+        }
+      }
+    })
+    file = "/root/.ndi/ndi-config.v1.json"
+  }
 
   log_opts ={
     "max-file" = "3",
